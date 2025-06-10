@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="expenses">Expenses</string>
+    <string name="income">Income</string>
+    <string name="check">Check</string>
+    <string name="articles">Articles</string>
+    <string name="settings">Settings</string>
+</resources>

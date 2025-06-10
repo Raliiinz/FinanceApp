@@ -1,0 +1,24 @@
+package com.example.financeapp.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import com.example.financeapp.articles.navigation.articlesNavGraph
+import com.example.financeapp.check.navigation.checkNavGraph
+import com.example.financeapp.expenses.navigation.expensesNavGraph
+import com.example.financeapp.income.navigation.incomeNavGraph
+import com.example.financeapp.settings.navigation.settingsNavGraph
+
+@Composable
+fun RootNavGraph(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Expenses.route,
+    ) {
+        expensesNavGraph(navController)
+        incomeNavGraph(navController)
+        checkNavGraph(navController)
+        articlesNavGraph(navController)
+        settingsNavGraph(navController)
+    }
+}

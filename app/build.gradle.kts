@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.financeapp"
-    compileSdk = 35
+    namespace = "com.example.financeapp.app"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.financeapp"
-        minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = rootProject.extra.get("versionCode") as Int
+        versionName = rootProject.extra.get("versionName") as String
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +40,19 @@ android {
 }
 
 dependencies {
+    implementation(project(path = ":core:base"))
+    implementation(project(path = ":core:base-feature"))
+    implementation(project(path = ":core:domain"))
+    implementation(project(path = ":core:navigation"))
+
+    // Feature
+
+    implementation(project(path = ":feature:check"))
+    implementation(project(path = ":feature:articles"))
+    implementation(project(path = ":feature:expenses"))
+    implementation(project(path = ":feature:income"))
+    implementation(project(path = ":feature:settings"))
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -56,4 +69,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.lottie.compose)
 }
