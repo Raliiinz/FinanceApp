@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="expenses">Expenses</string>
-    <string name="income">Income</string>
-    <string name="check">Check</string>
-    <string name="articles">Articles</string>
-    <string name="settings">Settings</string>
+    <string name="expenses">Расходы</string>
+    <string name="expenses_today">Расходы сегодня</string>
+
+
+    <string name="income">Доходы</string>
+    <string name="income_today">Доходы сегодня</string>
+    <string name="price">"%s ₽"</string>
+    <string name="add_expense">Добавить расход</string>
+    <string name="total">Всего</string>
+
+    <string name="check">Счет</string>
+    <string name="my_check">Мой счет</string>
+    <string name="balance">Баланс</string>
+    <string name="currency">Валюта</string>
+
+    <string name="articles">Статьи</string>
+    <string name="my_articles">Мои статьи</string>
+
+    <string name="settings">Настройки</string>
+    <string name="light_dark_auto">Светлая темная авто</string>
+    <string name="main_color">Основной цвет</string>
+    <string name="sounds">Звуки</string>
+    <string name="haptics">Хаптики</string>
+    <string name="password">Код пароль</string>
+    <string name="synchronizing">Синхронизация</string>
+    <string name="language">Язык</string>
+    <string name="about_the_program">О программе</string>
+
+    <string name="history">История</string>
 </resources>

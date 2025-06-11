@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
@@ -18,19 +19,35 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+//    primary = Color(0xFF2AE881), // Основной зелёный
+//    onPrimary = Color.Black,
+//    primaryContainer = Color(0xFFD4FAE6),
+//    onPrimaryContainer = Color(0xFF0A1E14),
+//
+//    secondary = Color(0xFF4A6357), // Дополнительный цвет
+//    onSecondary = Color.White,
+//
+//    surface = Color(0xFFFEF7FF),
+//    onSurface = Color(0xFF1D1B20),
+//
+//    surfaceContainer = Color(0xFFF3EDF7), // Ваш surfaceContainer
+//    onSurfaceVariant = Color(0xFF49454F),
+//
+//    outlineVariant = Color(0xFFCAC4D0),
+//    background = Color(0xFFFEF7FF) // Фон должен быть нейтральным
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+
+    primary = BackgroundColorLight,
+    secondary = SecondaryColorLight,
+    tertiary = TertiaryColorLight,
+
+    surface = SurfaceColorLight,
+    surfaceContainer = SurfaceContainerColorLight,
+    onSurface = OnSurfaceColorLight,
+    outlineVariant = OutlineVariantColorLight,
+    background = OutlineVariantColorLight,
+    surfaceVariant = SurfaceVariantLightColor,
+    surfaceContainerHigh = SurfaceContainerHighLightColor
 )
 
 @Composable

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -41,7 +43,6 @@ android {
 
 dependencies {
     implementation(project(path = ":core:base"))
-    implementation(project(path = ":core:base-feature"))
     implementation(project(path = ":core:domain"))
     implementation(project(path = ":core:navigation"))
 
@@ -72,4 +73,15 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.lottie.compose)
+
+
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+    // Hilt
+//    implementation("com.google.dagger:hilt-android:2.50") // последняя версия
+////    kapt("com.google.dagger:hilt-android-compiler:2.50")
+//    ksp("com.google.dagger:hilt-compiler:2.50")
+
+// Jetpack Compose + Hilt
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 }

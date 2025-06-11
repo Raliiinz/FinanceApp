@@ -1,5 +1,6 @@
 package com.example.financeapp.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -10,15 +11,15 @@ import com.example.financeapp.income.navigation.incomeNavGraph
 import com.example.financeapp.settings.navigation.settingsNavGraph
 
 @Composable
-fun RootNavGraph(navController: NavHostController) {
+fun RootNavGraph(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(
         navController = navController,
         startDestination = Screen.Expenses.route,
     ) {
         expensesNavGraph(navController)
-        incomeNavGraph(navController)
-        checkNavGraph(navController)
-        articlesNavGraph(navController)
-        settingsNavGraph(navController)
+        incomeNavGraph(navController, )
+        checkNavGraph(navController, )
+        articlesNavGraph(navController, )
+        settingsNavGraph(navController, paddingValues)
     }
 }

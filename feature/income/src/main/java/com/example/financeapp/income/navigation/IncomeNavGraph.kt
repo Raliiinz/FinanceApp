@@ -10,7 +10,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.financeapp.navigation.Routes
 import com.example.financeapp.navigation.Screen
 
 fun NavGraphBuilder.incomeNavGraph(navController: NavHostController) {
