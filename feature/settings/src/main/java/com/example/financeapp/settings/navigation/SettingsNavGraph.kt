@@ -1,13 +1,7 @@
 package com.example.financeapp.settings.navigation
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -29,9 +23,8 @@ fun NavGraphBuilder.settingsNavGraph(
         composable("settings/main") {
             SettingsRoute(
                 navController = navController,
-                paddingValues = paddingValues // или пробрасывай из родителя
+                paddingValues = paddingValues
             )
-//            SettingScreen() { }
         }
     }
 }
@@ -49,10 +42,3 @@ fun SettingsRoute(
         }
     )
 }
-
-//@Composable
-//fun SettingsScreen() {
-//    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-//        Text("Settings Screen")
-//    }
-//}

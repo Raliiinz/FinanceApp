@@ -2,10 +2,8 @@ package com.example.financeapp.ui.screens
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.base.R
-import com.example.financeapp.ui.theme.FinanceAppTheme
+import com.example.financeapp.base.ui.theme.FinanceAppTheme
+import com.example.financeapp.base.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,8 +41,7 @@ fun TopBarTextIcon(
                 Text(
                     text = stringResource(textResId),
                     color = MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontSize = 20.sp,
+                    style = Typography.titleLarge,
                     modifier = Modifier.align(Alignment.Center)
                 )
                 if (imageResId!= null){
@@ -64,12 +62,4 @@ fun TopBarTextIcon(
 
         }
     )
-}
-
-@Preview
-@Composable
-fun TopBarTextAndIconPreview() {
-    FinanceAppTheme {
-        TopBarTextIcon(R.string.expenses_today, R.drawable.refresh,{})
-    }
 }

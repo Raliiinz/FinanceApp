@@ -16,9 +16,9 @@ fun RootNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         navController = navController,
         startDestination = Screen.Expenses.route,
     ) {
-        expensesNavGraph(navController)
-        incomeNavGraph(navController, )
-        checkNavGraph(navController, )
+        expensesNavGraph(navController, paddingValues)
+        incomeNavGraph(navController, paddingValues)
+        checkNavGraph(navController, paddingValues)
         articlesNavGraph(navController, )
         settingsNavGraph(navController, paddingValues)
     }

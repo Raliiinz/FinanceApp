@@ -19,17 +19,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.financeapp.base.R
+import com.example.financeapp.base.commonItems.BaseFloatingActionButton
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatPrice
+import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.domain.model.Check
 
 @Composable
@@ -39,7 +39,7 @@ fun ChecksScreen(
     onCheckClicked: (Int) -> Unit,
     onFabClick: () -> Unit
 ) {
-    val checkListState = remember { checkList }
+    val checkListState = checkList
 
     Box(
         modifier = Modifier
@@ -78,7 +78,7 @@ fun ChecksScreen(
                                     }
                                     Text(
                                         text = stringResource(R.string.balance),
-                                        fontSize = 24.sp,
+                                        style = Typography.bodyLarge,
                                         maxLines = 1,
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
@@ -88,7 +88,7 @@ fun ChecksScreen(
                                 Row {
                                     Text(
                                         text = formatPrice(item.balance),
-                                        fontSize = 24.sp,
+                                        style = Typography.bodyLarge,
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                     EndIcon(Modifier
@@ -106,7 +106,7 @@ fun ChecksScreen(
                             leadingContent = {
                                 Text(
                                     text = stringResource(R.string.currency),
-                                    fontSize = 24.sp,
+                                    style = Typography.bodyLarge,
                                     modifier = Modifier.padding(horizontal = 16.dp),
                                     maxLines = 1,
                                     color = MaterialTheme.colorScheme.onSurface
@@ -117,7 +117,7 @@ fun ChecksScreen(
                                 Row {
                                     Text(
                                         text = item.currency,
-                                        fontSize = 24.sp,
+                                        style = Typography.bodyLarge,
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                     EndIcon(Modifier
@@ -127,7 +127,7 @@ fun ChecksScreen(
                                 }
                             },
                             upDivider = false,
-                            downDivider = true,
+                            downDivider = false,
                             onClick = { onCheckClicked(item.id) },
                             backgroundColor = MaterialTheme.colorScheme.secondary
                         )
@@ -137,24 +137,15 @@ fun ChecksScreen(
                 }
             }
         }
-        FloatingActionButton(
+        BaseFloatingActionButton(
             onClick = onFabClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(
                     end = 16.dp,
                     bottom = paddingValues.calculateTopPadding() + 14.dp
-                ),
-            shape = CircleShape,
-            containerColor = MaterialTheme.colorScheme.background,
-            elevation = FloatingActionButtonDefaults.elevation(0.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.add_expense),
-                tint = Color.White
-            )
-        }
+                )
+        )
     }
 
 }

@@ -9,36 +9,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.financeapp.base.R
+import com.example.financeapp.base.commonItems.BaseFloatingActionButton
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatPrice
+import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.domain.model.Income
 
 @Composable
 fun IncomeScreen(
-    incomeDtoList: List<Income>?,
+    incomeList: List<Income>?,
     paddingValues: PaddingValues,
     onIncomeClicked: (Int) -> Unit,
     onFabClick: () -> Unit
 ) {
-    val incomesListState = remember { incomeDtoList }
+    val incomesListState = incomeList
 
     val totalPrice = incomesListState?.sumOf { it.priceTrailing } ?: 0.0
 
@@ -62,7 +56,7 @@ fun IncomeScreen(
                         stringResource(R.string.total),
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
-                        fontSize = 24.sp,
+                        style = Typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 },
@@ -71,7 +65,7 @@ fun IncomeScreen(
                         formatPrice(totalPrice),
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
-                        fontSize = 24.sp,
+                        style = Typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 },
@@ -88,7 +82,7 @@ fun IncomeScreen(
                             leadingContent = {
                                 Text(
                                     text = item.textLeading,
-                                    fontSize = 24.sp,
+                                    style = Typography.bodyLarge,
                                     modifier = Modifier.padding(horizontal = 16.dp),
                                     maxLines = 1
                                 )
@@ -98,7 +92,7 @@ fun IncomeScreen(
                                 Row {
                                     Text(
                                         text = formatPrice(item.priceTrailing.toDouble()),
-                                        fontSize = 24.sp,
+                                        style = Typography.bodyLarge,
                                     )
                                     Icon(
                                         painterResource(R.drawable.ic_more_vert),
@@ -113,28 +107,20 @@ fun IncomeScreen(
                             downDivider = true,
                             onClick = { onIncomeClicked(item.id) },
                             backgroundColor = MaterialTheme.colorScheme.surface,
+                            itemHeight = 72.dp
                         )
                     }
                 }
             }
         }
-        FloatingActionButton(
+        BaseFloatingActionButton(
             onClick = onFabClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(
                     end = 16.dp,
                     bottom = paddingValues.calculateTopPadding() + 14.dp
-                ),
-            shape = CircleShape,
-            containerColor = MaterialTheme.colorScheme.background,
-            elevation = FloatingActionButtonDefaults.elevation(0.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.add_expense),
-                tint = Color.White
-            )
-        }
+                )
+        )
     }
 }

@@ -29,19 +29,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.base.R
+import com.example.financeapp.base.commonItems.BaseFloatingActionButton
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatPrice
+import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.domain.model.Expense
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpensesScreen(
-    expenseDtoList: List<Expense>?,
+    expenseList: List<Expense>?,
     paddingValues: PaddingValues,
     onExpenseClicked: (Int) -> Unit,
     onFabClick: () -> Unit
 ) {
-    val expensesListState = remember { expenseDtoList }
+    val expensesListState = expenseList
 
     val totalPrice = expensesListState?.sumOf { it.priceTrailing } ?: 0
 
@@ -64,7 +66,7 @@ fun ExpensesScreen(
                         stringResource(R.string.total),
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
-                        fontSize = 24.sp,
+                        style = Typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 },
@@ -73,7 +75,7 @@ fun ExpensesScreen(
                         formatPrice(totalPrice.toDouble()),
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
-                        fontSize = 24.sp,
+                        style = Typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 },
@@ -101,19 +103,19 @@ fun ExpensesScreen(
                                     ) {
                                         Text(
                                             item.iconLeading,
-                                            color = Color(0xFFFCE4EB)
+                                            color = MaterialTheme.colorScheme.onSurface,
                                         )
                                     }
                                     Column {
                                         Text(
                                             text = item.textLeading,
-                                            fontSize = 24.sp,
+                                            style = Typography.bodyLarge,
                                             maxLines = 1
                                         )
-                                        item.commentLeading?.let{
+                                        item.commentLeading?.let {
                                             Text(
                                                 text = it,
-                                                fontSize = 20.sp,
+                                                style = Typography.bodyMedium,
                                                 maxLines = 1,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                                             )
@@ -125,7 +127,7 @@ fun ExpensesScreen(
                                 Row {
                                     Text(
                                         text = formatPrice(item.priceTrailing),
-                                        fontSize = 24.sp,
+                                        style = Typography.bodyLarge,
                                     )
                                     Icon(
                                         painterResource(R.drawable.ic_more_vert),
@@ -140,29 +142,21 @@ fun ExpensesScreen(
                             downDivider = true,
                             onClick = { onExpenseClicked(item.id) },
                             backgroundColor = MaterialTheme.colorScheme.surface,
+                            itemHeight = 70.dp
                         )
                     }
                 }
             }
 
         }
-        FloatingActionButton(
+        BaseFloatingActionButton(
             onClick = onFabClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(
                     end = 16.dp,
                     bottom = paddingValues.calculateTopPadding() + 14.dp
-                ),
-            shape = CircleShape,
-            containerColor = MaterialTheme.colorScheme.background,
-            elevation = FloatingActionButtonDefaults.elevation(0.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.add_expense),
-                tint = Color.White
-            )
-        }
+                )
+        )
     }
 }

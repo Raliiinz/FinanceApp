@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,18 +21,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
-import com.example.financeapp.domain.model.Settings
+import com.example.financeapp.base.ui.theme.Typography
 
 @Composable
 fun SettingScreen(
-    viewModel: SettingsScreenViewModel,
+    viewModel: SettingsScreenViewModel = hiltViewModel(),
     paddingValues: PaddingValues,
     onSettingClicked: (Int) -> Unit
 ) {
-    val settingsList by viewModel.settingsList.collectAsState()
-
+    val settingsList by viewModel.settingsList.collectAsStateWithLifecycle()
+//    val isDarkThemeEnabled by viewModel.isDarkThemeEnabled.collectAsStateWithLifecycle()
     var checked by remember { mutableStateOf(false) }
 
     Column(
@@ -51,21 +52,28 @@ fun SettingScreen(
                     leadingContent = {
                         Text(
                             stringResource(R.string.light_dark_auto),
-                            modifier = Modifier.padding(start = 16.dp),
-                            fontSize = 24.sp,
+                            modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
+//                            modifier = Modifier.padding(start = 16.dp),
+                            style = Typography.bodyLarge,
+                            maxLines = 1,
                             color = MaterialTheme.colorScheme.onSurface
                         )
                     },
                     trailingContent = {
                         Switch(
                             checked = checked,
-                            onCheckedChange = { checked = it },
-                            modifier = Modifier.padding(end = 16.dp)
+                            onCheckedChange = {
+                                checked = it
+//                                viewModel.toggleDarkTheme()
+                            },
+                            modifier = Modifier.padding(end = 16.dp, top = 2.dp, bottom = 2.dp)
                         )
                     },
                     upDivider = false,
                     downDivider = true,
-                    onClick = { },
+                    onClick = {
+//                        viewModel.toggleDarkTheme()
+                    },
                     backgroundColor = MaterialTheme.colorScheme.surface,
                 )
             }
@@ -74,17 +82,17 @@ fun SettingScreen(
                     leadingContent = {
                         Text(
                             text = stringResource(item.textLeadingResId),
-                            fontSize = 24.sp,
+                            style = Typography.bodyLarge,
                             maxLines = 1,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
+
                         )
                     },
                     {
                         Icon(
                             painterResource(item.iconTrailingResId),
                             contentDescription = null,
-                            modifier = Modifier
-                                .padding(end = 16.dp),
+                            modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 16.dp),
                             tint = MaterialTheme.colorScheme.surfaceVariant
                         )
                     },
