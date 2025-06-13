@@ -21,4 +21,12 @@ dependencyResolutionManagement {
 
 rootProject.name = "FinanceApp"
 include(":app")
- 
+include(":core:base")
+include(":core:domain")
+include(":core:navigation")
+include(":feature:articles")
+include(":feature:expenses")
+include(":feature:income")
+include(":feature:settings")
+include(":feature:check")
+include(":core:data")
