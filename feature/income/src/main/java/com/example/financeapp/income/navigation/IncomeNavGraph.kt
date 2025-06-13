@@ -38,10 +38,10 @@ fun IncomeRoute(
     onIncomeClicked: (Int) -> Unit,
     onFabClick: () -> Unit
 ) {
-    val incomeList by viewModel.incomeList.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     IncomeScreen(
-        incomeList = incomeList,
+        uiState = uiState,
         paddingValues = paddingValues,
         onIncomeClicked = onIncomeClicked,
         onFabClick = onFabClick

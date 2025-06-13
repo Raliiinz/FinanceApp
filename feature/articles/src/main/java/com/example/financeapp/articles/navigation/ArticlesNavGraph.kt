@@ -1,31 +1,47 @@
 package com.example.financeapp.articles.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.financeapp.articles.screen.ArticleScreen
+import com.example.financeapp.articles.screen.ArticleScreenViewModel
 import com.example.financeapp.navigation.Screen
 
-fun NavGraphBuilder.articlesNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.articlesNavGraph(
+    navController: NavHostController,
+    paddingValues: PaddingValues
+) {
     navigation(
         startDestination = "articles/main",
         route = Screen.Articles.route
     ) {
         composable("articles/main") {
-            ArticlesScreen()
+            ArticlesRoute(
+                paddingValues = paddingValues,
+                onArticleClicked = { id -> /* handle tap */ },
+            )
         }
     }
 }
 
 @Composable
-fun ArticlesScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Articles Screen")
-    }
+fun ArticlesRoute(
+    paddingValues: PaddingValues,
+    onArticleClicked: (Int) -> Unit,
+    viewModel: ArticleScreenViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    ArticleScreen (
+        uiState = uiState,
+        paddingValues = paddingValues,
+        onArticleClicked = onArticleClicked,
+        onSearchClicked = {}
+    )
 }

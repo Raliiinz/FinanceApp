@@ -8,6 +8,6 @@ import com.example.financeapp.domain.model.Income
 interface FinanceRepository {
     suspend fun getExpenses(): List<Expense>?
     suspend fun getIncomes(): List<Income>?
-    suspend fun getChecks(): List<Check>?
+    suspend fun getCheck(): Check?
     suspend fun getCategories(): List<Category>?
 }

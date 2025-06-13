@@ -39,10 +39,10 @@ fun ChecksRoute(
     onFabClick: () -> Unit,
     viewModel: CheckScreenViewModel = hiltViewModel()
 ) {
-    val checkList by viewModel.checksList.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     ChecksScreen(
-        checkList = checkList,
+        uiState = uiState,
         paddingValues = paddingValues,
         onCheckClicked = onCheckClicked,
         onFabClick = onFabClick

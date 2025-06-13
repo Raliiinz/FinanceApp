@@ -31,7 +31,7 @@ class FinanceRepositoryImpl @Inject constructor() : FinanceRepository {
 
         val initialExpensesList = expensesData.mapIndexed { index, (name, amount, comment) ->
             TransactionResponse(
-                id = index + 1, // Начинаем с 1 как в вашем списке
+                id = index + 1,
                 account = AccountBrief(
                     id = index + 1,
                     name = "Основной счёт",
@@ -54,10 +54,10 @@ class FinanceRepositoryImpl @Inject constructor() : FinanceRepository {
                     isIncome = false
                 ),
                 amount = amount.replace(" P", "").replace(" ", ""),
-                transactionDate = "2025-06-10T21:56:58.596Z",
+                transactionDate = "2025-13-10T21:56:58.596Z",
                 comment = comment,
-                createdAt = "2025-06-10T21:56:58.596Z",
-                updatedAt = "2025-06-10T21:56:58.596Z"
+                createdAt = "2025-13-10T21:56:58.596Z",
+                updatedAt = "2025-13-10T21:56:58.596Z"
             )
         }
         return initialExpensesList.map { it.mapToExpenses() }
@@ -84,8 +84,8 @@ class FinanceRepositoryImpl @Inject constructor() : FinanceRepository {
                         amount = "500000.00",
                         transactionDate = "2025-06-10T21:56:58.596Z",
                         comment = "Зарплата за месяц",
-                        createdAt = "2025-12-10T21:50:58.596Z",
-                        updatedAt = "2025-12-10T21:50:58.596Z"
+                        createdAt = "2025-10-10T21:50:58.596Z",
+                        updatedAt = "2025-10-10T21:50:58.596Z"
                     )
                 )
                 add(
@@ -106,8 +106,8 @@ class FinanceRepositoryImpl @Inject constructor() : FinanceRepository {
                         amount = "100000.00",
                         transactionDate = "2025-06-10T21:56:58.596Z",
                         comment = "Подработка за месяц",
-                        createdAt = "2025-12-10T21:50:58.596Z",
-                        updatedAt = "2025-12-10T21:50:58.596Z"
+                        createdAt = "2025-12-10T19:50:58.596Z",
+                        updatedAt = "2025-12-10T19:50:58.596Z"
                     )
                 )
 
@@ -115,50 +115,50 @@ class FinanceRepositoryImpl @Inject constructor() : FinanceRepository {
         return initialIncomesList.map { it.mapToIncome() }
     }
 
-    override suspend fun getChecks(): List<Check>? {
-        val initialAccountList = mutableListOf<AccountResponse>()
-            .apply {
-                add(
-                    AccountResponse(
-                        id = 1,
-                        name = "Основной счёт",
-                        balance = "-670000.00",
-                        currency = "₽",
-                        incomeStats = StatItem(
-                            categoryId = 1,
-                            categoryName = "Зарплата",
-                            emoji = "💰",
-                            amount = "5000.00"
-                        ),
-                        expenseStats = StatItem(
-                            categoryId = 1,
-                            categoryName = "Зарплата",
-                            emoji = "💰",
-                            amount = "5000.00"
-                        ),
-                        createdAt = "2025-06-12T23:10:08.275Z",
-                        updatedAt = "2025-06-12T23:10:08.275Z"
-                    )
-                )
-            }
-        return initialAccountList.map { it.mapToCheck() }
+    override suspend fun getCheck(): Check? {
+        val initialAccount =
+            AccountResponse(
+                id = 1,
+                name = "Основной счёт",
+                balance = "-670000.00",
+                currency = "₽",
+                incomeStats = StatItem(
+                    categoryId = 1,
+                    categoryName = "Зарплата",
+                    emoji = "💰",
+                    amount = "5000.00"
+                ),
+                expenseStats = StatItem(
+                    categoryId = 1,
+                    categoryName = "Зарплата",
+                    emoji = "💰",
+                    amount = "5000.00"
+                ),
+                createdAt = "2025-06-12T23:10:08.275Z",
+                updatedAt = "2025-06-12T23:10:08.275Z"
+            )
+        return initialAccount.mapToCheck()
     }
 
     override suspend fun getCategories(): List<Category> {
-        val initialCategoryList = mutableListOf<CategoryResponse>()
-            .apply {
-                repeat(7) {
-                    add(
-                        CategoryResponse(
-                            id = 1,
-                            name = "Зарплата",
-                            emoji = "💰",
-                            isIncome = true
-                        )
-                    )
-                }
+        val categoriesData = listOf(
+            Triple(1, "Аренда квартиры", "🏠"),
+            Triple(2, "Одежда", "👗"),
+            Triple(3, "На собачку", "🐶"),
+            Triple(4, "На собачку", "🐶"),
+            Triple(5, "Ремонт квартиры", "РК"),
+            Triple(6, "Продукты", "🍭"),
+            Triple(7, "Спортзал", "🏋️"),
+            Triple(8, "Медицина", "💊")
+        )
 
-            }
-        return initialCategoryList.map { it.mapToCategory() }
+        return categoriesData.map { (id, name, emoji) ->
+            CategoryResponse(
+                id = id,
+                name = name,
+                emoji = emoji,
+                isIncome = false
+            ).mapToCategory()
+        }
     }
 }

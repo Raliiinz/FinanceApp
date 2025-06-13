@@ -38,10 +38,10 @@ fun ExpensesRoute(
     onFabClick: () -> Unit,
     viewModel: ExpensesScreenViewModel = hiltViewModel()
 ) {
-    val expenseList by viewModel.expenseDtoList.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     ExpensesScreen(
-        expenseList = expenseList,
+        uiState = uiState,
         paddingValues = paddingValues,
         onExpenseClicked = onExpenseClicked,
         onFabClick = onFabClick

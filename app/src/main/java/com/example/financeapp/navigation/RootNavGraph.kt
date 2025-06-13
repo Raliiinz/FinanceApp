@@ -19,7 +19,7 @@ fun RootNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         expensesNavGraph(navController, paddingValues)
         incomeNavGraph(navController, paddingValues)
         checkNavGraph(navController, paddingValues)
-        articlesNavGraph(navController, )
+        articlesNavGraph(navController, paddingValues)
         settingsNavGraph(navController, paddingValues)
     }
 }

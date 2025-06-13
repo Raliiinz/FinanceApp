@@ -22,30 +22,22 @@ import androidx.compose.ui.unit.dp
 fun ListItem(
     leadingContent: @Composable () -> Unit,
     trailingContent: @Composable () -> Unit,
-    upDivider: Boolean,
     downDivider: Boolean,
     onClick: () -> Unit,
     backgroundColor: Color,
-    modifier: Modifier = Modifier,
     itemHeight: Dp = 56.dp
 ) {
 
     Surface(
-        modifier = modifier
+        modifier = Modifier
                 .clickable{ onClick() },
         color = backgroundColor
     ) {
         Column {
-            if (upDivider) {
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.outlineVariant
-                )
-            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
                     .heightIn(itemHeight),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -62,7 +54,6 @@ fun ListItem(
                     color = MaterialTheme.colorScheme.outlineVariant
                 )
             }
-
         }
     }
 }

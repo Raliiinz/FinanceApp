@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screens
+package com.example.financeapp.base.commonItems
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -15,11 +15,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.financeapp.base.R
-import com.example.financeapp.base.ui.theme.FinanceAppTheme
 import com.example.financeapp.base.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,13 +46,12 @@ fun TopBarTextIcon(
                         painter = painterResource(imageResId),
                         contentDescription = stringResource(R.string.history),
                         modifier = Modifier
-                            .padding(end = 18.dp)
+                            .padding(horizontal = 16.dp, vertical = 20.dp)
                             .align(alignment = Alignment.CenterEnd)
                             .clickable{
                                 onClick()
                             },
-                        tint = MaterialTheme.colorScheme.onSurface.copy(0.8f)
-
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
