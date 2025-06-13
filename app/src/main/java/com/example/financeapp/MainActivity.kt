@@ -30,7 +30,6 @@ class MainActivity : ComponentActivity() {
                         }
                     } else {
                         MainScreen()
-                        println("nnn")
                     }
                 }
         }
