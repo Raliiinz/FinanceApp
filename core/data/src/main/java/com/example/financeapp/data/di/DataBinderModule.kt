@@ -1,7 +1,11 @@
 package com.example.financeapp.data.di
 
-import com.example.financeapp.data.repository.FinanceRepositoryImpl
-import com.example.financeapp.domain.repository.FinanceRepository
+import com.example.financeapp.data.repository.AccountRepositoryImpl
+import com.example.financeapp.data.repository.CategoryRepositoryImpl
+import com.example.financeapp.data.repository.TransactionRepositoryImpl
+import com.example.financeapp.domain.repository.AccountRepository
+import com.example.financeapp.domain.repository.CategoryRepository
+import com.example.financeapp.domain.repository.TransactionRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,5 +17,13 @@ import javax.inject.Singleton
 interface DataBinderModule {
     @Binds
     @Singleton
-    fun bindFinanceRepositoryToImpl(impl: FinanceRepositoryImpl): FinanceRepository
+    fun bindAccountRepositoryToImpl(impl: AccountRepositoryImpl): AccountRepository
+
+    @Binds
+    @Singleton
+    fun bindCategoryRepositoryToImpl(impl: CategoryRepositoryImpl): CategoryRepository
+
+    @Binds
+    @Singleton
+    fun bindTransactionRepositoryToImpl(impl: TransactionRepositoryImpl): TransactionRepository
 }

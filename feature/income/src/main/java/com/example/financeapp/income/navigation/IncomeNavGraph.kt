@@ -1,9 +1,9 @@
 package com.example.financeapp.income.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -13,37 +13,43 @@ import com.example.financeapp.income.screen.IncomeScreen
 import com.example.financeapp.income.screen.IncomeScreenViewModel
 import com.example.financeapp.navigation.Screen
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.incomeNavGraph(
     navController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
 ) {
     navigation(
-        startDestination = "income/main",
-        route =  Screen.Income.route
+        startDestination = IncomeScreens.Main.route,
+        route = Screen.Income.route
     ) {
-        composable("income/main") {
+        composable(route = IncomeScreens.Main.route) {
             IncomeRoute(
+                navController = navController,
                 paddingValues = paddingValues,
-                onIncomeClicked = { id -> /* TODO */ },
-                onFabClick = { /* TODO */ }
+                onIncomeClicked = { id -> /* Handle click */ },
+                onFabClick = { /* FloatingAction */ },
             )
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun IncomeRoute(
-    viewModel: IncomeScreenViewModel = hiltViewModel(),
+    navController: NavHostController,
     paddingValues: PaddingValues,
     onIncomeClicked: (Int) -> Unit,
-    onFabClick: () -> Unit
+    onFabClick: () -> Unit,
+    viewModel: IncomeScreenViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
     IncomeScreen(
-        uiState = uiState,
+        viewModel = viewModel,
         paddingValues = paddingValues,
         onIncomeClicked = onIncomeClicked,
-        onFabClick = onFabClick
+        onFabClick = onFabClick,
     )
+}
+
+sealed class IncomeScreens(val route: String) {
+    object Main : IncomeScreens("income/main")
 }

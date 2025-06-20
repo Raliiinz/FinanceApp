@@ -7,6 +7,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -14,19 +15,32 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.financeapp.navigation.NavigationItem
+import com.example.financeapp.navigation.TransactionType
 
 @Composable
-fun BottomNavBar(navController: NavController) {
-    val currentRoute = navController
+fun BottomNavBar(
+    navController: NavController,
+    activeTransactionType: TransactionType? = null
+) {
+    val currentDestination = navController
         .currentBackStackEntryAsState().value?.destination
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surfaceContainer
     ) {
         NavigationItem.all.forEach { item ->
-            val selected = currentRoute
-                ?.hierarchy
-                ?.any { it.route == item.screen.route } == true
+            val selected = when {
+                currentDestination?.hierarchy?.any { it.route == item.screen.route } == true -> true
+
+                currentDestination?.route?.startsWith("main") == true -> {
+                    when (item) {
+                        NavigationItem.Income -> activeTransactionType == TransactionType.INCOME
+                        NavigationItem.Expenses -> activeTransactionType == TransactionType.EXPENSE
+                        else -> false
+                    }
+                }
+                else -> false
+            }
 
             NavigationBarItem(
                 selected = selected,

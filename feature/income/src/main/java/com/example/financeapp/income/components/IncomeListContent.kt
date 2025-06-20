@@ -20,17 +20,17 @@ import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
-import com.example.financeapp.domain.model.Income
+import com.example.financeapp.domain.model.TransactionModel
 
 
 @Composable
 fun IncomeListContent(
-    incomes: List<Income>,
+    incomes: List<TransactionModel>,
     paddingValues: PaddingValues,
     onIncomeClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val totalIncome = incomes.sumOf { it.priceTrailing.toDouble() }
+    val totalIncome = incomes.sumOf { it.amount.toDouble() }
 
     Column(
         modifier = modifier
@@ -44,7 +44,7 @@ fun IncomeListContent(
         LazyColumn {
             itemsIndexed(incomes) { index, item ->
                 IncomeListItem(
-                    income = item,
+                    transaction = item,
                     onClick = { onIncomeClicked(item.id) }
                 )
             }
@@ -79,18 +79,18 @@ private fun TotalIncomeItem(
 
 @Composable
 private fun IncomeListItem(
-    income: Income,
+    transaction: TransactionModel,
     onClick: () -> Unit,
 ) {
     ListItem(
         leadingContent = {
             Text(
-                text = income.textLeading,
+                text = transaction.categoryName,
                 style = MaterialTheme.typography.bodyLarge,
             )
         },
         trailingContent = {
-            IncomeTrailingContent(amount = income.priceTrailing)
+            IncomeTrailingContent(amount = transaction.amount)
         },
         downDivider = true,
         onClick = onClick,
