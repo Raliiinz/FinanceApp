@@ -1,49 +1,71 @@
 package com.example.financeapp.income.screen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.BaseFloatingActionButton
+import com.example.financeapp.base.commonItems.ErrorDialog
+import com.example.financeapp.base.commonItems.LoadingContent
 import com.example.financeapp.income.components.IncomeListContent
+import com.example.financeapp.income.state.IncomeEvent
 import com.example.financeapp.income.state.IncomeUiState
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun IncomeScreen(
-    uiState: IncomeUiState,
+    viewModel: IncomeScreenViewModel,
     paddingValues: PaddingValues,
     onIncomeClicked: (Int) -> Unit,
-    onFabClick: () -> Unit
+    onFabClick: () -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val today = LocalDate.now()
+        val from = today.withDayOfMonth(1).format(dateFormatter)
+        val to = today.format(dateFormatter)
+        viewModel.loadIncomes(from, to)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-
-        when (uiState) {
+        when (val state = uiState) {
             IncomeUiState.Loading -> LoadingContent()
             is IncomeUiState.Success -> IncomeListContent(
-                incomes = uiState.incomes,
+                incomes = state.incomes,
                 paddingValues = paddingValues,
                 onIncomeClicked = onIncomeClicked
             )
-            is IncomeUiState.Error -> ErrorContent(
-                message = uiState.message,
-            )
-            IncomeUiState.Empty -> EmptyContent()
+            is IncomeUiState.Error -> {
+                ErrorDialog(
+                    message = stringResource((uiState as IncomeUiState.Error).messageRes),
+                    confirmButtonText = stringResource(R.string.repeat),
+                    dismissButtonText = stringResource(R.string.exit),
+                    onConfirm = { viewModel.reduce(IncomeEvent.ReloadData) },
+                    onDismiss = { viewModel.reduce(IncomeEvent.HideErrorDialog) }
+                )
+            }
+            IncomeUiState.Idle -> Unit
         }
 
         BaseFloatingActionButton(
@@ -54,57 +76,6 @@ fun IncomeScreen(
                     end = 16.dp,
                     bottom = paddingValues.calculateBottomPadding() + 14.dp
                 )
-        )
-    }
-}
-
-@Composable
-private fun LoadingContent(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-    }
-}
-
-@Composable
-private fun ErrorContent(
-    message: String,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(R.string.error_loading_data),
-            color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Text(
-            text = message,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-    }
-}
-
-@Composable
-private fun EmptyContent(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(R.string.no_data_available),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodyLarge
         )
     }
 }

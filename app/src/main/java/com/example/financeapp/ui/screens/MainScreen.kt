@@ -1,5 +1,7 @@
 package com.example.financeapp.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
@@ -11,32 +13,57 @@ import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.base.R
 import androidx.compose.runtime.getValue
 import com.example.financeapp.base.commonItems.TopBarTextIcon
-import com.example.financeapp.domain.model.ScaffoldItem
+import com.example.financeapp.domain.model.ScaffoldItemModel
+import com.example.financeapp.history.navigation.HistoryScreens
+import com.example.financeapp.navigation.HistoryNavigation
 import com.example.financeapp.navigation.RootNavGraph
 import com.example.financeapp.navigation.Screen
+import com.example.financeapp.navigation.TransactionType
 import com.example.financeapp.ui.components.BottomNavBar
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    historyNavigation: HistoryNavigation
+) {
     val navController = rememberNavController()
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val destination = navBackStackEntry?.destination
+    val transactionType = navBackStackEntry?.arguments?.getSerializable("type") as? TransactionType
 
     val topBarContent = when {
         destination?.hierarchy?.any { it.route == Screen.Expenses.route } == true -> {
-            ScaffoldItem(R.string.expenses_today, R.drawable.refresh)
+            ScaffoldItemModel(textResId = R.string.expenses_today, trailingImageResId = R.drawable.refresh, onTrailingClicked = {
+                val route = historyNavigation.navigateToHistory(TransactionType.EXPENSE)
+                navController.navigate(route)
+            })
         }
         destination?.hierarchy?.any { it.route == Screen.Settings.route } == true -> {
-            ScaffoldItem(R.string.settings, null)
+            ScaffoldItemModel(textResId = R.string.settings)
         }
         destination?.hierarchy?.any { it.route == Screen.Articles.route } == true -> {
-            ScaffoldItem(R.string.my_articles, null)
+            ScaffoldItemModel(textResId = R.string.my_articles)
         }
         destination?.hierarchy?.any { it.route == Screen.Income.route } == true -> {
-            ScaffoldItem(R.string.income_today, R.drawable.refresh)
+            ScaffoldItemModel(textResId = R.string.income_today, trailingImageResId = R.drawable.refresh) {
+                val route = historyNavigation.navigateToHistory(TransactionType.INCOME)
+                navController.navigate(route)
+            }
         }
         destination?.hierarchy?.any { it.route == Screen.Check.route } == true -> {
-            ScaffoldItem(R.string.my_check, R.drawable.pencil)
+            ScaffoldItemModel(textResId = R.string.my_check, trailingImageResId = R.drawable.pencil)
+        }
+
+        destination?.route?.contains(HistoryScreens.Main.route.substringBefore("?")) == true -> {
+            ScaffoldItemModel(
+                textResId = R.string.history,
+                leadingImageResId = R.drawable.ic_back,
+                trailingImageResId = R.drawable.ic_analysis,
+                onLeadingClicked = {
+                    navController.popBackStack()
+                },
+            )
         }
         else -> null
     }
@@ -45,17 +72,23 @@ fun MainScreen() {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             topBarContent?.let {
-                TopBarTextIcon(it.textResId, it.imageResId, onClick = {})
+                TopBarTextIcon(
+                    textResId = it.textResId,
+                    leadingImageResId = it.leadingImageResId,
+                    trailingImageResId = it.trailingImageResId,
+                    onLeadingClicked = it.onLeadingClicked,
+                    onTrailingClicked = it.onTrailingClicked
+                )
             }
         },
         bottomBar = {
-            BottomNavBar(navController = navController)
+            BottomNavBar(navController = navController, activeTransactionType = transactionType)
         }
     ) { innerPadding ->
         Box(modifier = Modifier.fillMaxSize()) {
             RootNavGraph(
                 navController = navController,
-                paddingValues = innerPadding
+                paddingValues = innerPadding,
             )
         }
     }

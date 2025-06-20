@@ -15,6 +15,7 @@ sealed class NavigationItem(
     object Articles : NavigationItem(Screen.Articles, baseR.string.articles, baseR.drawable.ic_articles)
     object Settings : NavigationItem(Screen.Settings, baseR.string.settings, baseR.drawable.ic_settings)
 
+
     companion object {
         val all = listOf(Expenses, Income, Check, Articles, Settings)
     }

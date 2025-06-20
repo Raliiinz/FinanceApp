@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -14,6 +15,14 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        defaultConfig {
+            buildConfigField("String", "FINANCE_API_URL", "\"https://shmr-finance.ru/api/v1/\"")
+        }
+
+        buildFeatures{
+            buildConfig = true
+        }
     }
 
     buildTypes {
@@ -37,10 +46,14 @@ android {
 dependencies {
 
     implementation(project(path = ":core:domain"))
+    implementation(project(path = ":core:util"))
 
     // Hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+
+    // Network
+    implementation(libs.bundles.network.deps)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
