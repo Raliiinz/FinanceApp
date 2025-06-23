@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.financeapp.articles.screen.ArticleScreen
-import com.example.financeapp.articles.screen.ArticleScreenViewModel
+import com.example.financeapp.articles.screen.CategoryScreenViewModel
 import com.example.financeapp.navigation.Screen
 
 fun NavGraphBuilder.articlesNavGraph(
@@ -32,7 +32,7 @@ fun NavGraphBuilder.articlesNavGraph(
 fun ArticlesRoute(
     paddingValues: PaddingValues,
     onArticleClicked: (Int) -> Unit,
-    viewModel: ArticleScreenViewModel = hiltViewModel()
+    viewModel: CategoryScreenViewModel = hiltViewModel()
 ) {
 
     ArticleScreen (

@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
+import com.example.financeapp.base.commonItems.ErrorContent
 import com.example.financeapp.base.commonItems.ErrorDialog
 import com.example.financeapp.base.commonItems.LoadingContent
 import com.example.financeapp.expenses.state.ExpensesEvent
@@ -42,9 +43,10 @@ fun ExpensesScreen(
 
     LaunchedEffect(Unit) {
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val date = LocalDate.now()
-        val to = date.format(dateFormatter)
-        viewModel.reduce(ExpensesEvent.LoadExpenses(to, to))
+        val today = LocalDate.now()
+        val from = today.withDayOfMonth(1).format(dateFormatter)
+        val to = today.format(dateFormatter)
+        viewModel.reduce(ExpensesEvent.LoadExpenses(from, to))
     }
 
     Box(

@@ -5,10 +5,10 @@ import com.example.financeapp.data.mapper.toDomain
 import com.example.financeapp.data.model.account.UpdateAccountsRequest
 import com.example.financeapp.data.remote.AccountApi
 import com.example.financeapp.data.remote.helper.ApiClient
-import com.example.financeapp.util.Result
+import com.example.financeapp.util.result.Result
 import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.domain.repository.AccountRepository
-import com.example.financeapp.util.Result.*
+import com.example.financeapp.util.result.Result.*
 import javax.inject.Inject
 import kotlin.collections.map
 

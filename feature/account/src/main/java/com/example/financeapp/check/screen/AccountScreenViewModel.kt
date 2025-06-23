@@ -6,7 +6,7 @@ import com.example.financeapp.base.R
 import com.example.financeapp.check.state.AccountEvent
 import com.example.financeapp.check.state.AccountUiState
 import com.example.financeapp.domain.usecase.account.GetAccountUseCase
-import com.example.financeapp.util.FailureReason
+import com.example.financeapp.util.result.FailureReason
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.financeapp.util.Result
+import com.example.financeapp.util.result.Result
 
 @HiltViewModel
 class AccountScreenViewModel @Inject constructor(

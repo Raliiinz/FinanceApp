@@ -5,8 +5,8 @@ import com.example.financeapp.data.remote.TransactionApi
 import com.example.financeapp.data.remote.helper.ApiClient
 import com.example.financeapp.domain.model.TransactionModel
 import com.example.financeapp.domain.repository.TransactionRepository
-import com.example.financeapp.util.Result
-import com.example.financeapp.util.Result.*
+import com.example.financeapp.util.result.Result
+import com.example.financeapp.util.result.Result.*
 import javax.inject.Inject
 import kotlin.collections.map
 

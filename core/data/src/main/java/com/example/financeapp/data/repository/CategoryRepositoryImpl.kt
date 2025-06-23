@@ -7,8 +7,8 @@ import com.example.financeapp.domain.model.CategoryModel
 import com.example.financeapp.domain.repository.CategoryRepository
 import javax.inject.Inject
 import kotlin.collections.map
-import com.example.financeapp.util.Result
-import com.example.financeapp.util.Result.*
+import com.example.financeapp.util.result.Result
+import com.example.financeapp.util.result.Result.*
 
 class CategoryRepositoryImpl @Inject constructor(
     private val api: CategoryApi,

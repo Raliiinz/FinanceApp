@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.annotation.RequiresPermission
-import com.example.financeapp.util.FailureReason
+import com.example.financeapp.util.result.FailureReason
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-import com.example.financeapp.util.Result
+import com.example.financeapp.util.result.Result
 
 class ApiClient @Inject constructor(
     private val context: Context,

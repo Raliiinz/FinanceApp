@@ -9,3 +9,4 @@ class HistoryNavigationImpl @Inject constructor() : HistoryNavigation {
         return HistoryScreens.Main.createRoute(transactionType)
     }
 }
+

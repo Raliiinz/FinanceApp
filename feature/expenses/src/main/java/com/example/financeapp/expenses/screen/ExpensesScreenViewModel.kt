@@ -7,8 +7,8 @@ import com.example.financeapp.domain.usecase.account.GetAccountUseCase
 import com.example.financeapp.domain.usecase.transaction.GetTransactionsUseCase
 import com.example.financeapp.expenses.state.ExpensesEvent
 import com.example.financeapp.expenses.state.ExpensesUiState
-import com.example.financeapp.util.FailureReason
-import com.example.financeapp.util.Result
+import com.example.financeapp.util.result.FailureReason
+import com.example.financeapp.util.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -39,8 +39,9 @@ fun IncomeScreen(
     LaunchedEffect(Unit) {
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val today = LocalDate.now()
-        val date = today.format(dateFormatter)
-        viewModel.loadIncomes(date, date)
+        val from = today.withDayOfMonth(1).format(dateFormatter)
+        val to = today.format(dateFormatter)
+        viewModel.loadIncomes(from, to)
     }
 
     Box(

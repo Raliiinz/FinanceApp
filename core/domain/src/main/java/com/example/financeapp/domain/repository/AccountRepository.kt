@@ -1,7 +1,7 @@
 package com.example.financeapp.domain.repository
 
 import com.example.financeapp.domain.model.AccountModel
-import com.example.financeapp.util.Result
+import com.example.financeapp.util.result.Result
 
 interface AccountRepository {
     suspend fun getAccounts(): Result<List<AccountModel>>

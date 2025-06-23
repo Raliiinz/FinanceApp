@@ -1,4 +1,4 @@
-package com.example.financeapp.util
+package com.example.financeapp.util.result
 
 sealed class FailureReason {
     data class BadRequest(val message: String? = null) : FailureReason()
