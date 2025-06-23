@@ -28,7 +28,7 @@ class ApiClient @Inject constructor(
     suspend fun <T> safeApiCall(
         apiRequest: suspend () -> T
     ): Result<T> {
-        return withContext(dispatcher) {
+        return withContext(dispatcher) @androidx.annotation.RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) {
             if (!isNetworkAvailable()) {
                 return@withContext Result.NetworkError
             }

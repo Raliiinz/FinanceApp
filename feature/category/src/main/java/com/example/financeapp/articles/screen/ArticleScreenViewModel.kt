@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.articles.state.CategoryEvent
 import com.example.financeapp.articles.state.CategoryScreenUiState
+import com.example.financeapp.articles.state.CategoryScreenUiState.*
 import com.example.financeapp.base.R
 import com.example.financeapp.domain.usecase.category.GetCategoriesUseCase
-import com.example.financeapp.util.FailureReason
+import com.example.financeapp.util.result.FailureReason
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.financeapp.util.Result
+import com.example.financeapp.util.result.Result
 
 @HiltViewModel
 class ArticleScreenViewModel @Inject constructor(
@@ -40,10 +41,10 @@ class ArticleScreenViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = CategoryScreenUiState.Loading
             when (val result = getCategoriesUseCase()) {
-                is Result.Success -> {
+                is com.example.financeapp.util.result.Result.Success -> {
                     _uiState.update {
                         if (result.data.isNotEmpty()) {
-                            CategoryScreenUiState.Success(result.data)
+                            Success(result.data)
                         } else {
                             CategoryScreenUiState.Empty
                         }
@@ -54,9 +55,10 @@ class ArticleScreenViewModel @Inject constructor(
                 }
                 is Result.NetworkError -> {
                     _uiState.update {
-                        CategoryScreenUiState.Error(R.string.error_network)
+                        Error(R.string.error_network)
                     }
                 }
+
             }
         }
     }

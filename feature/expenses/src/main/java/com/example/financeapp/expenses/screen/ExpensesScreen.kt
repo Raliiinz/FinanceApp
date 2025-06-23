@@ -44,9 +44,8 @@ fun ExpensesScreen(
     LaunchedEffect(Unit) {
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val today = LocalDate.now()
-        val from = today.withDayOfMonth(1).format(dateFormatter)
         val to = today.format(dateFormatter)
-        viewModel.reduce(ExpensesEvent.LoadExpenses(from, to))
+        viewModel.reduce(ExpensesEvent.LoadExpenses(to, to))
     }
 
     Box(
