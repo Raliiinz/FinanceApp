@@ -1,9 +1,9 @@
 package com.example.financeapp.expenses.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -13,16 +13,18 @@ import com.example.financeapp.expenses.screen.ExpensesScreen
 import com.example.financeapp.expenses.screen.ExpensesScreenViewModel
 import com.example.financeapp.navigation.Screen
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.expensesNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues
 ) {
     navigation(
-        startDestination = "expenses/main",
+        startDestination = ExpensesScreens.Main.route,
         route = Screen.Expenses.route
     ) {
-        composable("expenses/main") {
+        composable(route = ExpensesScreens.Main.route) {
             ExpensesRoute(
+                navController = navController,
                 paddingValues = paddingValues,
                 onExpenseClicked = { id -> /* Handle click */ },
                 onFabClick = { /* FloatingAction */ }
@@ -31,19 +33,23 @@ fun NavGraphBuilder.expensesNavGraph(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ExpensesRoute(
+    navController: NavHostController,
     paddingValues: PaddingValues,
     onExpenseClicked: (Int) -> Unit,
     onFabClick: () -> Unit,
     viewModel: ExpensesScreenViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
     ExpensesScreen(
-        uiState = uiState,
+        viewModel = viewModel,
         paddingValues = paddingValues,
         onExpenseClicked = onExpenseClicked,
-        onFabClick = onFabClick
+        onFabClick = onFabClick,
     )
+}
+
+sealed class ExpensesScreens(val route: String) {
+    object Main : ExpensesScreens("expenses/main")
 }

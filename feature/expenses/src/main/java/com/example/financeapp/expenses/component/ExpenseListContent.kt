@@ -21,20 +21,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.R
+import com.example.financeapp.base.commonItems.IconBox
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
-import com.example.financeapp.domain.model.Expense
+import com.example.financeapp.domain.model.TransactionModel
 
 
 @Composable
 fun ExpenseListContent(
-    expenses: List<Expense>,
+    expenses: List<TransactionModel>,
     paddingValues: PaddingValues,
     onExpenseClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val totalPrice = expenses.sumOf { it.priceTrailing }
+    val totalPrice = expenses.sumOf { it.amount }
 
     Column(
         modifier = modifier
@@ -48,7 +49,7 @@ fun ExpenseListContent(
         LazyColumn {
             itemsIndexed(expenses) { index, item ->
                 ExpenseListItem(
-                    expense = item,
+                    transaction = item,
                     onClick = { onExpenseClicked(item.id) }
                 )
             }
@@ -83,19 +84,19 @@ private fun TotalPriceItem(
 
 @Composable
 private fun ExpenseListItem(
-    expense: Expense,
+    transaction: TransactionModel,
     onClick: () -> Unit,
 ) {
     ListItem(
         leadingContent = {
             ExpenseLeadingContent(
-                icon = expense.iconLeading,
-                title = expense.textLeading,
-                comment = expense.commentLeading
+                icon = transaction.categoryEmoji,
+                title = transaction.categoryName,
+                comment = transaction.comment
             )
         },
         trailingContent = {
-            ExpenseTrailingContent(price = expense.priceTrailing)
+            ExpenseTrailingContent(price = transaction.amount)
         },
         downDivider = true,
         onClick = onClick,
@@ -154,34 +155,6 @@ private fun ExpenseTrailingContent(
 }
 
 @Composable
-private fun IconBox(
-    icon: String,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .size(24.dp)
-            .background(
-                color = MaterialTheme.colorScheme.secondary,
-                shape = CircleShape
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        val isEmoji = icon.isSingleEmoji()
-        val textStyle = if (isEmoji) {
-            MaterialTheme.typography.bodyLarge
-        } else {
-            MaterialTheme.typography.labelSmall
-        }
-        Text(
-            text = icon,
-            color = MaterialTheme.colorScheme.onSurface,
-            style = textStyle
-        )
-    }
-}
-
-@Composable
 private fun MoreIcon(
     modifier: Modifier = Modifier
 ) {
@@ -191,18 +164,4 @@ private fun MoreIcon(
         modifier = modifier.padding(start = 16.dp),
         tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
     )
-}
-
-private fun String.isSingleEmoji(): Boolean {
-    return when {
-        length != 2 -> false
-        codePointAt(0) in 0x1F600..0x1F64F -> true
-        codePointAt(0) in 0x1F300..0x1F5FF -> true
-        codePointAt(0) in 0x1F680..0x1F6FF -> true
-        codePointAt(0) in 0x2600..0x26FF -> true
-        codePointAt(0) in 0x2700..0x27BF -> true
-        codePointAt(0) in 0xFE00..0xFE0F -> true
-        codePointAt(0) in 0x1F900..0x1F9FF -> true
-        else -> false
-    }
 }

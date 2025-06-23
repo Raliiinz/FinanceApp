@@ -1,43 +1,43 @@
 package com.example.financeapp.data.mapper
 
-import com.example.financeapp.data.model.AccountResponse
-import com.example.financeapp.data.model.CategoryResponse
-import com.example.financeapp.data.model.TransactionResponse
-import com.example.financeapp.domain.model.Category
-import com.example.financeapp.domain.model.Check
-import com.example.financeapp.domain.model.Expense
-import com.example.financeapp.domain.model.Income
+import com.example.financeapp.data.model.account.Account
+import com.example.financeapp.data.model.account.AccountBrief
+import com.example.financeapp.data.model.category.CategoryResponse
+import com.example.financeapp.data.model.transaction.TransactionResponse
+import com.example.financeapp.domain.model.AccountModel
+import com.example.financeapp.domain.model.CategoryModel
+import com.example.financeapp.domain.model.TransactionModel
 
-fun TransactionResponse.mapToExpenses(): Expense{
-    return Expense(
-        id = this.id,
-        iconLeading = this.category.emoji,
-        textLeading = this.category.name,
-        commentLeading = this.comment,
-        priceTrailing = this.amount.toDouble()
-    )
-}
-fun TransactionResponse.mapToIncome(): Income{
-    return Income(
-        id = this.id,
-        textLeading = this.category.name,
-        priceTrailing = this.amount.toDouble()
-    )
-}
+fun TransactionResponse.toDomain(): TransactionModel = TransactionModel(
+    id = id,
+    accountId = account.id.toString(),
+    categoryEmoji = category.emoji,
+    categoryName = category.name,
+    isIncome = category.isIncome,
+    amount = amount.toDoubleOrNull() ?: 0.0,
+    time = transactionDate,
+    comment = comment
+)
 
-fun AccountResponse.mapToCheck(): Check{
-    return Check(
-        id = this.id,
-        leadingIcon = this.incomeStats.emoji,
-        balance = this.balance.toDouble(),
-        currency = this.currency
-    )
-}
+fun AccountModel.toAccountBrief(): AccountBrief = AccountBrief(
+    id = id.toInt(),
+    name = name,
+    balance = balance.toString(),
+    currency = currency
+)
 
-fun CategoryResponse.mapToCategory(): Category{
-    return Category(
+fun Account.toDomain(): AccountModel = AccountModel(
+    id = this.id,
+    name = this.name,
+    balance = this.balance.toDouble(),
+    currency = this.currency
+)
+
+fun CategoryResponse.mapToCategory(): CategoryModel{
+    return CategoryModel(
         id = this.id,
         iconLeading = this.emoji,
-        textLeading = this.name
+        textLeading = this.name,
+        isIncome = this.isIncome
     )
 }

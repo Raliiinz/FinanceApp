@@ -46,11 +46,12 @@ dependencies {
     implementation(project(path = ":core:domain"))
     implementation(project(path = ":core:data"))
     implementation(project(path = ":core:navigation"))
+    implementation(project(":feature:account"))
+    implementation(project(":feature:category"))
+    implementation(project(":feature:history"))
 
     // Feature
 
-    implementation(project(path = ":feature:check"))
-    implementation(project(path = ":feature:articles"))
     implementation(project(path = ":feature:expenses"))
     implementation(project(path = ":feature:income"))
     implementation(project(path = ":feature:settings"))
