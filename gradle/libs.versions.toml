@@ -2,30 +2,43 @@
 agp = "8.9.1"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
+appcompat = "1.7.0"
+material = "1.12.0"
+
+# Тестирование
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
+
+# Jetpack Components
 lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
+
+# Jetpack Compose
 composeBom = "2025.06.00"
 lottieCompose = "6.4.0"
+
+# Navigation
 navigationCompose = "2.9.0"
+
+# DI
 hilt-compose = "1.2.0"
 hilt-version = "2.56.1"
 ksp = "2.0.21-1.0.27"
-coroutines-version = "1.10.2"
+
+# Networking
 okhttp-version = "4.12.0"
 converter-gson-version="2.3.0"
 gson = "2.13.0"
 retrofit_version = "2.11.0"
+
+# Security
 secretsGradlePlugin = "2.0.1"
 
-
+# Android SDK
 minSdk = "24"
 targetSdk = "35"
 compileSdk = "35"
-appcompat = "1.7.0"
-material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,8 +62,6 @@ lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "
 hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-compose" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-version" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-version" }
-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines-version" }
-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines-version" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit_version" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp-version" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converter-gson-version" }
@@ -58,7 +69,6 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 [bundles]
 network-deps = ["retrofit", "converter-gson", "okhttp", "gson"]
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -68,5 +78,3 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-version" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
-
-

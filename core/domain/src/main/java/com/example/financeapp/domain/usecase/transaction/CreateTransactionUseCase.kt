@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/*юзкейс для создания транзакции - дохода/расхода*/
 class CreateTransactionUseCase @Inject constructor(
     val transactionRepository: TransactionRepository,
     @IoDispatchers private val dispatcher: CoroutineDispatcher
@@ -16,5 +17,4 @@ class CreateTransactionUseCase @Inject constructor(
             transactionRepository.createTransaction(transaction)
         }
     }
-
 }

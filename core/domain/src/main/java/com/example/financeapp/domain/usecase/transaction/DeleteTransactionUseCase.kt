@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/*юзкейс для удаления транзакции по id*/
 class DeleteTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
     @IoDispatchers private val dispatcher: CoroutineDispatcher

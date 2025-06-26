@@ -12,6 +12,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/*Модуль для привязки реализаций репозиториев к их интерфейсам*/
+
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataBinderModule {

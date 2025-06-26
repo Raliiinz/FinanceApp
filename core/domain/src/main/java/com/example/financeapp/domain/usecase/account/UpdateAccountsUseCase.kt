@@ -1,0 +1,21 @@
+package com.example.financeapp.domain.usecase.account
+
+import com.example.financeapp.domain.di.qualifies.IoDispatchers
+import com.example.financeapp.domain.model.AccountModel
+import com.example.financeapp.domain.repository.AccountRepository
+import com.example.financeapp.util.result.Result
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+/*юзкейс для обновления данных аккаунта*/
+class UpdateAccountsUseCase @Inject constructor(
+    private val accountRepository: AccountRepository,
+    @IoDispatchers private val dispatcher: CoroutineDispatcher
+) {
+    suspend operator fun invoke(accounts: List<AccountModel>): Result<Unit> {
+        return withContext(dispatcher) {
+            accountRepository.updateAccounts(accounts)
+        }
+    }
+}
