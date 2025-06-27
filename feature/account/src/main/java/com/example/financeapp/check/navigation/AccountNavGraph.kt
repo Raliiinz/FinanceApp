@@ -2,17 +2,19 @@ package com.example.financeapp.check.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.financeapp.check.screen.AccountScreen
 import com.example.financeapp.check.screen.AccountScreenViewModel
-import com.example.financeapp.check.screen.ChecksScreen
 import com.example.financeapp.navigation.Screen
 
+/**
+ * Навигационный граф для экранов раздела "Чеки/Счета".
+ * Содержит route для главного экрана счетов и обработку навигации.
+ */
 fun NavGraphBuilder.checkNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues
@@ -31,7 +33,10 @@ fun NavGraphBuilder.checkNavGraph(
     }
 }
 
-
+/**
+ * Основной route для экрана счетов.
+ * Обертка для AccountScreen с обработкой событий.
+ */
 @Composable
 fun ChecksRoute(
     paddingValues: PaddingValues,
@@ -39,10 +44,10 @@ fun ChecksRoute(
     onFabClick: () -> Unit,
     viewModel: AccountScreenViewModel = hiltViewModel()
 ) {
-    ChecksScreen(
+    AccountScreen(
         viewModel = viewModel,
         paddingValues = paddingValues,
-        onCheckClicked = onCheckClicked,
-        onFabClick = onFabClick
+        onAccountClick = onCheckClicked,
+        onFabClick = onFabClick,
     )
 }

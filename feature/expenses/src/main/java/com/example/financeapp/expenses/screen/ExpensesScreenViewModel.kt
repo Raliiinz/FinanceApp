@@ -7,6 +7,7 @@ import com.example.financeapp.domain.usecase.account.GetAccountUseCase
 import com.example.financeapp.domain.usecase.transaction.GetTransactionsUseCase
 import com.example.financeapp.expenses.state.ExpensesEvent
 import com.example.financeapp.expenses.state.ExpensesUiState
+import com.example.financeapp.util.date.formatDate
 import com.example.financeapp.util.result.FailureReason
 import com.example.financeapp.util.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
+/**
+ * ViewModel для экрана расходов.
+ * Управляет загрузкой и состоянием данных о расходах.
+ */
 @HiltViewModel
 class ExpensesScreenViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
@@ -26,12 +32,16 @@ class ExpensesScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<ExpensesUiState>(ExpensesUiState.Loading)
     val uiState: StateFlow<ExpensesUiState> = _uiState.asStateFlow()
 
-    fun reduce(event: ExpensesEvent) {
+    fun handleEvent(event: ExpensesEvent) {
         when (event) {
-            ExpensesEvent.HideErrorDialog ->
-                _uiState.update { ExpensesUiState.Idle }
             is ExpensesEvent.LoadExpenses -> loadExpenses(event.from, event.to)
+            ExpensesEvent.HideErrorDialog -> _uiState.update { ExpensesUiState.Idle }
         }
+    }
+
+    fun loadTodayExpenses() {
+        val today = LocalDate.now().formatDate()
+        handleEvent(ExpensesEvent.LoadExpenses(today, today))
     }
 
     private fun loadExpenses(from: String, to: String) {

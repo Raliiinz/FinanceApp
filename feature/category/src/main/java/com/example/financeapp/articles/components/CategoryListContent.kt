@@ -11,12 +11,16 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.example.financeapp.util.ui.isSingleEmoji
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.domain.model.CategoryModel
 
+/**
+ * Список категорий статей.
+ */
 @Composable
 fun CategoryListContent(
     categories: List<CategoryModel>,
@@ -34,61 +38,49 @@ private fun CategoryListItem(
     category: CategoryModel,
     onArticleClicked: (Int) -> Unit
 ) {
-    val iconSize = 24.dp
-    val iconPaddingEnd = 16.dp
-
     ListItem(
         leadingContent = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(
-                    modifier = Modifier
-                        .padding(end = iconPaddingEnd)
-                        .size(iconSize)
-                        .background(
-                            color = MaterialTheme.colorScheme.secondary,
-                            shape = CircleShape
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    val isEmoji = category.iconLeading.isSingleEmoji()
-                    val textStyle = if (isEmoji) {
-                        MaterialTheme.typography.bodyLarge
-                    } else {
-                        MaterialTheme.typography.labelSmall
-                    }
-                    Text(
-                        text = category.iconLeading,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        style = textStyle
-                    )
-                }
-                Text(
-                    text = category.textLeading,
-                    style = MaterialTheme.typography.bodyLarge,
-                    maxLines = 1,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-        },
-        trailingContent = {
+            CategoryLeadingContent(category)
         },
         downDivider = true,
         onClick = { onArticleClicked(category.id) },
         backgroundColor = MaterialTheme.colorScheme.surface,
-        itemHeight = 70.dp
+        itemHeight = 70.dp,
+        trailingContent = {}
     )
 }
 
-private fun String.isSingleEmoji(): Boolean {
-    return when {
-        length != 2 -> false
-        codePointAt(0) in 0x1F600..0x1F64F -> true
-        codePointAt(0) in 0x1F300..0x1F5FF -> true
-        codePointAt(0) in 0x1F680..0x1F6FF -> true
-        codePointAt(0) in 0x2600..0x26FF -> true
-        codePointAt(0) in 0x2700..0x27BF -> true
-        codePointAt(0) in 0xFE00..0xFE0F -> true
-        codePointAt(0) in 0x1F900..0x1F9FF -> true
-        else -> false
+@Composable
+private fun CategoryLeadingContent(category: CategoryModel) {
+    val iconSize = 24.dp
+    val iconPaddingEnd = 16.dp
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            modifier = Modifier
+                .padding(end = iconPaddingEnd)
+                .size(iconSize)
+                .background(
+                    color = MaterialTheme.colorScheme.secondary,
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = category.iconLeading,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = if (category.iconLeading.isSingleEmoji()) {
+                    MaterialTheme.typography.bodyLarge
+                } else {
+                    MaterialTheme.typography.labelSmall
+                }
+            )
+        }
+        Text(
+            text = category.textLeading,
+            style = MaterialTheme.typography.bodyLarge,
+            maxLines = 1,
+            modifier = Modifier.weight(1f)
+        )
     }
-}
+}    

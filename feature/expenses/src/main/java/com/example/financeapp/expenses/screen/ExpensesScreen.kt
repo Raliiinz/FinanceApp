@@ -1,7 +1,5 @@
 package com.example.financeapp.expenses.screen
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,18 +16,16 @@ import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.commonItems.BaseFloatingActionButton
 import com.example.financeapp.expenses.component.ExpenseListContent
 import com.example.financeapp.expenses.state.ExpensesUiState
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
-import com.example.financeapp.base.commonItems.ErrorContent
 import com.example.financeapp.base.commonItems.ErrorDialog
-import com.example.financeapp.base.commonItems.LoadingContent
+import com.example.financeapp.base.ui.commonItems.LoadingContent
 import com.example.financeapp.expenses.state.ExpensesEvent
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Основной экран отображения расходов.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpensesScreen(
@@ -39,13 +35,9 @@ fun ExpensesScreen(
     onFabClick: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val today = LocalDate.now()
-        val to = today.format(dateFormatter)
-        viewModel.reduce(ExpensesEvent.LoadExpenses(to, to))
+        viewModel.loadTodayExpenses()
     }
 
     Box(
@@ -62,17 +54,13 @@ fun ExpensesScreen(
             )
             is ExpensesUiState.Error -> {
                 ErrorDialog(
-                    message = context.getString(state.messageRes),
-                    confirmButtonText = stringResource(R.string.repeat),
+                    message = stringResource(state.messageRes),
+                    retryButtonText = stringResource(R.string.repeat),
                     dismissButtonText = stringResource(R.string.exit),
-                    onConfirm = {
-                        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                        val today = LocalDate.now()
-                        val from = today.withDayOfMonth(1).format(dateFormatter)
-                        val to = today.format(dateFormatter)
-                        viewModel.reduce(ExpensesEvent.LoadExpenses(from, to))
+                    onRetry = {
+                        viewModel.loadTodayExpenses()
                     },
-                    onDismiss = { viewModel.reduce(ExpensesEvent.HideErrorDialog) }
+                    onDismiss = { viewModel.handleEvent(ExpensesEvent.HideErrorDialog) }
                 )
             }
             ExpensesUiState.Idle -> Unit

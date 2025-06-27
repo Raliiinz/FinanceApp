@@ -8,6 +8,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+* UseCase для получения списка аккаунтов.
+*/
 class GetAccountUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
     @IoDispatchers private val dispatcher: CoroutineDispatcher

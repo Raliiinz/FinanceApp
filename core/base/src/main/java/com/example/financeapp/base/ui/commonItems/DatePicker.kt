@@ -3,6 +3,7 @@ package com.example.financeapp.base.commonItems
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SelectableDates
@@ -15,10 +16,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.financeapp.base.R
-import java.util.Calendar
+import com.example.financeapp.util.date.isBetween
+import com.example.financeapp.util.date.toDateAtStartOfDay
+import com.example.financeapp.util.date.toEndOfDay
+import com.example.financeapp.util.date.toMillisAtNoon
+import com.example.financeapp.util.date.toStartOfDay
 import java.util.Date
 
-
+/**
+ * Диалог выбора даты с кастомизируемыми параметрами.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDatePicker(
@@ -31,98 +38,58 @@ fun MyDatePicker(
     minDate: Date? = null,
     maxDate: Date? = null
 ) {
-    val initialDateMillis = selectedDate?.let { date ->
-        val calendar = Calendar.getInstance().apply {
-            time = date
-            set(Calendar.HOUR_OF_DAY, 12)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        calendar.timeInMillis
-    }
-
-    val minDateMillis = minDate?.let { date ->
-        val calendar = Calendar.getInstance().apply {
-            time = date
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        calendar.timeInMillis
-    }
-
-    val maxDateMillis = maxDate?.let { date ->
-        val calendar = Calendar.getInstance().apply {
-            time = date
-            set(Calendar.HOUR_OF_DAY, 23)
-            set(Calendar.MINUTE, 59)
-            set(Calendar.SECOND, 59)
-            set(Calendar.MILLISECOND, 999)
-        }
-        calendar.timeInMillis
-    }
-
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = initialDateMillis,
+        initialSelectedDateMillis = selectedDate?.toMillisAtNoon(),
         yearRange = IntRange(2020, 2030),
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                val minCheck = minDateMillis?.let { utcTimeMillis >= it } ?: true
-                val maxCheck = maxDateMillis?.let { utcTimeMillis <= it } ?: true
-                return minCheck && maxCheck
+                return utcTimeMillis.isBetween(minDate?.toStartOfDay(), maxDate?.toEndOfDay())
             }
         }
     )
 
-
     DatePickerDialog(
         onDismissRequest = onDismiss,
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    datePickerState.selectedDateMillis?.let { millis ->
-                        val calendar = Calendar.getInstance().apply {
-                            timeInMillis = millis
-                            set(Calendar.HOUR_OF_DAY, 0)
-                            set(Calendar.MINUTE, 0)
-                            set(Calendar.SECOND, 0)
-                            set(Calendar.MILLISECOND, 0)
-                        }
-                        onDateSelected(calendar.time)
-                    }
-                    onDismiss()
-                }
-            ) {
-                Text(
-                    text = stringResource(R.string.ok),
-                    fontWeight = FontWeight.SemiBold,
-                    color = textColor
-                )
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(
-                    text = stringResource(R.string.exit),
-                    color = textColor
-                )
-            }
-        },
+        confirmButton = { ConfirmButton(datePickerState, onDateSelected, onDismiss, textColor) },
+        dismissButton = { DismissButton(onDismiss, textColor) },
         modifier = modifier,
-        colors = DatePickerDefaults.colors(
-            containerColor = containerColor,
-        )
+        colors = DatePickerDefaults.colors(containerColor = containerColor)
     ) {
         DatePicker(
             state = datePickerState,
             title = null,
             headline = null,
             showModeToggle = false,
-            colors = DatePickerDefaults.colors(
-                containerColor = containerColor,
-            )
+            colors = DatePickerDefaults.colors(containerColor = containerColor)
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ConfirmButton(
+    state: DatePickerState,
+    onDateSelected: (Date) -> Unit,
+    onDismiss: () -> Unit,
+    textColor: Color
+) {
+    TextButton(onClick = {
+        state.selectedDateMillis?.let { millis ->
+            onDateSelected(millis.toDateAtStartOfDay())
+        }
+        onDismiss()
+    }) {
+        Text(
+            text = stringResource(R.string.ok),
+            fontWeight = FontWeight.SemiBold,
+            color = textColor
+        )
+    }
+}
+
+@Composable
+private fun DismissButton(onDismiss: () -> Unit, textColor: Color) {
+    TextButton(onClick = onDismiss) {
+        Text(text = stringResource(R.string.exit), color = textColor)
     }
 }

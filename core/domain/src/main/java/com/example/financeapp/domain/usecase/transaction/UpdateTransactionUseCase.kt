@@ -7,6 +7,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * UseCase для обновления данных транзакции.
+ */
 class UpdateTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
     @IoDispatchers private val dispatcher: CoroutineDispatcher

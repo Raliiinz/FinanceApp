@@ -1,7 +1,5 @@
 package com.example.financeapp.history.screen
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,14 +15,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ErrorDialog
-import com.example.financeapp.base.commonItems.LoadingContent
 import com.example.financeapp.base.commonItems.MyDatePicker
-import com.example.financeapp.base.formating.formatPrice
+import com.example.financeapp.base.ui.commonItems.LoadingContent
+import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.history.components.HistoryListItem
 import com.example.financeapp.history.components.InfoItemClickable
 import com.example.financeapp.history.state.HistoryEvent
@@ -35,8 +32,9 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Date
 
-
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Основной экран истории транзакций.
+ */
 @Composable
 fun HistoryScreen(
     transactionType: TransactionType,
@@ -50,7 +48,6 @@ fun HistoryScreen(
     val fromDateStr by viewModel.fromDate.collectAsState()
     val toDateStr by viewModel.toDate.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
-    val context = LocalContext.current
 
     val fromDate = remember(fromDateStr) { LocalDate.parse(fromDateStr, backendFormatter) }
     val toDate = remember(toDateStr) { LocalDate.parse(toDateStr, backendFormatter) }
@@ -111,10 +108,10 @@ fun HistoryScreen(
             HistoryUiState.Loading -> LoadingContent()
             is HistoryUiState.Error -> {
                 ErrorDialog(
-                    message = context.getString(state.messageRes),
-                    confirmButtonText = stringResource(R.string.repeat),
+                    message = stringResource(state.messageRes),
+                    retryButtonText = stringResource(R.string.repeat),
                     dismissButtonText = stringResource(R.string.exit),
-                    onConfirm = {
+                    onRetry = {
                         viewModel.reduce(HistoryEvent.DateChanged(
                             transactionType = transactionType,
                             from = fromDateStr,

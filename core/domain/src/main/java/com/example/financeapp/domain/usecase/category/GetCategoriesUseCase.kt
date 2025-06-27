@@ -8,6 +8,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * UseCase для получения списка категорий.
+*/
 class GetCategoriesUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
     @IoDispatchers private val dispatcher: CoroutineDispatcher

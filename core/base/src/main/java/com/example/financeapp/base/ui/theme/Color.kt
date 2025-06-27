@@ -2,6 +2,10 @@ package com.example.financeapp.base.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Цветовая схема приложения.
+ * Определяет все цвета, используемые в light теме.
+ */
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
@@ -16,4 +20,3 @@ val BackgroundColorLight = Color(0xFF2AE881)
 val SecondaryColorLight = Color(0xFFD4FAE6)
 val TertiaryColorLight = Color(0xFF3C3C43)
 val SurfaceVariantLightColor = Color(0xFF49454F)
-

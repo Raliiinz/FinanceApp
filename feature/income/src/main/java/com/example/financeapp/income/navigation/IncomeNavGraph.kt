@@ -13,16 +13,18 @@ import com.example.financeapp.income.screen.IncomeScreen
 import com.example.financeapp.income.screen.IncomeScreenViewModel
 import com.example.financeapp.navigation.Screen
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Навигационный граф для раздела доходов.
+ */
 fun NavGraphBuilder.incomeNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues,
 ) {
     navigation(
-        startDestination = IncomeScreens.Main.route,
+        startDestination = "income/main",
         route = Screen.Income.route
     ) {
-        composable(route = IncomeScreens.Main.route) {
+        composable(route = "income/main") {
             IncomeRoute(
                 navController = navController,
                 paddingValues = paddingValues,
@@ -33,7 +35,10 @@ fun NavGraphBuilder.incomeNavGraph(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Route для экрана доходов.
+ * Обертка для IncomeScreen с обработкой навигации.
+ */
 @Composable
 fun IncomeRoute(
     navController: NavHostController,
@@ -48,8 +53,4 @@ fun IncomeRoute(
         onIncomeClicked = onIncomeClicked,
         onFabClick = onFabClick,
     )
-}
-
-sealed class IncomeScreens(val route: String) {
-    object Main : IncomeScreens("income/main")
 }

@@ -1,7 +1,5 @@
 package com.example.financeapp.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -13,7 +11,9 @@ import com.example.financeapp.history.navigation.historyNavGraph
 import com.example.financeapp.income.navigation.incomeNavGraph
 import com.example.financeapp.settings.navigation.settingsNavGraph
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Хост навигации, содержащий все графы навигации приложения.
+ */
 @Composable
 fun RootNavGraph(
     navController: NavHostController,

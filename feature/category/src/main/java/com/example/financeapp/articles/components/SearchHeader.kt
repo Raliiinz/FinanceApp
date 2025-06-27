@@ -8,7 +8,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
-
+/**
+ * Заголовок поиска для экрана статей.
+ */
 @Composable
 fun SearchHeader(onSearchClicked: () -> Unit) {
     ListItem(

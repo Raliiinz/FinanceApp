@@ -47,6 +47,7 @@ dependencies {
 
     implementation(project(path = ":core:domain"))
     implementation(project(path = ":core:util"))
+    implementation(project(path = ":core:network"))
 
     // Hilt
     implementation(libs.hilt)

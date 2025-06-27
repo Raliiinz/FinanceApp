@@ -16,6 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.financeapp.util.result.Result
 
+/**
+ * ViewModel для экрана счета.
+ * Управляет загрузкой данных и состоянием UI.
+ */
 @HiltViewModel
 class AccountScreenViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase
@@ -24,52 +28,36 @@ class AccountScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<AccountUiState>(AccountUiState.Loading)
     val uiState: StateFlow<AccountUiState> = _uiState.asStateFlow()
 
-    fun reduce(event: AccountEvent) {
+    init {
+        loadAccount()
+    }
+
+    fun handleEvent(event: AccountEvent) {
         when (event) {
-            AccountEvent.HideErrorDialog ->
-                _uiState.update { AccountUiState.Idle }
-            AccountEvent.Retry -> {
-                loadCheck()
-            }
+            AccountEvent.Retry -> loadAccount()
+            AccountEvent.HideErrorDialog -> _uiState.update { AccountUiState.Idle }
         }
     }
 
-    init {
-        loadCheck()
-    }
-
-    private fun loadCheck() {
+    private fun loadAccount() {
         viewModelScope.launch {
             _uiState.update { AccountUiState.Loading }
-
             when (val result = getAccountUseCase()) {
-                is Result.Success -> {
-                    val firstAccount = result.data.firstOrNull()
-                    _uiState.update {
-                        if (firstAccount != null) {
-                            AccountUiState.Success(firstAccount)
-                        } else {
-                            AccountUiState.Empty
+                is Result.Success -> _uiState.update {
+                    result.data.firstOrNull()?.let { AccountUiState.Success(it) }
+                        ?: AccountUiState.Empty
+                }
+                is Result.HttpError -> _uiState.update {
+                    AccountUiState.Error(
+                        when (result.reason) {
+                            is FailureReason.Unauthorized -> R.string.error_unauthorized
+                            is FailureReason.ServerError -> R.string.error_server
+                            else -> R.string.error_unknown
                         }
-                    }
-
+                    )
                 }
-
-                is Result.HttpError -> {
-                    val errorMessage = when (result.reason) {
-                        is FailureReason.Unauthorized -> R.string.error_unauthorized
-                        is FailureReason.ServerError -> R.string.error_server
-                        else -> R.string.error_unknown
-                    }
-                    _uiState.update {
-                        AccountUiState.Error(errorMessage)
-                    }
-                }
-
-                is Result.NetworkError -> {
-                    _uiState.update {
-                        AccountUiState.Error(R.string.error_network)
-                    }
+                is Result.NetworkError -> _uiState.update {
+                    AccountUiState.Error(R.string.error_network)
                 }
             }
         }

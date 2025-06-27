@@ -7,32 +7,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
 
+/**
+ * Диалог для отображения ошибок с действиями подтверждения/отмены.
+ */
 @Composable
 fun ErrorDialog(
     message: String,
-    confirmButtonText: String = stringResource(R.string.repeat),
+    retryButtonText: String = stringResource(R.string.repeat),
     dismissButtonText: String = stringResource(R.string.exit),
-    onConfirm: () -> Unit,
+    onRetry: () -> Unit,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(text = stringResource(R.string.error))
-        },
-        text = {
-            Text(text = message)
-        },
-        confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(text = confirmButtonText)
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = dismissButtonText)
-            }
-        }
+        title = { Text(text = stringResource(R.string.error)) },
+        text = { Text(text = message) },
+        confirmButton = { DialogButton(retryButtonText, onRetry) },
+        dismissButton = { DialogButton(dismissButtonText, onDismiss) }
     )
 }
 
+@Composable
+private fun DialogButton(text: String, onClick: () -> Unit) {
+    TextButton(onClick = onClick) {
+        Text(text = text)
+    }
+}

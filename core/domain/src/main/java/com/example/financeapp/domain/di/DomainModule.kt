@@ -8,6 +8,9 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
+/**
+ * Модуль для предоставления зависимостей уровня Domain
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 class DomainModule {

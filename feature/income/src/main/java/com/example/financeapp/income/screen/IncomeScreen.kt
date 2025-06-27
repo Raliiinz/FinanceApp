@@ -19,14 +19,14 @@ import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.BaseFloatingActionButton
 import com.example.financeapp.base.commonItems.ErrorDialog
-import com.example.financeapp.base.commonItems.LoadingContent
+import com.example.financeapp.base.ui.commonItems.LoadingContent
 import com.example.financeapp.income.components.IncomeListContent
 import com.example.financeapp.income.state.IncomeEvent
 import com.example.financeapp.income.state.IncomeUiState
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Основной экран отображения доходов.
+ */
 @Composable
 fun IncomeScreen(
     viewModel: IncomeScreenViewModel,
@@ -37,10 +37,7 @@ fun IncomeScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val today = LocalDate.now()
-        val to = today.format(dateFormatter)
-        viewModel.loadIncomes(to, to)
+        viewModel.loadTodayIncomes()
     }
 
     Box(
@@ -58,10 +55,10 @@ fun IncomeScreen(
             is IncomeUiState.Error -> {
                 ErrorDialog(
                     message = stringResource((uiState as IncomeUiState.Error).messageRes),
-                    confirmButtonText = stringResource(R.string.repeat),
+                    retryButtonText = stringResource(R.string.repeat),
                     dismissButtonText = stringResource(R.string.exit),
-                    onConfirm = { viewModel.reduce(IncomeEvent.ReloadData) },
-                    onDismiss = { viewModel.reduce(IncomeEvent.HideErrorDialog) }
+                    onRetry = { viewModel.handleEvent(IncomeEvent.ReloadData) },
+                    onDismiss = { viewModel.handleEvent(IncomeEvent.HideErrorDialog) }
                 )
             }
             IncomeUiState.Idle -> Unit
