@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.theme
+package com.example.financeapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,6 +17,9 @@ import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.financeapp.base.R
 
+/**
+ * Composable функция для отображения анимированного splash screen с использованием Lottie.
+ */
 @Composable
 fun LottieSplashScreen(
     onSplashFinished: () -> Unit

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -79,11 +80,6 @@ dependencies {
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
-    // Hilt
-//    implementation("com.google.dagger:hilt-android:2.50") // последняя версия
-////    kapt("com.google.dagger:hilt-android-compiler:2.50")
-//    ksp("com.google.dagger:hilt-compiler:2.50")
 
-// Jetpack Compose + Hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 }

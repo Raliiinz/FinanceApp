@@ -7,7 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.commonItems.ListItem
-
+/**
+ * Кликабельный элемент информации с текстом и действием.
+ */
 @Composable
 fun InfoItemClickable(
     leadingTextResId: Int,

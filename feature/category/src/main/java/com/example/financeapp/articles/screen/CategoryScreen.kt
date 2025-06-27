@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -19,22 +18,24 @@ import com.example.financeapp.articles.components.CategoryListContent
 import com.example.financeapp.articles.components.SearchHeader
 import com.example.financeapp.articles.state.CategoryEvent
 import com.example.financeapp.articles.state.CategoryScreenUiState
-import com.example.financeapp.base.commonItems.EmptyContent
 import com.example.financeapp.base.commonItems.ErrorDialog
-import com.example.financeapp.base.commonItems.LoadingContent
+import com.example.financeapp.base.ui.commonItems.EmptyContent
+import com.example.financeapp.base.ui.commonItems.LoadingContent
 
+/**
+ * Основной экран отображения категорий статей.
+ */
 @Composable
-fun ArticleScreen(
+fun CategoryScreen(
     viewModel: CategoryScreenViewModel = hiltViewModel(),
     paddingValues: PaddingValues,
     onArticleClicked: (Int) -> Unit,
     onSearchClicked: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        viewModel.reduce(CategoryEvent.ReloadData)
+        viewModel.handleEvent(CategoryEvent.ReloadData)
     }
 
     Column(
@@ -63,11 +64,11 @@ fun ArticleScreen(
 
             is CategoryScreenUiState.Error -> {
                 ErrorDialog(
-                    message = context.getString(state.messageRes),
-                    confirmButtonText = stringResource(R.string.repeat),
+                    message = stringResource(state.messageRes),
+                    retryButtonText = stringResource(R.string.repeat),
                     dismissButtonText = stringResource(R.string.exit),
-                    onConfirm = { viewModel.reduce(CategoryEvent.ReloadData) },
-                    onDismiss = { viewModel.reduce(CategoryEvent.HideErrorDialog) }
+                    onRetry = { viewModel.handleEvent(CategoryEvent.ReloadData) },
+                    onDismiss = { viewModel.handleEvent(CategoryEvent.HideErrorDialog) }
                 )
             }
 

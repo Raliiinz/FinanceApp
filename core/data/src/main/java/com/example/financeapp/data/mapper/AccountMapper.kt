@@ -6,7 +6,9 @@ import com.example.financeapp.network.pojo.response.account.AccountBrief
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/*Маппер для работы с модельками аккаунта*/
+/**
+ * Маппер для преобразования между сетевыми и доменными моделями аккаунтов.
+ */
 @Singleton
 class AccountMapper @Inject constructor() {
     fun toBriefAccount(model: AccountModel): AccountBrief = AccountBrief(

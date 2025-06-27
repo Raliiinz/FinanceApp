@@ -18,6 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * Элемент списка с ведущим и завершающим контентом.
+ */
 @Composable
 fun ListItem(
     leadingContent: @Composable () -> Unit,
@@ -27,33 +30,41 @@ fun ListItem(
     backgroundColor: Color,
     itemHeight: Dp = 56.dp
 ) {
-
     Surface(
-        modifier = Modifier
-                .clickable{ onClick() },
+        modifier = Modifier.clickable(onClick = onClick),
         color = backgroundColor
     ) {
         Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .heightIn(itemHeight),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Box(modifier = Modifier.weight(1f)) {
-                    leadingContent()
-                }
-                trailingContent()
-            }
-            if (downDivider) {
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.outlineVariant
-                )
-            }
+            RowContent(leadingContent, trailingContent, itemHeight)
+            if (downDivider) ListDivider()
         }
     }
+}
+
+@Composable
+private fun RowContent(
+    leading: @Composable () -> Unit,
+    trailing: @Composable () -> Unit,
+    height: Dp
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .heightIn(height),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Box(modifier = Modifier.weight(1f)) { leading() }
+        trailing()
+    }
+}
+
+@Composable
+private fun ListDivider() {
+    HorizontalDivider(
+        modifier = Modifier.fillMaxWidth(),
+        thickness = 1.dp,
+        color = MaterialTheme.colorScheme.outlineVariant
+    )
 }

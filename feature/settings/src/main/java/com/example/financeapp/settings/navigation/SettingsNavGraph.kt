@@ -9,9 +9,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.financeapp.navigation.Screen
-import com.example.financeapp.settings.screen.SettingScreen
-import com.example.financeapp.settings.screen.SettingsScreenViewModel
+import com.example.financeapp.settings.screen.SettingsScreen
+import com.example.financeapp.settings.screen.SettingsViewModel
 
+/**
+ * Настройка графа навигации для экрана настроек
+ */
 fun NavGraphBuilder.settingsNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues
@@ -28,13 +31,17 @@ fun NavGraphBuilder.settingsNavGraph(
         }
     }
 }
+
+/**
+ * Основной маршрут экрана настроек.
+ */
 @Composable
 fun SettingsRoute(
     navController: NavController,
     paddingValues: PaddingValues,
-    viewModel: SettingsScreenViewModel = hiltViewModel(),
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
-    SettingScreen(
+    SettingsScreen(
         viewModel = viewModel,
         paddingValues = paddingValues,
         onSettingClicked = { settingId ->

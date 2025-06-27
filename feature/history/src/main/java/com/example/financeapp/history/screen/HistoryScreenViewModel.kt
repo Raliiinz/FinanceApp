@@ -1,7 +1,5 @@
 package com.example.financeapp.history.screen
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.base.R
@@ -22,7 +20,10 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * ViewModel для экрана истории транзакций.
+ * Управляет загрузкой и фильтрацией транзакций по датам.
+ */
 @HiltViewModel
 class HistoryScreenViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
@@ -52,7 +53,6 @@ class HistoryScreenViewModel @Inject constructor(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun loadHistory(transactionType: TransactionType, from: String, to: String) {
         viewModelScope.launch {
             _uiState.update { HistoryUiState.Loading }

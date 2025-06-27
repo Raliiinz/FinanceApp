@@ -10,7 +10,13 @@ import com.example.financeapp.util.result.map
 import javax.inject.Inject
 import kotlin.collections.map
 
-/*Имплементация репозитория для данных об аккаунте*/
+/**
+ * Реализация репозитория для работы с данными аккаунтов.
+ *
+ * Предоставляет методы для:
+ * - Получения списка аккаунтов с сервера
+ * - Обновления информации об аккаунтах на сервере
+ */
 class AccountRepositoryImpl @Inject constructor(
     private val api: AccountApi,
     private val apiClient: ApiClient,

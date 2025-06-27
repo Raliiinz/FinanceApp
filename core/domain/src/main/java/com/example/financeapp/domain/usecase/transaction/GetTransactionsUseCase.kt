@@ -8,8 +8,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
-/*юзкейс для получения списка транзакций по id аккаунта с учетом периода*/
+/**
+ * UseCase для получения транзакций за период.
+ */
 class GetTransactionsUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
     @IoDispatchers private val dispatcher: CoroutineDispatcher

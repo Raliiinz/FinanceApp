@@ -10,7 +10,11 @@ import kotlin.collections.map
 import com.example.financeapp.util.result.Result
 import com.example.financeapp.util.result.map
 
-/*Имплементация репозитория для данных о категориях*/
+/**
+ * Реализация репозитория для работы с данными категорий.
+ *
+ * Предоставляет метод для получения списка категорий с сервера.
+ */
 class CategoryRepositoryImpl @Inject constructor(
     private val api: CategoryApi,
     private val apiClient: ApiClient,

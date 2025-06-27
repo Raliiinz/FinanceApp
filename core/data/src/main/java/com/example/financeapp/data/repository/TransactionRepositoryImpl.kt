@@ -10,7 +10,13 @@ import com.example.financeapp.util.result.map
 import javax.inject.Inject
 import kotlin.collections.map
 
-/*Имплементация репозитория для данных о транзакциях*/
+/**
+ * Реализация репозитория для работы с данными транзакций.
+ *
+ * Предоставляет методы для:
+ * - Получения транзакций по аккаунту и периоду
+ * - Создания, обновления и удаления транзакций (реализация в разработке)
+ */
 class TransactionRepositoryImpl @Inject constructor(
     private val api: TransactionApi,
     private val apiClient: ApiClient,

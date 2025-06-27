@@ -7,10 +7,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.financeapp.articles.screen.ArticleScreen
+import com.example.financeapp.articles.screen.CategoryScreen
 import com.example.financeapp.articles.screen.CategoryScreenViewModel
 import com.example.financeapp.navigation.Screen
 
+/**
+ * Навигационный граф для раздела статей.
+ */
 fun NavGraphBuilder.articlesNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues
@@ -28,6 +31,10 @@ fun NavGraphBuilder.articlesNavGraph(
     }
 }
 
+/**
+ * Route для экрана статей.
+ * Обертка для CategoryScreen с обработкой навигации.
+ */
 @Composable
 fun ArticlesRoute(
     paddingValues: PaddingValues,
@@ -35,7 +42,7 @@ fun ArticlesRoute(
     viewModel: CategoryScreenViewModel = hiltViewModel()
 ) {
 
-    ArticleScreen (
+    CategoryScreen (
         viewModel = viewModel,
         paddingValues = paddingValues,
         onArticleClicked = onArticleClicked,

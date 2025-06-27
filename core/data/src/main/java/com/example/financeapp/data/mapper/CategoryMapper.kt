@@ -5,8 +5,9 @@ import com.example.financeapp.network.pojo.response.category.CategoryResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
-/*Маппер для работы с модельками категорий*/
+/**
+ * Маппер для преобразования между сетевыми и доменными моделями категорий.
+ */
 @Singleton
 class CategoryMapper @Inject constructor() {
     fun toDomain(response: CategoryResponse): CategoryModel = CategoryModel(

@@ -18,11 +18,15 @@ import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.IconBox
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatBackendTime
-import com.example.financeapp.base.formating.formatPrice
+import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.domain.model.TransactionModel
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Элемент списка истории транзакций.
+ *
+ * @param item Данные транзакции
+ */
 @Composable
 fun HistoryListItem(item: TransactionModel) {
     ListItem(

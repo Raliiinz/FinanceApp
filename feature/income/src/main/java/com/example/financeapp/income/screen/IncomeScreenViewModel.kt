@@ -7,6 +7,8 @@ import com.example.financeapp.domain.usecase.account.GetAccountUseCase
 import com.example.financeapp.domain.usecase.transaction.GetTransactionsUseCase
 import com.example.financeapp.income.state.IncomeEvent
 import com.example.financeapp.income.state.IncomeUiState
+import com.example.financeapp.util.date.formatDate
+import com.example.financeapp.util.date.getMonthRange
 import com.example.financeapp.util.result.FailureReason
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +18,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.financeapp.util.result.Result
+import java.time.LocalDate
 
+/**
+ * ViewModel для экрана доходов.
+ * Управляет загрузкой и состоянием данных о доходах.
+ */
 @HiltViewModel
 class IncomeScreenViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
@@ -26,14 +33,27 @@ class IncomeScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<IncomeUiState>(IncomeUiState.Loading)
     val uiState: StateFlow<IncomeUiState> = _uiState.asStateFlow()
 
-    fun reduce(event: IncomeEvent) {
-        when (event) {
-            IncomeEvent.HideErrorDialog ->
-                _uiState.update { IncomeUiState.Idle }
-            IncomeEvent.ReloadData -> {
-                loadIncomes("", "")
-            }
-        }
+    fun handleEvent(event: IncomeEvent) = when (event) {
+        IncomeEvent.HideErrorDialog -> dismissError()
+        IncomeEvent.ReloadData -> reloadData()
+    }
+
+    fun loadTodayIncomes() {
+        val today = LocalDate.now().formatDate()
+        loadIncomes(today, today)
+    }
+
+    fun loadCurrentMonthIncomes() {
+        val (firstDay, today) = LocalDate.now().getMonthRange()
+        loadIncomes(firstDay, today)
+    }
+
+    fun reloadData() {
+        loadCurrentMonthIncomes()
+    }
+
+    fun dismissError() {
+        _uiState.update { IncomeUiState.Idle }
     }
 
     fun loadIncomes(from: String, to: String) {

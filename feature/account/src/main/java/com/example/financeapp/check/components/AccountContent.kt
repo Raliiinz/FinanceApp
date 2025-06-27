@@ -21,27 +21,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
-import com.example.financeapp.base.formating.formatPrice
+import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.domain.model.AccountModel
 
+/**
+ * Компоненты экрана просмотра счета/аккаунта.
+ *
+ * Содержит:
+ * - [AccountContent] - основной контейнер для отображения информации о счете
+ * - [BalanceItem] - элемент отображения баланса счета
+ * - [CurrencyItem] - элемент отображения валюты счета
+ * - Вспомогательные компоненты [IconBox] и [MoreIcon] для оформления
+ */
 @Composable
-fun CheckContent(
+fun AccountContent(
     account: AccountModel,
     paddingValues: PaddingValues,
-    onCheckClicked: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    onAccountClick: (Int) -> Unit,
 ) {
     Column(
-        modifier = modifier
+        Modifier
             .fillMaxSize()
             .padding(
                 top = paddingValues.calculateTopPadding(),
                 bottom = paddingValues.calculateBottomPadding()
             )
     ) {
-        BalanceItem(account, onCheckClicked)
-        CurrencyItem(account, onCheckClicked)
+        BalanceItem(account, onAccountClick)
+        CurrencyItem(account, onAccountClick)
     }
 }
 
@@ -141,4 +149,3 @@ private fun MoreIcon(
         tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f)
     )
 }
-

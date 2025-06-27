@@ -1,5 +1,8 @@
 package com.example.financeapp.domain.model
 
+/**
+ * Доменная модель транзакции.
+ */
 data class TransactionModel(
     val id: Int,
     val accountId: String,

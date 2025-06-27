@@ -1,7 +1,5 @@
 package com.example.financeapp.history.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -12,7 +10,9 @@ import androidx.navigation.navigation
 import com.example.financeapp.history.screen.HistoryScreen
 import com.example.financeapp.navigation.TransactionType
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Навигационный граф для раздела истории.
+ */
 fun NavGraphBuilder.historyNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues
@@ -34,13 +34,5 @@ fun NavGraphBuilder.historyNavGraph(
                 paddingValues = paddingValues
             )
         }
-    }
-}
-
-
-
-sealed class HistoryScreens(val route: String) {
-    object Main : HistoryScreens("main?type={type}") {
-        fun createRoute(type: TransactionType) = "main?type=${type.name}"
     }
 }

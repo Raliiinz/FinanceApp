@@ -5,8 +5,9 @@ import com.example.financeapp.network.pojo.response.transaction.TransactionRespo
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
-/*Маппер для работы с модельками транзакций*/
+/**
+ * Маппер для преобразования между сетевыми и доменными моделями транзакций.
+ */
 @Singleton
 class TransactionMapper @Inject constructor() {
     fun toDomain(response: TransactionResponse): TransactionModel = TransactionModel(

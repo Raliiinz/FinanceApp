@@ -1,7 +1,5 @@
 package com.example.financeapp.expenses.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,16 +11,18 @@ import com.example.financeapp.expenses.screen.ExpensesScreen
 import com.example.financeapp.expenses.screen.ExpensesScreenViewModel
 import com.example.financeapp.navigation.Screen
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Навигационный граф для раздела расходов.
+ */
 fun NavGraphBuilder.expensesNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues
 ) {
     navigation(
-        startDestination = ExpensesScreens.Main.route,
+        startDestination = "expenses/main",
         route = Screen.Expenses.route
     ) {
-        composable(route = ExpensesScreens.Main.route) {
+        composable(route = "expenses/main") {
             ExpensesRoute(
                 navController = navController,
                 paddingValues = paddingValues,
@@ -33,7 +33,10 @@ fun NavGraphBuilder.expensesNavGraph(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+/**
+ * Route для экрана расходов.
+ * Обертка для ExpensesScreen с обработкой навигации.
+ */
 @Composable
 fun ExpensesRoute(
     navController: NavHostController,
@@ -48,8 +51,4 @@ fun ExpensesRoute(
         onExpenseClicked = onExpenseClicked,
         onFabClick = onFabClick,
     )
-}
-
-sealed class ExpensesScreens(val route: String) {
-    object Main : ExpensesScreens("expenses/main")
 }

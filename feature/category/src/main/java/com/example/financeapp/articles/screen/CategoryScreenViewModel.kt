@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.articles.state.CategoryEvent
 import com.example.financeapp.articles.state.CategoryScreenUiState
+import com.example.financeapp.articles.state.CategoryScreenUiState.*
 import com.example.financeapp.base.R
 import com.example.financeapp.domain.usecase.category.GetCategoriesUseCase
 import com.example.financeapp.util.result.FailureReason
@@ -16,6 +17,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.financeapp.util.result.Result
 
+
+/**
+ * ViewModel для экрана категорий статей.
+ * Управляет загрузкой и состоянием данных категорий.
+ */
 @HiltViewModel
 class CategoryScreenViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase
@@ -24,10 +30,9 @@ class CategoryScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<CategoryScreenUiState>(CategoryScreenUiState.Loading)
     val uiState: StateFlow<CategoryScreenUiState> = _uiState.asStateFlow()
 
-    fun reduce(event: CategoryEvent) {
+    fun handleEvent(event: CategoryEvent) {
         when (event) {
-            CategoryEvent.HideErrorDialog ->
-                _uiState.update { CategoryScreenUiState.Idle }
+            CategoryEvent.HideErrorDialog -> _uiState.update { Idle }
             CategoryEvent.ReloadData -> loadArticles()
         }
     }
@@ -38,24 +43,16 @@ class CategoryScreenViewModel @Inject constructor(
 
     private fun loadArticles() {
         viewModelScope.launch {
-            _uiState.value = CategoryScreenUiState.Loading
+            _uiState.value = Loading
             when (val result = getCategoriesUseCase()) {
                 is Result.Success -> {
                     _uiState.update {
-                        if (result.data.isNotEmpty()) {
-                            CategoryScreenUiState.Success(result.data)
-                        } else {
-                            CategoryScreenUiState.Empty
-                        }
+                        if (result.data.isNotEmpty()) Success(result.data) else Empty
                     }
                 }
-                is Result.HttpError -> {
-                    handleHttpError(result.reason)
-                }
+                is Result.HttpError -> handleHttpError(result.reason)
                 is Result.NetworkError -> {
-                    _uiState.update {
-                        CategoryScreenUiState.Error(R.string.error_network)
-                    }
+                    _uiState.update { Error(R.string.error_network) }
                 }
             }
         }
@@ -67,9 +64,6 @@ class CategoryScreenViewModel @Inject constructor(
             is FailureReason.ServerError -> R.string.error_server
             else -> R.string.error_unknown
         }
-        _uiState.update { CategoryScreenUiState.Error(errorRes) }
-    }
-
-    fun onSearchClicked() {
+        _uiState.update { Error(errorRes) }
     }
 }

@@ -8,7 +8,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-/*юзкейс для обновления данных аккаунта*/
+/**
+ * UseCase для обновления данных аккаунтов.
+ */
 class UpdateAccountsUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
     @IoDispatchers private val dispatcher: CoroutineDispatcher

@@ -1,5 +1,8 @@
 package com.example.financeapp.navigation
 
+/**
+ * Запечатанный класс, определяющий маршруты экранов в приложении.
+ */
 sealed class Screen(val route: String) {
     object Expenses : Screen("expenses_graph")
     object Income   : Screen("income_graph")

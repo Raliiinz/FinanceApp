@@ -10,7 +10,10 @@ import com.example.financeapp.navigation.NavigationItem
 import com.example.financeapp.navigation.Screen
 import com.example.financeapp.navigation.TransactionType
 
-// Extension functions для проверки текущего экрана
+/**
+ * Файл с extension-функциями для навигации.
+ * Содержит вспомогательные методы для работы с Navigation Component.
+ */
 fun NavDestination?.isExpensesScreen() =
     this?.hierarchy?.any { it.route == Screen.Expenses.route } == true
 
@@ -26,16 +29,14 @@ fun NavDestination?.isArticlesScreen() =
 fun NavDestination?.isCheckScreen() =
     this?.hierarchy?.any { it.route == Screen.Check.route } == true
 
-// Файл: com/example/financeapp/extensions/NavExtensions.kt
 fun NavDestination?.isHistoryScreen(): Boolean {
     val historyRoute = HistoryScreens.Main.route.substringBefore("?")
     return this?.route?.contains(historyRoute) == true
 }
-// Получение типа транзакции из аргументов навигации
+
 fun NavBackStackEntry?.getTransactionType(): TransactionType? =
     this?.arguments?.getSerializable("type") as? TransactionType
 
-// Проверка выбранного элемента в BottomNavBar
 fun NavDestination?.isItemSelected(
     item: NavigationItem,
     transactionType: TransactionType? = null
@@ -51,7 +52,6 @@ fun NavDestination?.isItemSelected(
     }
 }
 
-// Навигация к элементу с правильными флагами
 fun NavController.navigateToItem(item: NavigationItem) {
     navigate(item.screen.route) {
         popUpTo(graph.findStartDestination().id) {

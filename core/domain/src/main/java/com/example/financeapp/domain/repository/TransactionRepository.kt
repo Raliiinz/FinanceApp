@@ -4,7 +4,7 @@ import com.example.financeapp.domain.model.TransactionModel
 import com.example.financeapp.util.result.Result
 
 /**
- * репозиторий для данных о транзакциях
+ * Интерфейс репозитория для работы с транзакциями.
  */
 interface TransactionRepository {
     suspend fun getTransactions(accountId: Int, from: String, to: String): Result<List<TransactionModel>>

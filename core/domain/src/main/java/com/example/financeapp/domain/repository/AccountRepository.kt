@@ -4,7 +4,7 @@ import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.util.result.Result
 
 /**
- * репозиторий для данных об аккаунте
+ * Интерфейс репозитория для работы с данными аккаунтов.
  */
 interface AccountRepository {
     suspend fun getAccounts(): Result<List<AccountModel>>

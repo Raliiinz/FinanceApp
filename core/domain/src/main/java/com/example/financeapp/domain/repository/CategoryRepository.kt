@@ -4,7 +4,7 @@ import com.example.financeapp.domain.model.CategoryModel
 import com.example.financeapp.util.result.Result
 
 /**
- * репозиторий для данных о категориях
+ * Интерфейс репозитория для работы с категориями транзакций.
  */
 interface CategoryRepository {
     suspend fun getCategories(): Result<List<CategoryModel>>
