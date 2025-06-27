@@ -1,9 +1,9 @@
-package com.example.financeapp.base.formating
+package com.example.financeapp.util.formating
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import com.example.financeapp.base.R
+import java.lang.String.format
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -15,5 +15,5 @@ fun formatPrice(price: Double): String {
         NumberFormat.getInstance(Locale("ru")).format(price)
     }
 
-    return String.format(priceFormat, formattedNumber)
+    return format(priceFormat, formattedNumber)
 }

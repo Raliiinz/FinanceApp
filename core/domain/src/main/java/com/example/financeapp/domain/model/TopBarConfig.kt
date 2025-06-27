@@ -1,5 +1,8 @@
 package com.example.financeapp.domain.model
 
+/**
+ * Модель элемента topbar.
+ */
 data class ScaffoldItemModel(
     val textResId: Int ,
     val leadingImageResId: Int? = null,
