@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.financeapp.base.R
 import com.example.financeapp.articles.components.CategoryListContent
 import com.example.financeapp.articles.components.SearchHeader
+import com.example.financeapp.articles.components.SearchInputField
 import com.example.financeapp.articles.state.CategoryEvent
 import com.example.financeapp.articles.state.CategoryScreenUiState
 import com.example.financeapp.base.commonItems.ErrorDialog
@@ -34,10 +35,6 @@ fun CategoryScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.handleEvent(CategoryEvent.ReloadData)
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,14 +44,27 @@ fun CategoryScreen(
                 bottom = paddingValues.calculateBottomPadding()
             )
     ) {
-        SearchHeader(onSearchClicked)
+//        SearchHeader(onSearchClicked)
+
+        if (uiState is CategoryScreenUiState.Success) {
+            val state = uiState as CategoryScreenUiState.Success
+            SearchHeader(
+                query = state.query,
+                onQueryChange = { viewModel.handleEvent(CategoryEvent.SearchChanged(it)) }
+            )
+        } else {
+            SearchHeader(
+                query = "",
+                onQueryChange = {  }
+            )
+        }
 
         when (val state = uiState) {
             CategoryScreenUiState.Loading -> LoadingContent()
             is CategoryScreenUiState.Success -> {
                 if (state.categories.isNotEmpty()) {
                     CategoryListContent(
-                        categories = state.categories,
+                        categories = state.filteredCategories,
                         onArticleClicked = onArticleClicked
                     )
                 } else {

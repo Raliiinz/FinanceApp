@@ -6,6 +6,7 @@ import com.example.financeapp.articles.state.CategoryEvent
 import com.example.financeapp.articles.state.CategoryScreenUiState
 import com.example.financeapp.articles.state.CategoryScreenUiState.*
 import com.example.financeapp.base.R
+import com.example.financeapp.domain.model.CategoryModel
 import com.example.financeapp.domain.usecase.category.GetCategoriesUseCase
 import com.example.financeapp.util.result.FailureReason
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,15 +31,18 @@ class CategoryScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<CategoryScreenUiState>(CategoryScreenUiState.Loading)
     val uiState: StateFlow<CategoryScreenUiState> = _uiState.asStateFlow()
 
+    private var originalCategories: List<CategoryModel> = emptyList()
+
+    init {
+        loadArticles()
+    }
+
     fun handleEvent(event: CategoryEvent) {
         when (event) {
             CategoryEvent.HideErrorDialog -> _uiState.update { Idle }
             CategoryEvent.ReloadData -> loadArticles()
+            is CategoryEvent.SearchChanged -> performSearch(event.query)
         }
-    }
-
-    init {
-        loadArticles()
     }
 
     private fun loadArticles() {
@@ -46,8 +50,15 @@ class CategoryScreenViewModel @Inject constructor(
             _uiState.value = Loading
             when (val result = getCategoriesUseCase()) {
                 is Result.Success -> {
-                    _uiState.update {
-                        if (result.data.isNotEmpty()) Success(result.data) else Empty
+                    originalCategories = result.data
+                    if (originalCategories.isEmpty()) {
+                        _uiState.value = CategoryScreenUiState.Empty
+                    } else {
+                        _uiState.value = CategoryScreenUiState.Success(
+                            categories = originalCategories,
+                            filteredCategories = originalCategories,
+                            query = ""
+                        )
                     }
                 }
                 is Result.HttpError -> handleHttpError(result.reason)
@@ -55,6 +66,18 @@ class CategoryScreenViewModel @Inject constructor(
                     _uiState.update { Error(R.string.error_network) }
                 }
             }
+        }
+    }
+
+    private fun performSearch(query: String) {
+        val filtered = originalCategories.filter {
+            it.textLeading.contains(query, ignoreCase = true)
+        }
+
+        _uiState.update {
+            if (it is CategoryScreenUiState.Success) {
+                it.copy(filteredCategories = filtered, query = query)
+            } else it
         }
     }
 

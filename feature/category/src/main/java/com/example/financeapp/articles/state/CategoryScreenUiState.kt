@@ -8,7 +8,11 @@ import com.example.financeapp.domain.model.CategoryModel
  */
 sealed class CategoryScreenUiState {
     object Loading : CategoryScreenUiState()
-    data class Success(val categories: List<CategoryModel>) : CategoryScreenUiState()
+    data class Success(
+        val categories: List<CategoryModel>,
+        val filteredCategories: List<CategoryModel>,
+        val query: String
+    ) : CategoryScreenUiState()
     data class Error(@StringRes val messageRes: Int) : CategoryScreenUiState()
     object Empty : CategoryScreenUiState()
     object Idle : CategoryScreenUiState()

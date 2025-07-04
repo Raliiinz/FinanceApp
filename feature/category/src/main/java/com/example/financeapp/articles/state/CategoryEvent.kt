@@ -6,4 +6,5 @@ package com.example.financeapp.articles.state
 sealed class CategoryEvent {
     object HideErrorDialog : CategoryEvent()
     object ReloadData : CategoryEvent()
+    data class SearchChanged(val query: String) : CategoryEvent()
 }
