@@ -2,13 +2,14 @@ package com.example.financeapp.articles.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.financeapp.articles.screen.CategoryScreen
 import com.example.financeapp.articles.screen.CategoryScreenViewModel
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.navigation.Screen
 
 /**
@@ -16,16 +17,21 @@ import com.example.financeapp.navigation.Screen
  */
 fun NavGraphBuilder.articlesNavGraph(
     navController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModelFactory: ViewModelFactory
 ) {
     navigation(
         startDestination = "articles/main",
         route = Screen.Articles.route
     ) {
-        composable("articles/main") {
-            ArticlesRoute(
+        composable("articles/main") { backStackEntry ->
+        ArticlesRoute(
                 paddingValues = paddingValues,
                 onArticleClicked = { id -> /* handle tap */ },
+                viewModel = viewModel(
+                    factory = viewModelFactory,
+                    viewModelStoreOwner = backStackEntry
+                )
             )
         }
     }
@@ -39,7 +45,7 @@ fun NavGraphBuilder.articlesNavGraph(
 fun ArticlesRoute(
     paddingValues: PaddingValues,
     onArticleClicked: (Int) -> Unit,
-    viewModel: CategoryScreenViewModel = hiltViewModel()
+    viewModel: CategoryScreenViewModel
 ) {
 
     CategoryScreen (

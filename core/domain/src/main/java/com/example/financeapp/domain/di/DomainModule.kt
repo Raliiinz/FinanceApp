@@ -1,10 +1,9 @@
 package com.example.financeapp.domain.di
 
+import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.domain.di.qualifies.IoDispatchers
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -12,10 +11,10 @@ import kotlinx.coroutines.Dispatchers
  * Модуль для предоставления зависимостей уровня Domain
  */
 @Module
-@InstallIn(SingletonComponent::class)
 class DomainModule {
 
     @Provides
+    @AppScope
     @IoDispatchers
     fun provideIoDispatcher(): CoroutineDispatcher{
         return Dispatchers.IO

@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.annotation.RequiresPermission
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.example.financeapp.base.di.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -2,11 +2,12 @@ package com.example.financeapp.expenses.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.expenses.screen.ExpensesScreen
 import com.example.financeapp.expenses.screen.ExpensesScreenViewModel
 import com.example.financeapp.navigation.Screen
@@ -16,18 +17,23 @@ import com.example.financeapp.navigation.Screen
  */
 fun NavGraphBuilder.expensesNavGraph(
     navController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModelFactory: ViewModelFactory
 ) {
     navigation(
         startDestination = "expenses/main",
         route = Screen.Expenses.route
     ) {
-        composable(route = "expenses/main") {
+        composable(route = "expenses/main") {  backStackEntry ->
             ExpensesRoute(
                 navController = navController,
                 paddingValues = paddingValues,
                 onExpenseClicked = { id -> /* Handle click */ },
-                onFabClick = { /* FloatingAction */ }
+                onFabClick = { /* FloatingAction */ },
+                viewModel = viewModel(
+                    factory = viewModelFactory,
+                    viewModelStoreOwner = backStackEntry
+                )
             )
         }
     }
@@ -43,7 +49,7 @@ fun ExpensesRoute(
     paddingValues: PaddingValues,
     onExpenseClicked: (Int) -> Unit,
     onFabClick: () -> Unit,
-    viewModel: ExpensesScreenViewModel = hiltViewModel()
+    viewModel: ExpensesScreenViewModel
 ) {
     ExpensesScreen(
         viewModel = viewModel,

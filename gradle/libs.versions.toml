@@ -32,6 +32,7 @@ okhttp-version = "4.12.0"
 converter-gson-version="2.3.0"
 gson = "2.13.0"
 retrofit_version = "2.11.0"
+kotlinx-coroutines = "1.7.3"
 
 # Security
 secretsGradlePlugin = "2.0.1"
@@ -73,6 +74,8 @@ converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ve
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
 [bundles]
 network-deps = ["retrofit", "converter-gson", "okhttp", "gson"]

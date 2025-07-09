@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.financeapp.base.R
 import com.example.financeapp.articles.components.CategoryListContent
@@ -26,7 +25,7 @@ import com.example.financeapp.base.ui.commonItems.LoadingContent
  */
 @Composable
 fun CategoryScreen(
-    viewModel: CategoryScreenViewModel = hiltViewModel(),
+    viewModel: CategoryScreenViewModel,
     paddingValues: PaddingValues,
     onArticleClicked: (Int) -> Unit,
     onSearchClicked: () -> Unit

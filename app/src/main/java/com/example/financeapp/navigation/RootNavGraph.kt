@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.financeapp.articles.navigation.articlesNavGraph
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.check.navigation.checkNavGraph
 import com.example.financeapp.expenses.navigation.expensesNavGraph
 import com.example.financeapp.history.navigation.historyNavGraph
@@ -18,17 +19,23 @@ import com.example.financeapp.settings.navigation.settingsNavGraph
 fun RootNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues,
+    expensesViewModelFactory: ViewModelFactory,
+    historyViewModelFactory: ViewModelFactory,
+    incomeViewModelFactory: ViewModelFactory,
+    checkViewModelFactory: ViewModelFactory,
+    articlesViewModelFactory: ViewModelFactory,
+    settingsViewModelFactory: ViewModelFactory,
 
 ) {
     NavHost(
         navController = navController,
         startDestination = Screen.Expenses.route,
     ) {
-        expensesNavGraph(navController, paddingValues)
-        incomeNavGraph(navController, paddingValues,)
-        checkNavGraph(navController, paddingValues)
-        articlesNavGraph(navController, paddingValues)
-        settingsNavGraph(navController, paddingValues)
-        historyNavGraph(navController, paddingValues)
+        expensesNavGraph(navController, paddingValues, expensesViewModelFactory)
+        incomeNavGraph(navController, paddingValues, incomeViewModelFactory)
+        checkNavGraph(navController, paddingValues, checkViewModelFactory)
+        articlesNavGraph(navController, paddingValues, articlesViewModelFactory)
+        settingsNavGraph(navController, paddingValues, settingsViewModelFactory)
+        historyNavGraph(navController, paddingValues, historyViewModelFactory)
     }
 }

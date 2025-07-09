@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    kotlin("kapt")
 }
 
 android {
@@ -37,6 +36,7 @@ android {
 dependencies {
 
 
+    implementation(project(path = ":core:base"))
     implementation(project(path = ":core:util"))
 
     implementation(libs.androidx.core.ktx)
@@ -46,6 +46,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.hilt)
-    ksp(libs.hilt.compiler)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 }

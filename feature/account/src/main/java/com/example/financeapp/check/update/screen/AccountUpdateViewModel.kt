@@ -15,7 +15,6 @@ import com.example.financeapp.domain.usecase.account.GetAllCurrenciesUseCase
 import com.example.financeapp.domain.usecase.account.UpdateAccountUseCase
 import com.example.financeapp.util.result.FailureReason
 import com.example.financeapp.util.result.Result
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +25,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-@HiltViewModel
 class AccountUpdateViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val updateAccountUseCase: UpdateAccountUseCase,

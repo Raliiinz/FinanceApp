@@ -2,14 +2,16 @@ package com.example.financeapp.check.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.check.main.screen.AccountScreen
 import com.example.financeapp.check.main.screen.AccountScreenViewModel
 import com.example.financeapp.check.update.screen.AccountUpdateScreen
+import com.example.financeapp.check.update.screen.AccountUpdateViewModel
 import com.example.financeapp.navigation.Screen
 
 /**
@@ -18,25 +20,34 @@ import com.example.financeapp.navigation.Screen
  */
 fun NavGraphBuilder.checkNavGraph(
     navController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModelFactory: ViewModelFactory
 ) {
     navigation(
         startDestination = CheckRoutes.CHECK_MAIN,
         route = Screen.Check.route
     ) {
-        composable("check/main") {
+        composable("check/main") { backStackEntry ->
             ChecksRoute(
                 paddingValues = paddingValues,
                 onCheckClicked = { id -> /* handle tap */ },
-                onFabClick = { /* handle FAB */ }
+                onFabClick = { /* handle FAB */ },
+                viewModel = viewModel(
+                    factory = viewModelFactory,
+                    viewModelStoreOwner = backStackEntry
+                )
             )
         }
 
-        composable(CheckRoutes.CHECK_EDIT_FROM_TOPBAR) {
+        composable(CheckRoutes.CHECK_EDIT_FROM_TOPBAR) { backStackEntry ->
             EditAccountRoute(
                 accountId = null,
                 navController = navController,
-                paddingValues = paddingValues
+                paddingValues = paddingValues,
+                viewModel = viewModel(
+                    factory = viewModelFactory,
+                    viewModelStoreOwner = backStackEntry
+                )
             )
         }
         // 1.4. (ОПЦИОНАЛЬНО) Если вы когда-нибудь захотите редактировать по ID, раскомментируйте это:
@@ -67,7 +78,7 @@ fun ChecksRoute(
     paddingValues: PaddingValues,
     onCheckClicked: (Int) -> Unit,
     onFabClick: () -> Unit,
-    viewModel: AccountScreenViewModel = hiltViewModel()
+    viewModel: AccountScreenViewModel
 ) {
     AccountScreen(
         viewModel = viewModel,
@@ -86,12 +97,13 @@ fun EditAccountRoute(
     accountId: Int?, // Если null, значит ID нужно получить во ViewModel
     navController: NavHostController,
     paddingValues: PaddingValues,
-    // viewModel: EditAccountViewModel = hiltViewModel() // Ваша ViewModel для этого экрана
+    viewModel: AccountUpdateViewModel
 ) {
     AccountUpdateScreen(
         paddingValues = paddingValues,
         onCloseClick = { navController.popBackStack() },
         onSaveClick = { navController.popBackStack() },
+        viewModel = viewModel
     )
 }
 

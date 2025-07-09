@@ -1,12 +1,14 @@
 package com.example.financeapp.history.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.history.screen.HistoryScreen
 import com.example.financeapp.navigation.TransactionType
 
@@ -15,7 +17,8 @@ import com.example.financeapp.navigation.TransactionType
  */
 fun NavGraphBuilder.historyNavGraph(
     navController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModelFactory: ViewModelFactory
 ) {
     navigation(
         startDestination = HistoryScreens.Main.route,
@@ -31,7 +34,11 @@ fun NavGraphBuilder.historyNavGraph(
             HistoryScreen(
                 transactionType = transactionType,
                 onBackClick = { navController.popBackStack() },
-                paddingValues = paddingValues
+                paddingValues = paddingValues,
+                viewModel = viewModel(
+                    factory = viewModelFactory,
+                    viewModelStoreOwner = backStackEntry
+                )
             )
         }
     }

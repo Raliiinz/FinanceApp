@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -34,7 +33,7 @@ fun AccountUpdateScreen(
     paddingValues: PaddingValues,
     onCloseClick: () -> Unit,
     onSaveClick: () -> Unit,
-    viewModel: AccountUpdateViewModel = hiltViewModel()
+    viewModel: AccountUpdateViewModel
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 

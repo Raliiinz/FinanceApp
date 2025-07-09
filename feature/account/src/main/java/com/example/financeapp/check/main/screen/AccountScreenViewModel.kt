@@ -7,10 +7,8 @@ import com.example.financeapp.check.mapper.AccountUIMapper
 import com.example.financeapp.check.main.state.AccountEffect
 import com.example.financeapp.check.main.state.AccountState
 import com.example.financeapp.check.model.AccountUIModel
-import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.domain.usecase.account.GetAccountUseCase
 import com.example.financeapp.util.result.FailureReason
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +23,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
  * ViewModel для экрана счета.
  * Управляет загрузкой данных и состоянием UI.
  */
-@HiltViewModel
+
 class AccountScreenViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val accountUIMapper: AccountUIMapper,

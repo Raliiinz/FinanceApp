@@ -10,7 +10,6 @@ import com.example.financeapp.history.state.HistoryUiState
 import com.example.financeapp.navigation.TransactionType
 import com.example.financeapp.util.result.FailureReason
 import com.example.financeapp.util.result.Result
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +23,7 @@ import javax.inject.Inject
  * ViewModel для экрана истории транзакций.
  * Управляет загрузкой и фильтрацией транзакций по датам.
  */
-@HiltViewModel
+
 class HistoryScreenViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getAccountUseCase: GetAccountUseCase

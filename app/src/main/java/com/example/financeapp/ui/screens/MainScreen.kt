@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.check.navigation.CheckRoutes
 import com.example.financeapp.extensions.shouldHideTopBar
 import com.example.financeapp.navigation.HistoryNavigation
@@ -21,7 +22,13 @@ import com.example.financeapp.ui.components.AppTopBar
  */
 @Composable
 fun MainScreen(
-    historyNavigation: HistoryNavigation
+    historyNavigation: HistoryNavigation,
+    expensesViewModelFactory: ViewModelFactory,
+    historyViewModelFactory: ViewModelFactory,
+    incomeViewModelFactory: ViewModelFactory,
+    checkViewModelFactory: ViewModelFactory,
+    articlesViewModelFactory: ViewModelFactory,
+    settingsViewModelFactory: ViewModelFactory,
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -52,6 +59,12 @@ fun MainScreen(
             RootNavGraph(
                 navController = navController,
                 paddingValues = innerPadding,
+                expensesViewModelFactory = expensesViewModelFactory,
+                historyViewModelFactory = historyViewModelFactory,
+                incomeViewModelFactory = incomeViewModelFactory,
+                articlesViewModelFactory = articlesViewModelFactory,
+                settingsViewModelFactory = settingsViewModelFactory,
+                checkViewModelFactory = checkViewModelFactory
             )
         }
     }
