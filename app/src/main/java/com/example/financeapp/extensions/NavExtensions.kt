@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.financeapp.check.navigation.CheckRoutes
 import com.example.financeapp.history.navigation.HistoryScreens
 import com.example.financeapp.navigation.NavigationItem
 import com.example.financeapp.navigation.Screen
@@ -60,4 +61,9 @@ fun NavController.navigateToItem(item: NavigationItem) {
         launchSingleTop = true
         restoreState = true
     }
+}
+
+fun NavDestination.shouldHideTopBar(): Boolean {
+    val route = this.route ?: return false
+    return route == CheckRoutes.CHECK_EDIT_FROM_TOPBAR
 }

@@ -49,6 +49,7 @@ fun ExpensesScreen(
             ExpensesUiState.Loading -> LoadingContent()
             is ExpensesUiState.Success -> ExpenseListContent(
                 expenses = state.transactions,
+                currency = state.currency,
                 paddingValues = paddingValues,
                 onExpenseClicked = onExpenseClicked
             )

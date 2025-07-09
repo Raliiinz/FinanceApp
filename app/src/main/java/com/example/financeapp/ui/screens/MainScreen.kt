@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.financeapp.check.navigation.CheckRoutes
+import com.example.financeapp.extensions.shouldHideTopBar
 import com.example.financeapp.navigation.HistoryNavigation
 import com.example.financeapp.navigation.RootNavGraph
 import com.example.financeapp.navigation.TransactionType
@@ -29,11 +31,11 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            AppTopBar(
-                currentDestination = currentDestination,
-                navController = navController,
-                historyNavigation = historyNavigation
-            )
+                AppTopBar(
+                    currentDestination = currentDestination,
+                    navController = navController,
+                    historyNavigation = historyNavigation
+                )
         },
         bottomBar = {
             AppBottomBar(

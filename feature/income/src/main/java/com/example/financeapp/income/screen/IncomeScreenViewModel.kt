@@ -33,6 +33,8 @@ class IncomeScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<IncomeUiState>(IncomeUiState.Loading)
     val uiState: StateFlow<IncomeUiState> = _uiState.asStateFlow()
 
+    private var currentCurrency: String = "RUB"
+
     fun handleEvent(event: IncomeEvent) = when (event) {
         IncomeEvent.HideErrorDialog -> dismissError()
         IncomeEvent.ReloadData -> reloadData()
@@ -66,11 +68,13 @@ class IncomeScreenViewModel @Inject constructor(
                         return@launch
                     }
 
+                    currentCurrency = account.currency
+
                     when (val transactionsResult = getTransactionsUseCase(account.id, from, to)) {
                         is Result.Success -> {
                             val incomes = transactionsResult.data.filter { it.isIncome }
                             _uiState.update {
-                                IncomeUiState.Success(incomes)
+                                IncomeUiState.Success(incomes, currentCurrency)
                             }
                         }
                         is Result.HttpError -> {

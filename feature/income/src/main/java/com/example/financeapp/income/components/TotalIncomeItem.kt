@@ -8,6 +8,7 @@ import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
+import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 
 /**
  * Компонент отображения общей суммы доходов.
@@ -17,6 +18,7 @@ import com.example.financeapp.base.ui.theme.Typography
 @Composable
 fun TotalIncomeItem(
     totalIncome: Double,
+    currency: String
 ) {
     ListItem(
         leadingContent = {
@@ -28,7 +30,7 @@ fun TotalIncomeItem(
         },
         trailingContent = {
             Text(
-                text = formatPrice(totalIncome),
+                text = "${totalIncome.toDouble()} ${currency.toCurrencySymbol()}",
                 style = Typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )

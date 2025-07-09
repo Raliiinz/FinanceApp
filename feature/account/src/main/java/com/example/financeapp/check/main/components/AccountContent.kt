@@ -1,4 +1,4 @@
-package com.example.financeapp.check.components
+package com.example.financeapp.check.main.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,6 +23,7 @@ import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
+import com.example.financeapp.check.model.AccountUIModel
 import com.example.financeapp.domain.model.AccountModel
 
 /**
@@ -36,9 +37,8 @@ import com.example.financeapp.domain.model.AccountModel
  */
 @Composable
 fun AccountContent(
-    account: AccountModel,
+    account: AccountUIModel,
     paddingValues: PaddingValues,
-    onAccountClick: (Int) -> Unit,
 ) {
     Column(
         Modifier
@@ -48,15 +48,14 @@ fun AccountContent(
                 bottom = paddingValues.calculateBottomPadding()
             )
     ) {
-        BalanceItem(account, onAccountClick)
-        CurrencyItem(account, onAccountClick)
+        BalanceItem(account)
+        CurrencyItem(account)
     }
 }
 
 @Composable
 private fun BalanceItem(
-    account: AccountModel,
-    onClick: (Int) -> Unit,
+    account: AccountUIModel,
 ) {
     ListItem(
         leadingContent = {
@@ -73,7 +72,7 @@ private fun BalanceItem(
         trailingContent = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = formatPrice(account.balance),
+                    text = "${account.balance} ${account.currency.symbol}",
                     style = Typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -81,15 +80,14 @@ private fun BalanceItem(
             }
         },
         downDivider = true,
-        onClick = { onClick(account.id) },
+        onClick = {  },
         backgroundColor = MaterialTheme.colorScheme.secondary,
     )
 }
 
 @Composable
 private fun CurrencyItem(
-    account: AccountModel,
-    onClick: (Int) -> Unit,
+    account: AccountUIModel,
 ) {
     ListItem(
         leadingContent = {
@@ -103,7 +101,7 @@ private fun CurrencyItem(
         trailingContent = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = account.currency,
+                    text = account.currency.symbol,
                     style = Typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -111,7 +109,7 @@ private fun CurrencyItem(
             }
         },
         downDivider = false,
-        onClick = { onClick(account.id) },
+        onClick = {  },
         backgroundColor = MaterialTheme.colorScheme.secondary
     )
 }

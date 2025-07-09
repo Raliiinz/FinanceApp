@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarTextIcon(
-    textResId: Int,
+    textResId: Int?,
     leadingImageResId: Int?,
     trailingImageResId: Int?,
     onTrailingClicked: (() -> Unit)?,
@@ -37,12 +37,14 @@ fun TopBarTextIcon(
 }
 
 @Composable
-private fun AppBarTitle(textResId: Int) {
-    Text(
-        text = stringResource(textResId),
-        color = MaterialTheme.colorScheme.onSurface,
-        style = MaterialTheme.typography.titleLarge
-    )
+private fun AppBarTitle(textResId: Int?) {
+    textResId?.let {
+        Text(
+            text = stringResource(it),
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleLarge
+        )
+    }
 }
 
 @Composable

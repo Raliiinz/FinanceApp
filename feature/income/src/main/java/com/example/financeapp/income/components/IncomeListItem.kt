@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
+import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.domain.model.TransactionModel
 
 /**
@@ -31,7 +32,7 @@ fun IncomeListItem(
             )
         },
         trailingContent = {
-            IncomeTrailingContent(amount = transaction.amount)
+            IncomeTrailingContent(amount = transaction.amount, currency = transaction.currency)
         },
         downDivider = true,
         onClick = onClick,
@@ -43,6 +44,7 @@ fun IncomeListItem(
 @Composable
 private fun IncomeTrailingContent(
     amount: Double,
+    currency: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -50,7 +52,7 @@ private fun IncomeTrailingContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = formatPrice(amount.toDouble()),
+            text = "${amount.toDouble()} ${currency.toCurrencySymbol()}",
             style = Typography.bodyLarge,
         )
         MoreIcon()

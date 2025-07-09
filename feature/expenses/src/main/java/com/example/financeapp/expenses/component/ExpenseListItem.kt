@@ -13,6 +13,7 @@ import com.example.financeapp.base.commonItems.IconBox
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
+import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.domain.model.TransactionModel
 
 /**
@@ -35,7 +36,7 @@ fun ExpenseListItem(
             )
         },
         trailingContent = {
-            ExpenseTrailingContent(price = transaction.amount)
+            ExpenseTrailingContent(price = transaction.amount, currency = transaction.currency)
         },
         downDivider = true,
         onClick = onClick,
@@ -79,6 +80,7 @@ private fun ExpenseLeadingContent(
 @Composable
 private fun ExpenseTrailingContent(
     price: Double,
+    currency: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -86,7 +88,7 @@ private fun ExpenseTrailingContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = formatPrice(price),
+            text = "${price} ${currency.toCurrencySymbol()}",
             style = Typography.bodyLarge,
         )
         MoreIcon()

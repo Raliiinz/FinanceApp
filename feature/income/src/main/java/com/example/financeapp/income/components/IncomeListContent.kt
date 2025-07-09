@@ -16,6 +16,7 @@ import com.example.financeapp.domain.model.TransactionModel
 @Composable
 fun IncomeListContent(
     incomes: List<TransactionModel>,
+    currency: String,
     paddingValues: PaddingValues,
     onIncomeClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -30,7 +31,7 @@ fun IncomeListContent(
                 bottom = paddingValues.calculateBottomPadding()
             )
     ) {
-        TotalIncomeItem(totalIncome)
+        TotalIncomeItem(totalIncome, currency)
         LazyColumn {
             itemsIndexed(incomes) { index, item ->
                 IncomeListItem(

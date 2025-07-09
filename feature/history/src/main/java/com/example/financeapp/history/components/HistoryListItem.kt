@@ -20,6 +20,7 @@ import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatBackendTime
 import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
+import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.domain.model.TransactionModel
 
 /**
@@ -59,7 +60,7 @@ fun HistoryListItem(item: TransactionModel) {
                     modifier = Modifier.align(Alignment.CenterVertically),
                 ) {
                     Text(
-                        text = formatPrice(item.amount) +
+                        text = "${item.amount} ${item.currency.toCurrencySymbol()}" +
                                 "\n" + formatBackendTime(item.time),
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.End,

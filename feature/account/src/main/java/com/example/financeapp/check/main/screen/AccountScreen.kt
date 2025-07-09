@@ -1,4 +1,4 @@
-package com.example.financeapp.check.screen
+package com.example.financeapp.check.main.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,8 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,9 +20,8 @@ import com.example.financeapp.base.commonItems.BaseFloatingActionButton
 import com.example.financeapp.base.commonItems.ErrorDialog
 import com.example.financeapp.base.ui.commonItems.EmptyContent
 import com.example.financeapp.base.ui.commonItems.LoadingContent
-import com.example.financeapp.check.components.AccountContent
-import com.example.financeapp.check.state.AccountEvent
-import com.example.financeapp.check.state.AccountUiState
+import com.example.financeapp.check.main.components.AccountContent
+import com.example.financeapp.check.main.state.AccountEffect
 
 
 /**
@@ -35,33 +34,21 @@ fun AccountScreen(
     onAccountClick: (Int) -> Unit,
     onFabClick: () -> Unit
 ) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) { viewModel.handleEvent(AccountEvent.Retry) }
+    LaunchedEffect(Unit) { viewModel.handleEvent(AccountEffect.Retry) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-        when (uiState) {
-            AccountUiState.Loading -> LoadingContent()
-            is AccountUiState.Success -> AccountContent(
-                account = uiState.account,
-                paddingValues = paddingValues,
-                onAccountClick = onAccountClick
+        when {
+            state.isLoading -> LoadingContent()
+            state.account != null -> AccountContent(
+                account = state.account,
+                paddingValues = paddingValues
             )
-            is AccountUiState.Error -> {
-                ErrorDialog(
-                    message = stringResource(uiState.messageRes),
-                    retryButtonText = stringResource(R.string.repeat),
-                    dismissButtonText = stringResource(R.string.exit),
-                    onRetry = { viewModel.handleEvent(AccountEvent.Retry) },
-                    onDismiss = { viewModel.handleEvent(AccountEvent.HideErrorDialog) }
-                )
-            }
-            AccountUiState.Empty -> EmptyContent()
-            AccountUiState.Idle -> {}
         }
 
         BaseFloatingActionButton(
@@ -72,6 +59,15 @@ fun AccountScreen(
                     end = 16.dp,
                     bottom = paddingValues.calculateBottomPadding() + 14.dp
                 )
+        )
+    }
+    state.showErrorDialog?.let { errorRes ->
+        ErrorDialog(
+            message = stringResource(errorRes),
+            retryButtonText = stringResource(R.string.repeat),
+            dismissButtonText = stringResource(R.string.exit),
+            onRetry = { viewModel.handleEvent(AccountEffect.Retry) },
+            onDismiss = { viewModel.handleEvent(AccountEffect.HideErrorDialog) }
         )
     }
 }

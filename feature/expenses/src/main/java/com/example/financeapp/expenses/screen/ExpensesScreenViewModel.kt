@@ -32,6 +32,8 @@ class ExpensesScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<ExpensesUiState>(ExpensesUiState.Loading)
     val uiState: StateFlow<ExpensesUiState> = _uiState.asStateFlow()
 
+    private var currentCurrency: String = "RUB"
+
     fun handleEvent(event: ExpensesEvent) {
         when (event) {
             is ExpensesEvent.LoadExpenses -> loadExpenses(event.from, event.to)
@@ -55,11 +57,16 @@ class ExpensesScreenViewModel @Inject constructor(
                         return@launch
                     }
 
+                    currentCurrency = account.currency
+
                     when (val transactionsResult = getTransactionsUseCase(account.id, from, to)) {
                         is Result.Success -> {
                             val expenses = transactionsResult.data.filter { !it.isIncome }
                             _uiState.update {
-                                ExpensesUiState.Success(expenses)
+                                ExpensesUiState.Success(
+                                    transactions = expenses,
+                                    currency = currentCurrency
+                                )
                             }
                         }
                         is Result.HttpError -> handleHttpError(transactionsResult.reason)
