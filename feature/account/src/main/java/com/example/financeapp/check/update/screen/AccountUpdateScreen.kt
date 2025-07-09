@@ -9,11 +9,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.widget.Toast
+import androidx.compose.foundation.background
 import com.example.financeapp.base.R
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -54,8 +56,7 @@ fun AccountUpdateScreen(
 
 
     Column(
-        modifier = Modifier.fillMaxSize()
-        ,
+        modifier = Modifier.fillMaxSize(),
     ) {
         TopBarTextIcon(
             textResId = R.string.my_check,
@@ -70,6 +71,7 @@ fun AccountUpdateScreen(
 
         Box(
             modifier = Modifier.weight(1f)
+            .background(MaterialTheme.colorScheme.surface)
         ) {
             when {
                 state.isLoading -> {

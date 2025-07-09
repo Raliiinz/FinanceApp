@@ -78,8 +78,7 @@ dependencies {
     implementation(libs.lottie.compose)
 
 
-    implementation(libs.hilt)
-    ksp(libs.hilt.compiler)
+
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 }

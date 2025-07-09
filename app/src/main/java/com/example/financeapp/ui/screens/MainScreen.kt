@@ -27,15 +27,18 @@ fun MainScreen(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val transactionType = navBackStackEntry?.arguments?.getSerializable("type") as? TransactionType
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
+            if (currentRoute != CheckRoutes.CHECK_EDIT_FROM_TOPBAR) {
                 AppTopBar(
                     currentDestination = currentDestination,
                     navController = navController,
                     historyNavigation = historyNavigation
                 )
+            }
         },
         bottomBar = {
             AppBottomBar(
