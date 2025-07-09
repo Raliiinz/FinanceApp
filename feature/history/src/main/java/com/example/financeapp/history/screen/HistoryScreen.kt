@@ -22,6 +22,7 @@ import com.example.financeapp.base.commonItems.ErrorDialog
 import com.example.financeapp.base.commonItems.MyDatePicker
 import com.example.financeapp.base.ui.commonItems.LoadingContent
 import com.example.financeapp.base.ui.formating.formatPrice
+import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.history.components.HistoryListItem
 import com.example.financeapp.history.components.InfoItemClickable
 import com.example.financeapp.history.state.HistoryEvent
@@ -123,7 +124,7 @@ fun HistoryScreen(
             }
             is HistoryUiState.Success -> {
                 val historyList = state.transactions
-                val totalSum = formatPrice(historyList.sumOf { it.amount })
+                val totalSum = "${historyList.sumOf { it.amount}} ${state.currency.toCurrencySymbol()}"
 
                 LazyColumn(
                     modifier = Modifier

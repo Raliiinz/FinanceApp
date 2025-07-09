@@ -8,5 +8,11 @@ import com.example.financeapp.util.result.Result
  */
 interface AccountRepository {
     suspend fun getAccounts(): Result<List<AccountModel>>
-    suspend fun updateAccounts(accounts: List<AccountModel>) : Result<Unit>
+    suspend fun updateAccount(
+        id: Int,
+        name: String,
+        balance: String,
+        currency: String,
+    ) : Result<AccountModel>
+    suspend fun getAllCurrencies() : Result<List<String>>
 }

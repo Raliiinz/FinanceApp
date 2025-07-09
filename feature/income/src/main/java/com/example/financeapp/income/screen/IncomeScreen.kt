@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.BaseFloatingActionButton
@@ -49,6 +50,7 @@ fun IncomeScreen(
             IncomeUiState.Loading -> LoadingContent()
             is IncomeUiState.Success -> IncomeListContent(
                 incomes = state.incomes,
+                currency = state.currency,
                 paddingValues = paddingValues,
                 onIncomeClicked = onIncomeClicked
             )

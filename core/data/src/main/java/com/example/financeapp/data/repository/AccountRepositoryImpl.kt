@@ -5,6 +5,8 @@ import com.example.financeapp.util.result.Result
 import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.domain.repository.AccountRepository
 import com.example.financeapp.network.AccountApi
+import com.example.financeapp.network.pojo.request.AccountUpdateRequest
+import com.example.financeapp.network.pojo.response.account.Account
 import com.example.financeapp.network.util.ApiClient
 import com.example.financeapp.util.result.map
 import javax.inject.Inject
@@ -31,11 +33,22 @@ class AccountRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateAccounts(accounts: List<AccountModel>): Result<Unit> {
+    override suspend fun updateAccount(
+        id: Int,
+        name: String,
+        balance: String,
+        currency: String
+    ): Result<AccountModel> {
         return apiClient.safeApiCall {
-            api.updateAccounts(
-                accounts.map(accountMapper::toBriefAccount)
-            )
-        }
+            api.updateAccountById(id, AccountUpdateRequest(
+                name = name,
+                balance = balance,
+                currency = currency))
+        }.map(accountMapper::toDomain)
+    }
+
+    override suspend fun getAllCurrencies(): Result<List<String>> {
+        val currencies = listOf("RUB", "USD", "EUR")
+        return Result.Success(currencies)
     }
 }

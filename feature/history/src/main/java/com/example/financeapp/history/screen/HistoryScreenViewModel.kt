@@ -34,6 +34,7 @@ class HistoryScreenViewModel @Inject constructor(
     val uiState: StateFlow<HistoryUiState> = _uiState.asStateFlow()
 
     private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    private var currentCurrency: String = "RUB"
 
     private val _fromDate = MutableStateFlow(LocalDate.now().withDayOfMonth(1).format(formatter))
     private val _toDate = MutableStateFlow(LocalDate.now().format(formatter))
@@ -63,6 +64,7 @@ class HistoryScreenViewModel @Inject constructor(
                     if (account == null) {
                         return@launch
                     }
+                    currentCurrency = account.currency
 
                     when (val transactionsResult = getTransactionsUseCase(
                         accountId = account.id,
@@ -75,7 +77,7 @@ class HistoryScreenViewModel @Inject constructor(
                                 .sortedByDescending { it.time }
 
                             _uiState.update {
-                                HistoryUiState.Success(filteredTransactions)
+                                HistoryUiState.Success(filteredTransactions, currentCurrency)
                             }
                         }
                         is Result.HttpError -> handleHttpError(transactionsResult.reason)

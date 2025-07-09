@@ -13,6 +13,7 @@ class TransactionMapper @Inject constructor() {
     fun toDomain(response: TransactionResponse): TransactionModel = TransactionModel(
         id = response.id,
         accountId = response.account.id.toString(),
+        currency = response.account.currency,
         categoryEmoji = response.category.emoji,
         categoryName = response.category.name,
         isIncome = response.category.isIncome,
