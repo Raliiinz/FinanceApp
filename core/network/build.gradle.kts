@@ -48,6 +48,7 @@ dependencies {
     implementation(project(path = ":core:util"))
     implementation(project(path = ":core:base"))
 
+    implementation("androidx.annotation:annotation:1.7.1")
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
     implementation(libs.kotlinx.coroutines.core)

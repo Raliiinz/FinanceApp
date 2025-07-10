@@ -1,5 +1,6 @@
 package com.example.financeapp.data.mapper
 
+import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.network.pojo.response.account.Account
 import com.example.financeapp.network.pojo.response.account.AccountBrief
@@ -9,7 +10,7 @@ import javax.inject.Singleton
 /**
  * Маппер для преобразования между сетевыми и доменными моделями аккаунтов.
  */
-@Singleton
+@AppScope
 class AccountMapper @Inject constructor() {
     fun toBriefAccount(model: AccountModel): AccountBrief = AccountBrief(
         id = model.id.toInt(),

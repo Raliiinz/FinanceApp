@@ -1,5 +1,6 @@
 package com.example.financeapp.network.util
 
+import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.domain.di.qualifies.IoDispatchers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
@@ -17,7 +18,7 @@ import javax.inject.Singleton
  * - Повторов запросов
  * - Обработки ошибок
  */
-@Singleton
+@AppScope
 class ApiClient @Inject constructor(
     @IoDispatchers private val dispatcher: CoroutineDispatcher,
     private val networkChecker: NetworkChecker,

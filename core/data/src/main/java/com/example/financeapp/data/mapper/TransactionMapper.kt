@@ -1,5 +1,6 @@
 package com.example.financeapp.data.mapper
 
+import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.domain.model.TransactionModel
 import com.example.financeapp.network.pojo.response.transaction.TransactionResponse
 import javax.inject.Inject
@@ -8,7 +9,7 @@ import javax.inject.Singleton
 /**
  * Маппер для преобразования между сетевыми и доменными моделями транзакций.
  */
-@Singleton
+@AppScope
 class TransactionMapper @Inject constructor() {
     fun toDomain(response: TransactionResponse): TransactionModel = TransactionModel(
         id = response.id,
