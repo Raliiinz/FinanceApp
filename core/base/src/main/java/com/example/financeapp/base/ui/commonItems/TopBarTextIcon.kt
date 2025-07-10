@@ -54,7 +54,7 @@ private fun LeadingIcon(resId: Int?, onClick: (() -> Unit)?) {
             painter = painterResource(it),
             contentDescription = null,
             modifier = Modifier
-                .padding(start = 18.dp)
+//                .padding(start = 18.dp)
                 .clickable { onClick?.invoke() },
             tint = MaterialTheme.colorScheme.onSurface.copy(0.8f)
         )

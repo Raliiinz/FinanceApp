@@ -2,6 +2,7 @@ package com.example.financeapp.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.financeapp.articles.navigation.articlesNavGraph
@@ -25,17 +26,19 @@ fun RootNavGraph(
     checkViewModelFactory: ViewModelFactory,
     articlesViewModelFactory: ViewModelFactory,
     settingsViewModelFactory: ViewModelFactory,
+    historyNavigation: HistoryNavigation,
+    updateTopBarState: (NavBackStackEntry, TopBarConfig?) -> Unit,
 
 ) {
     NavHost(
         navController = navController,
         startDestination = Screen.Expenses.route,
     ) {
-        expensesNavGraph(navController, paddingValues, expensesViewModelFactory)
-        incomeNavGraph(navController, paddingValues, incomeViewModelFactory)
-        checkNavGraph(navController, paddingValues, checkViewModelFactory)
-        articlesNavGraph(navController, paddingValues, articlesViewModelFactory)
-        settingsNavGraph(navController, paddingValues, settingsViewModelFactory)
-        historyNavGraph(navController, paddingValues, historyViewModelFactory)
+        expensesNavGraph(navController, paddingValues, expensesViewModelFactory, updateTopBarState, historyNavigation)
+        incomeNavGraph(navController, paddingValues, incomeViewModelFactory, updateTopBarState, historyNavigation)
+        checkNavGraph(navController, paddingValues, checkViewModelFactory, updateTopBarState)
+        articlesNavGraph(navController, paddingValues, articlesViewModelFactory, updateTopBarState)
+        settingsNavGraph(navController, paddingValues, settingsViewModelFactory, updateTopBarState)
+        historyNavGraph(navController, paddingValues, historyViewModelFactory, updateTopBarState)
     }
 }
