@@ -21,6 +21,10 @@ import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.ui.util.pattern.BALANCE_PATTERN
 import com.example.financeapp.check.model.AccountUIModel
 
+/**
+ * Компонент для редактирования данных аккаунта.
+ * Содержит поля для имени, баланса и выбора валюты.
+ */
 @Composable
 fun AccountUpdateItem(
     account: AccountUIModel,

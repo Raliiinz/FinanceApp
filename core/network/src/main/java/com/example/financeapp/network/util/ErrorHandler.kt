@@ -1,11 +1,11 @@
 package com.example.financeapp.network.util
 
+import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.util.result.FailureReason
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Обрабатывает ошибки сетевых запросов.
@@ -14,7 +14,7 @@ import javax.inject.Singleton
  * - Преобразование исключений в FailureReason
  * - Парсинг ошибок сервера
  */
-@Singleton
+@AppScope
 class ErrorHandler @Inject constructor(
     private val gson: Gson
 ) {

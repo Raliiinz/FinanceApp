@@ -8,7 +8,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.commonItems.ListItem
-import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.domain.model.TransactionModel
@@ -27,12 +26,12 @@ fun IncomeListItem(
     ListItem(
         leadingContent = {
             Text(
-                text = transaction.categoryName,
+                text = transaction.category.textLeading,
                 style = MaterialTheme.typography.bodyLarge,
             )
         },
         trailingContent = {
-            IncomeTrailingContent(amount = transaction.amount, currency = transaction.currency)
+            IncomeTrailingContent(amount = transaction.amount, currency = transaction.account.currency)
         },
         downDivider = true,
         onClick = onClick,

@@ -2,15 +2,25 @@ package com.example.financeapp.check.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.runtime.DisposableEffect
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.financeapp.base.R
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.check.main.screen.AccountScreen
 import com.example.financeapp.check.main.screen.AccountScreenViewModel
 import com.example.financeapp.check.update.screen.AccountUpdateScreen
+import com.example.financeapp.check.update.screen.AccountUpdateViewModel
+import com.example.financeapp.check.update.state.AccountUpdateEvent
 import com.example.financeapp.navigation.Screen
+import com.example.financeapp.navigation.TopBarConfig
 
 /**
  * Навигационный граф для экранов раздела "Чеки/Счета".
@@ -18,43 +28,93 @@ import com.example.financeapp.navigation.Screen
  */
 fun NavGraphBuilder.checkNavGraph(
     navController: NavHostController,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModelFactory: ViewModelFactory,
+    updateTopBarState: (NavBackStackEntry, TopBarConfig?) -> Unit,
 ) {
     navigation(
         startDestination = CheckRoutes.CHECK_MAIN,
         route = Screen.Check.route
     ) {
-        composable("check/main") {
+        composable("check/main") { backStackEntry ->
+            val lifecycleOwner = LocalLifecycleOwner.current
+
+            DisposableEffect(lifecycleOwner, backStackEntry) {
+                val observer = LifecycleEventObserver { _, event ->
+                    if (event == Lifecycle.Event.ON_START) {
+                        val topBarConfig = TopBarConfig(
+                            textResId = R.string.my_check,
+                            trailingImageResId = R.drawable.pencil,
+                            onTrailingClick = {
+                                navController.navigate(CheckRoutes.CHECK_EDIT_FROM_TOPBAR)
+                            },
+                            leadingImageResId = null,
+                            onLeadingClick = null
+                        )
+                        updateTopBarState(backStackEntry, topBarConfig)
+                    }
+                }
+
+                backStackEntry.lifecycle.addObserver(observer)
+
+                onDispose {
+                    backStackEntry.lifecycle.removeObserver(observer)
+                    updateTopBarState(backStackEntry, null)
+                }
+            }
+
             ChecksRoute(
                 paddingValues = paddingValues,
                 onCheckClicked = { id -> /* handle tap */ },
-                onFabClick = { /* handle FAB */ }
+                onFabClick = { /* handle FAB */ },
+                viewModel = viewModel(
+                    factory = viewModelFactory,
+                    viewModelStoreOwner = backStackEntry
+                )
             )
         }
 
-        composable(CheckRoutes.CHECK_EDIT_FROM_TOPBAR) {
+        composable(CheckRoutes.CHECK_EDIT_FROM_TOPBAR) { backStackEntry ->
+            val lifecycleOwner = LocalLifecycleOwner.current
+            val accountUpdateViewModel: AccountUpdateViewModel = viewModel(
+                factory = viewModelFactory,
+                viewModelStoreOwner = backStackEntry
+            )
+
+            DisposableEffect(lifecycleOwner, backStackEntry) {
+                val observer = LifecycleEventObserver { _, event ->
+                    if (event == Lifecycle.Event.ON_START) {
+                        val topBarConfig = TopBarConfig(
+                            textResId = R.string.my_check,
+                            trailingImageResId = R.drawable.ic_done,
+                            onTrailingClick = {
+                                accountUpdateViewModel.reduce(AccountUpdateEvent.OnDoneClicked)
+                            },
+                            leadingImageResId = R.drawable.ic_close,
+                            onLeadingClick = {
+                                navController.popBackStack()
+                            }
+                        )
+                        updateTopBarState(backStackEntry, topBarConfig)
+                    }
+                }
+
+                backStackEntry.lifecycle.addObserver(observer)
+
+                onDispose {
+                    backStackEntry.lifecycle.removeObserver(observer)
+                    updateTopBarState(backStackEntry, null)
+                }
+            }
+
             EditAccountRoute(
                 accountId = null,
                 navController = navController,
-                paddingValues = paddingValues
+                paddingValues = paddingValues,
+                viewModel = accountUpdateViewModel
             )
         }
-        // 1.4. (ОПЦИОНАЛЬНО) Если вы когда-нибудь захотите редактировать по ID, раскомментируйте это:
-        /*
-        composable(
-            route = CheckRoutes.CHECK_EDIT_SPECIFIC_ACCOUNT,
-            arguments = listOf(navArgument("accountId") {
-                type = NavType.IntType
-            })
-        ) { backStackEntry ->
-            val accountId = backStackEntry.arguments?.getInt("accountId")
-            EditAccountRoute(
-                accountId = accountId, // Передаем полученный ID
-                navController = navController,
-                paddingValues = paddingValues
-            )
-        }
-        */
+
     }
 }
 
@@ -67,7 +127,7 @@ fun ChecksRoute(
     paddingValues: PaddingValues,
     onCheckClicked: (Int) -> Unit,
     onFabClick: () -> Unit,
-    viewModel: AccountScreenViewModel = hiltViewModel()
+    viewModel: AccountScreenViewModel
 ) {
     AccountScreen(
         viewModel = viewModel,
@@ -83,20 +143,20 @@ fun ChecksRoute(
  */
 @Composable
 fun EditAccountRoute(
-    accountId: Int?, // Если null, значит ID нужно получить во ViewModel
+    accountId: Int?,
     navController: NavHostController,
     paddingValues: PaddingValues,
-    // viewModel: EditAccountViewModel = hiltViewModel() // Ваша ViewModel для этого экрана
+    viewModel: AccountUpdateViewModel
 ) {
     AccountUpdateScreen(
         paddingValues = paddingValues,
         onCloseClick = { navController.popBackStack() },
         onSaveClick = { navController.popBackStack() },
+        viewModel = viewModel
     )
 }
 
 object CheckRoutes {
     const val CHECK_MAIN = "check/main"
     const val CHECK_EDIT_FROM_TOPBAR = "check/edit_from_topbar"
-
 }

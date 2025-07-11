@@ -10,7 +10,6 @@ import com.example.financeapp.income.state.IncomeUiState
 import com.example.financeapp.util.date.formatDate
 import com.example.financeapp.util.date.getMonthRange
 import com.example.financeapp.util.result.FailureReason
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +23,7 @@ import java.time.LocalDate
  * ViewModel для экрана доходов.
  * Управляет загрузкой и состоянием данных о доходах.
  */
-@HiltViewModel
+
 class IncomeScreenViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getAccountUseCase: GetAccountUseCase
@@ -72,7 +71,7 @@ class IncomeScreenViewModel @Inject constructor(
 
                     when (val transactionsResult = getTransactionsUseCase(account.id, from, to)) {
                         is Result.Success -> {
-                            val incomes = transactionsResult.data.filter { it.isIncome }
+                            val incomes = transactionsResult.data.filter { it.category.isIncome }
                             _uiState.update {
                                 IncomeUiState.Success(incomes, currentCurrency)
                             }

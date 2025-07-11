@@ -1,45 +1,72 @@
 package com.example.financeapp.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.financeapp.check.navigation.CheckRoutes
-import com.example.financeapp.extensions.shouldHideTopBar
+import com.example.financeapp.base.di.ViewModelFactory
+import androidx.navigation.NavBackStackEntry
+import com.example.financeapp.base.R
 import com.example.financeapp.navigation.HistoryNavigation
 import com.example.financeapp.navigation.RootNavGraph
+import com.example.financeapp.navigation.TopBarConfig
 import com.example.financeapp.navigation.TransactionType
 import com.example.financeapp.ui.components.AppBottomBar
 import com.example.financeapp.ui.components.AppTopBar
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Главный экран приложения с навигацией и scaffold-структурой.
  */
+@SuppressLint("RememberReturnType")
 @Composable
 fun MainScreen(
-    historyNavigation: HistoryNavigation
+    historyNavigation: HistoryNavigation,
+    expensesViewModelFactory: ViewModelFactory,
+    historyViewModelFactory: ViewModelFactory,
+    incomeViewModelFactory: ViewModelFactory,
+    checkViewModelFactory: ViewModelFactory,
+    articlesViewModelFactory: ViewModelFactory,
+    settingsViewModelFactory: ViewModelFactory,
+    transactionViewModelFactory: ViewModelFactory
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val transactionType = navBackStackEntry?.arguments?.getSerializable("type") as? TransactionType
-    val currentRoute = navBackStackEntry?.destination?.route
+
+    val topBarStateMap = remember { mutableStateMapOf<NavBackStackEntry, TopBarConfig>() }
+    val currentNavController by rememberUpdatedState(navController)
+    val currentHistoryNavigation by rememberUpdatedState(historyNavigation)
+
+    val currentTopBarStateFlow = remember {
+        val initialTopBarConfig = TopBarConfig(
+            textResId = R.string.expenses_today,
+            trailingImageResId = R.drawable.refresh,
+            onTrailingClick = {
+                currentNavController.navigate(
+                    currentHistoryNavigation.navigateToHistory(
+                        TransactionType.EXPENSE
+                    )
+                )
+            },
+            leadingImageResId = null,
+            onLeadingClick = null
+        )
+        MutableStateFlow<TopBarConfig?>(initialTopBarConfig)
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            if (currentRoute != CheckRoutes.CHECK_EDIT_FROM_TOPBAR) {
-                AppTopBar(
-                    currentDestination = currentDestination,
-                    navController = navController,
-                    historyNavigation = historyNavigation
-                )
-            }
-        },
+        topBar = { AppTopBar(currentTopBarStateFlow) },
         bottomBar = {
             AppBottomBar(
                 navController = navController,
@@ -52,6 +79,25 @@ fun MainScreen(
             RootNavGraph(
                 navController = navController,
                 paddingValues = innerPadding,
+                expensesViewModelFactory = expensesViewModelFactory,
+                historyViewModelFactory = historyViewModelFactory,
+                incomeViewModelFactory = incomeViewModelFactory,
+                articlesViewModelFactory = articlesViewModelFactory,
+                settingsViewModelFactory = settingsViewModelFactory,
+                checkViewModelFactory = checkViewModelFactory,
+                transactionViewModelFactory = transactionViewModelFactory,
+                historyNavigation = historyNavigation,
+
+                updateTopBarState = { entry, newState ->
+                    if (newState != null) {
+                        topBarStateMap[entry] = newState
+                    } else {
+                        topBarStateMap.remove(entry)
+                    }
+                    currentTopBarStateFlow.value = navBackStackEntry?.let { activeEntry ->
+                        topBarStateMap[activeEntry]
+                    } ?: currentTopBarStateFlow.value
+                }
             )
         }
     }

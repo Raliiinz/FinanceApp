@@ -5,12 +5,10 @@ package com.example.financeapp.domain.model
  */
 data class TransactionModel(
     val id: Int,
-    val accountId: String,
-    val currency: String,
-    val categoryName: String,
-    val categoryEmoji: String,
-    val isIncome: Boolean,
+    val account: AccountModel,
+    val category: CategoryModel,
     val amount: Double,
-    val time: String,
-    val comment: String?
+    val date: String,
+    val comment: String?,
+    val isIncome: Boolean
 )

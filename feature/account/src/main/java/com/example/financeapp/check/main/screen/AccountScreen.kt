@@ -13,12 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.BaseFloatingActionButton
 import com.example.financeapp.base.commonItems.ErrorDialog
-import com.example.financeapp.base.ui.commonItems.EmptyContent
 import com.example.financeapp.base.ui.commonItems.LoadingContent
 import com.example.financeapp.check.main.components.AccountContent
 import com.example.financeapp.check.main.state.AccountEffect
@@ -29,7 +27,7 @@ import com.example.financeapp.check.main.state.AccountEffect
  */
 @Composable
 fun AccountScreen(
-    viewModel: AccountScreenViewModel = hiltViewModel(),
+    viewModel: AccountScreenViewModel,
     paddingValues: PaddingValues,
     onAccountClick: (Int) -> Unit,
     onFabClick: () -> Unit

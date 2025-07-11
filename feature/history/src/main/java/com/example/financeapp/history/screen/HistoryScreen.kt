@@ -16,12 +16,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ErrorDialog
 import com.example.financeapp.base.commonItems.MyDatePicker
 import com.example.financeapp.base.ui.commonItems.LoadingContent
-import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.history.components.HistoryListItem
 import com.example.financeapp.history.components.InfoItemClickable
@@ -41,7 +39,7 @@ fun HistoryScreen(
     transactionType: TransactionType,
     paddingValues: PaddingValues,
     onBackClick: (Int) -> Unit,
-    viewModel: HistoryScreenViewModel = hiltViewModel()
+    viewModel: HistoryScreenViewModel
 ) {
     val displayFormatter = remember { DateTimeFormatter.ofPattern("dd-MM-yy") }
     val backendFormatter = remember { DateTimeFormatter.ofPattern("yyyy-MM-dd") }

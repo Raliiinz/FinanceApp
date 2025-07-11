@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/feature/history" />
             <option value="$PROJECT_DIR$/feature/income" />
             <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/transaction" />
           </set>
         </option>
       </GradleProjectSettings>

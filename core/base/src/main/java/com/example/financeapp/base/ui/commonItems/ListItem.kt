@@ -61,7 +61,7 @@ private fun RowContent(
 }
 
 @Composable
-private fun ListDivider() {
+fun ListDivider() {
     HorizontalDivider(
         modifier = Modifier.fillMaxWidth(),
         thickness = 1.dp,

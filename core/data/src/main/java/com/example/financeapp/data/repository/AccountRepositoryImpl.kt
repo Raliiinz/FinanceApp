@@ -5,8 +5,7 @@ import com.example.financeapp.util.result.Result
 import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.domain.repository.AccountRepository
 import com.example.financeapp.network.AccountApi
-import com.example.financeapp.network.pojo.request.AccountUpdateRequest
-import com.example.financeapp.network.pojo.response.account.Account
+import com.example.financeapp.network.pojo.request.account.AccountUpdateRequest
 import com.example.financeapp.network.util.ApiClient
 import com.example.financeapp.util.result.map
 import javax.inject.Inject

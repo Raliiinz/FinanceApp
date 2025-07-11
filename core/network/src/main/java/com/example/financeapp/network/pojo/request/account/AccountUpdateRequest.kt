@@ -1,4 +1,4 @@
-package com.example.financeapp.network.pojo.request
+package com.example.financeapp.network.pojo.request.account
 
 import com.google.gson.annotations.SerializedName
 

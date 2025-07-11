@@ -1,6 +1,7 @@
 package com.example.financeapp.util.date
 
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
@@ -63,3 +64,17 @@ fun LocalDate.getMonthRange(): Pair<String, String> {
     )
 }
 
+/** Форматирует дату в пользовательский формат для отображения (напр. 11.07.2025). */
+fun LocalDate.formatForDisplay(): String {
+    return this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+}
+
+/** Форматирует время в пользовательский формат для отображения (напр. 14:30). */
+fun LocalTime.formatForDisplay(): String {
+    return this.format(DateTimeFormatter.ofPattern("HH:mm"))
+}
+
+/** Преобразует дату и время в строку ISO_LOCAL_DATE_TIME для отправки на сервер. */
+fun LocalDateTimeToIsoString(date: LocalDate, time: LocalTime): String {
+    return date.atTime(time).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+}

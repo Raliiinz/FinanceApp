@@ -10,7 +10,6 @@ import com.example.financeapp.expenses.state.ExpensesUiState
 import com.example.financeapp.util.date.formatDate
 import com.example.financeapp.util.result.FailureReason
 import com.example.financeapp.util.result.Result
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +22,6 @@ import javax.inject.Inject
  * ViewModel для экрана расходов.
  * Управляет загрузкой и состоянием данных о расходах.
  */
-@HiltViewModel
 class ExpensesScreenViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getAccountUseCase: GetAccountUseCase
@@ -61,7 +59,7 @@ class ExpensesScreenViewModel @Inject constructor(
 
                     when (val transactionsResult = getTransactionsUseCase(account.id, from, to)) {
                         is Result.Success -> {
-                            val expenses = transactionsResult.data.filter { !it.isIncome }
+                            val expenses = transactionsResult.data.filter { !it.category.isIncome }
                             _uiState.update {
                                 ExpensesUiState.Success(
                                     transactions = expenses,

@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    kotlin("kapt")
     alias(libs.plugins.secrets)
 }
 
@@ -48,10 +47,10 @@ dependencies {
     implementation(project(path = ":core:domain"))
     implementation(project(path = ":core:util"))
     implementation(project(path = ":core:network"))
+    implementation(project(path = ":core:base"))
 
-    // Hilt
-    implementation(libs.hilt)
-    ksp(libs.hilt.compiler)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 
     // Network
     implementation(libs.bundles.network.deps)

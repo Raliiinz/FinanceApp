@@ -8,7 +8,8 @@ import com.example.financeapp.util.result.Result
  */
 interface TransactionRepository {
     suspend fun getTransactions(accountId: Int, from: String, to: String): Result<List<TransactionModel>>
-    suspend fun createTransaction(transaction: TransactionModel)
-    suspend fun updateTransaction(transaction: TransactionModel)
-    suspend fun deleteTransaction(id: Int)
+    suspend fun createTransaction(transaction: TransactionModel): Result<TransactionModel>
+    suspend fun updateTransaction(transaction: TransactionModel): Result<TransactionModel>
+    suspend fun deleteTransaction(id: Int): Result<Unit>
+    suspend fun getTransactionById(id: Int): Result<TransactionModel>
 }

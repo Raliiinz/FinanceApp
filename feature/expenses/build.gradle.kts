@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    kotlin("kapt")
 }
 
 android {
@@ -66,8 +65,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Hilt
-    implementation(libs.hilt)
-    ksp(libs.hilt.compiler)
-    implementation(libs.hilt.compose)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")
+    // AssistedInject
+    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
+    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
 }

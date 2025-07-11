@@ -9,7 +9,6 @@ import com.example.financeapp.base.R
 import com.example.financeapp.domain.model.CategoryModel
 import com.example.financeapp.domain.usecase.category.GetCategoriesUseCase
 import com.example.financeapp.util.result.FailureReason
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +22,7 @@ import com.example.financeapp.util.result.Result
  * ViewModel для экрана категорий статей.
  * Управляет загрузкой и состоянием данных категорий.
  */
-@HiltViewModel
+
 class CategoryScreenViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {

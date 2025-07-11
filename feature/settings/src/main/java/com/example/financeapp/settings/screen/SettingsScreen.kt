@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.financeapp.settings.components.SettingsList
 
@@ -19,7 +18,7 @@ import com.example.financeapp.settings.components.SettingsList
 fun SettingsScreen(
     paddingValues: PaddingValues,
     onSettingClicked: (Int) -> Unit,
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 

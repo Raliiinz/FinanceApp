@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    kotlin("kapt")
     alias(libs.plugins.detekt)
 }
 
@@ -46,13 +45,12 @@ dependencies {
     implementation(project(path = ":core:base"))
     implementation(project(path = ":core:domain"))
     implementation(project(path = ":core:data"))
+    implementation(project(path = ":core:network"))
     implementation(project(path = ":core:navigation"))
     implementation(project(":feature:account"))
     implementation(project(":feature:category"))
     implementation(project(":feature:history"))
-
-    // Feature
-
+    implementation(project(path = ":feature:transaction"))
     implementation(project(path = ":feature:expenses"))
     implementation(project(path = ":feature:income"))
     implementation(project(path = ":feature:settings"))
@@ -77,8 +75,15 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.lottie.compose)
 
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.bundles.network.deps)
 
-
+    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    // AssistedInject
+    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
+    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
 }
