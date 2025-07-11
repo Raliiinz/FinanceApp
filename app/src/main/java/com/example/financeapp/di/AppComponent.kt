@@ -16,23 +16,28 @@ import com.example.financeapp.income.di.IncomeComponent
 import com.example.financeapp.navigation.HistoryNavigation
 import com.example.financeapp.network.di.NetworkModule
 import com.example.financeapp.settings.di.SettingsComponent
+import com.example.financeapp.transaction.di.TransactionComponent
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.coroutines.CoroutineDispatcher
 
+/**
+ * Главный компонент приложения, предоставляющий зависимости в масштабе всего приложения.
+ *
+ * Включает модули: NetworkModule, DataBinderModule, DomainModule и NavigationModule.
+ * Предоставляет билдеры для субкомпонентов (Expenses, Account, Category и др.),
+ * а также основные зависимости: Application, Context и CoroutineDispatcher.
+ */
 @AppScope
 @Component(
     modules = [
-        AppModule::class,
-        NetworkModule::class, // Из core:network
-        DataBinderModule::class, // Из core:data
-        DomainModule::class,    // Из core:domain
+        NetworkModule::class,
+        DataBinderModule::class,
+        DomainModule::class,
         NavigationModule::class
     ]
 )
 interface AppComponent {
-
-    // Метод для инъекции в Application класс, если нужно
     fun inject(application: FinanceApplication)
 
     fun expensesComponentBuilder(): ExpensesComponent.Builder
@@ -41,14 +46,10 @@ interface AppComponent {
     fun historyComponentBuilder(): HistoryComponent.Builder
     fun incomeComponentBuilder(): IncomeComponent.Builder
     fun settingsComponentBuilder(): SettingsComponent.Builder
+    fun transactionComponentBuilder(): TransactionComponent.Builder
 
     fun historyNavigation(): HistoryNavigation
-//    @Provides
-//    @AppScope
-//    fun provideHistoryNavigation(): HistoryNavigation {
-//        return HistoryNavigation() // Или ваш реальный конструктор
-//    }
-    // Метод для получения ApplicationContext, доступный для зависимых компонентов
+
     fun application(): Application
 
     @ApplicationContext
@@ -57,18 +58,9 @@ interface AppComponent {
     @IoDispatchers
     fun ioDispatcher(): CoroutineDispatcher
 
-    // -- Методы для expose зависимостей, которые будут нужны FeatureComponents --
-    // Эти методы будут использоваться в Component Dependencies
-    // Пример:
-    // fun yourApiService(): YourApiService
-    // fun yourDao(): YourDao
-    // fun yourRepository(): YourRepository
-    // fun yourUseCase(): YourUseCase
-
-    // Компонент-билдер для создания AppComponent с BindsInstance
     @Component.Builder
     interface Builder {
-        @BindsInstance // Используем для предоставления ApplicationContext
+        @BindsInstance
         fun application(application: Application): Builder
         fun build(): AppComponent
     }

@@ -83,7 +83,6 @@ fun SettingsRoute(
         viewModel = viewModel,
         paddingValues = paddingValues,
         onSettingClicked = { settingId ->
-            // навигация на подэкран, если нужно
         }
     )
 }

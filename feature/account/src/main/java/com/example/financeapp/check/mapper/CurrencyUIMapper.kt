@@ -6,6 +6,10 @@ import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.check.model.CurrencyUIModel
 import javax.inject.Inject
 
+/**
+ * Преобразует строковый код валюты в CurrencyUIModel.
+ * Содержит данные для отображения: название, символ, иконку.
+ */
 class CurrencyUIMapper @Inject constructor() {
     fun map(currency: String): CurrencyUIModel {
         return CurrencyUIModel(

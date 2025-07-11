@@ -41,7 +41,6 @@ fun CategoryScreen(
                 bottom = paddingValues.calculateBottomPadding()
             )
     ) {
-//        SearchHeader(onSearchClicked)
 
         if (uiState is CategoryScreenUiState.Success) {
             val state = uiState as CategoryScreenUiState.Success

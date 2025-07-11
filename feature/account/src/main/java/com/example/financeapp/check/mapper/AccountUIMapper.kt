@@ -5,6 +5,10 @@ import com.example.financeapp.check.model.AccountUIModel
 import com.example.financeapp.domain.model.AccountModel
 import javax.inject.Inject
 
+/**
+ * Преобразует AccountModel из domain-слоя в AccountUIModel для UI.
+ * Форматирует баланс и преобразует валюту.
+ */
 class AccountUIMapper @Inject constructor(
     private val currencyUIMapper: CurrencyUIMapper
 ) {

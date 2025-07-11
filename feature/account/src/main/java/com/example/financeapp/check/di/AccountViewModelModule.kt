@@ -6,8 +6,12 @@ import com.example.financeapp.check.main.screen.AccountScreenViewModel
 import com.example.financeapp.check.update.screen.AccountUpdateViewModel
 import dagger.Binds
 import dagger.Module
-import dagger.multibindings.IntoMap // Не забудьте добавить зависимость dagger-android-support
+import dagger.multibindings.IntoMap
 
+/**
+ * Модуль для регистрации ViewModel'ей экранов аккаунта.
+ * Связывает AccountScreenViewModel и AccountUpdateViewModel с мультибиндингом.
+ */
 @Module
 interface AccountViewModelModule {
 

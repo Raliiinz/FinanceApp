@@ -2,10 +2,12 @@
 <resources>
     <!-- Expenses Screen -->
     <string name="expenses">Расходы</string>
+    <string name="my_expenses">Мои расходы</string>
     <string name="expenses_today">Расходы сегодня</string>
 
     <!-- Income Screen -->
     <string name="income">Доходы</string>
+    <string name="my_income">Мои доходы</string>
     <string name="income_today">Доходы сегодня</string>
     <string name="price">"%s ₽"</string>
     <string name="add_expense">Добавить расход</string>
@@ -40,8 +42,6 @@
     <string name="error_loading_articles">Ошибка при загрузке статей</string>
 
 
-
-
     <!-- Settings Screen -->
     <string name="settings">Настройки</string>
     <string name="light_dark_auto">Темная тема</string>
@@ -73,4 +73,58 @@
     <string name="error_unknown">Произошла неизвестная ошибка</string>
     <string name="repeat">Повторить</string>
     <string name="error">Произошла ошибка</string>
+    <string name="error_validation_fields">Заполните все обязательные поля</string>
+    <string name="error_delete_invalid_id">Не удалось удалить транзакцию</string>
+
+    <!-- Основные строки для экрана транзакций -->
+    <string name="account">Счет</string>
+    <string name="select_account">Выберите счет</string>
+    <string name="category">Категория</string>
+    <string name="select_category">Выберите категорию</string>
+    <string name="select_time">Выберите время</string>
+    <string name="amount">Сумма</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="comment_optional">Комментарий (необязательно)</string>
+    <string name="delete_transaction">Удалить транзакцию</string>
+
+    <!-- Плейсхолдеры -->
+    <string name="transaction_placeholder_no_account">Не выбран</string>
+    <string name="transaction_placeholder_no_category">Не выбрана</string>
+    <string name="transaction_placeholder_amount">0.00</string>
+    <string name="transaction_placeholder_no_comment">Нет комментария</string>
+
+    <!-- Кнопки действий -->
+    <string name="transaction_action_save">Сохранить</string>
+    <string name="transaction_action_delete">Удалить</string>
+    <string name="transaction_action_cancel">Отмена</string>
+    <string name="transaction_action_confirm_delete">Удалить</string>
+    <string name="transaction_action_select">Выбрать</string>
+
+    <!-- Сообщения о статусах -->
+    <string name="transaction_status_loading">Загрузка данных…</string>
+    <string name="transaction_status_saving">Сохранение…</string>
+    <string name="transaction_status_deleting">Удаление…</string>
+
+    <!-- Уведомления об успехе -->
+    <string name="transaction_success_created">Транзакция успешно создана</string>
+    <string name="transaction_success_updated">Транзакция успешно обновлена</string>
+    <string name="transaction_success_deleted">Транзакция успешно удалена</string>
+
+    <!-- Диалоги -->
+    <string name="transaction_dialog_delete_title">Удаление транзакции</string>
+    <string name="transaction_dialog_delete_message">Вы уверены, что хотите удалить эту транзакцию?</string>
+    <string name="transaction_dialog_error_title">Ошибка</string>
+
+    <!-- Валидация -->
+    <string name="transaction_validation_amount_empty">Введите сумму транзакции</string>
+    <string name="transaction_validation_amount_invalid">Сумма должна быть положительным числом</string>
+    <string name="transaction_validation_account_empty">Выберите счет для транзакции</string>
+    <string name="transaction_validation_category_empty">Выберите категорию транзакции</string>
+
+    <!-- Ошибки загрузки -->
+    <string name="transaction_error_load_accounts">Не удалось загрузить список счетов</string>
+    <string name="transaction_error_load_categories">Не удалось загрузить список категорий</string>
+    <string name="transaction_error_load_transaction">Не удалось загрузить данные транзакции</string>
+    <string name="transaction_error_save_failed">Не удалось сохранить транзакцию</string>
 </resources>

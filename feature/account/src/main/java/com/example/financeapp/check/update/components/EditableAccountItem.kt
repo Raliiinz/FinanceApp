@@ -21,6 +21,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.ui.theme.Typography
 
+/**
+ * Переиспользуемый компонент для редактируемого поля.
+ * Поддерживает различные типы ввода и валидацию.
+ */
 @Composable
 fun EditableAccountItem(
     title: String,

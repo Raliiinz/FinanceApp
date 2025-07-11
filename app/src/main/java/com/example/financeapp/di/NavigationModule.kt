@@ -6,9 +6,14 @@ import com.example.financeapp.navigation.HistoryNavigation
 import dagger.Binds
 import dagger.Module
 
+/**
+ * Dagger-модуль для навигации, предоставляющий реализации навигационных интерфейсов.
+ *
+ * Связывает HistoryNavigation с его реализацией HistoryNavigationImpl в рамках AppScope.
+ */
 @Module
 interface NavigationModule {
-    @Binds // Используем @Binds для связывания интерфейса с реализацией
-    @AppScope // Убедимся, что HistoryNavigation является синглтоном на уровне приложения
+    @Binds
+    @AppScope
     fun bindHistoryNavigation(impl: HistoryNavigationImpl): HistoryNavigation
 }

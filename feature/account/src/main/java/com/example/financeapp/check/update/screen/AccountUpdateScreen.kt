@@ -25,6 +25,10 @@ import com.example.financeapp.check.update.components.CurrencySelectionBottomShe
 import com.example.financeapp.check.update.state.AccountUpdateEffect
 import com.example.financeapp.check.update.state.AccountUpdateEvent
 
+/**
+ * Экран редактирования аккаунта.
+ * Управляет состоянием, отображает форму редактирования и диалоги.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountUpdateScreen(

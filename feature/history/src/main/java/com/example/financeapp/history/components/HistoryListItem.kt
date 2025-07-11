@@ -1,7 +1,5 @@
 package com.example.financeapp.history.components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -18,7 +16,6 @@ import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.IconBox
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.base.formating.formatBackendTime
-import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.domain.model.TransactionModel
@@ -34,11 +31,11 @@ fun HistoryListItem(item: TransactionModel) {
         leadingContent = {
             Row(verticalAlignment = Alignment.CenterVertically) {
 
-                IconBox(icon = item.categoryEmoji)
+                IconBox(icon = item.category.iconLeading)
 
                 Column(modifier = Modifier
                     .padding(start = 16.dp)) {
-                    Text(item.categoryName, style = Typography.bodyLarge, maxLines = 1)
+                    Text(item.category.textLeading, style = Typography.bodyLarge, maxLines = 1)
                     item.comment?.let {
                         Text(
                             text = it,
@@ -60,8 +57,8 @@ fun HistoryListItem(item: TransactionModel) {
                     modifier = Modifier.align(Alignment.CenterVertically),
                 ) {
                     Text(
-                        text = "${item.amount} ${item.currency.toCurrencySymbol()}" +
-                                "\n" + formatBackendTime(item.time),
+                        text = "${item.amount} ${item.account.currency.toCurrencySymbol()}" +
+                                "\n" + formatBackendTime(item.date),
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.End,
                         color = MaterialTheme.colorScheme.onSurface,

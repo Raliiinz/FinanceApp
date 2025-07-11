@@ -20,7 +20,6 @@ import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ErrorDialog
 import com.example.financeapp.base.commonItems.MyDatePicker
 import com.example.financeapp.base.ui.commonItems.LoadingContent
-import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.history.components.HistoryListItem
 import com.example.financeapp.history.components.InfoItemClickable

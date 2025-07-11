@@ -21,10 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
-import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.check.model.AccountUIModel
-import com.example.financeapp.domain.model.AccountModel
 
 /**
  * Компоненты экрана просмотра счета/аккаунта.

@@ -21,6 +21,10 @@ import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
 import com.example.financeapp.check.model.CurrencyUIModel
 
+/**
+ * BottomSheet для выбора валюты из списка.
+ * Показывает список валют с иконками и названиями.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrencySelectionBottomSheet(
@@ -68,7 +72,6 @@ fun CurrencySelectionBottomSheet(
                 }
             }
 
-            // Кнопка закрытия
             ListItem(
                 leadingContent = {
                     Row(verticalAlignment = Alignment.CenterVertically) {

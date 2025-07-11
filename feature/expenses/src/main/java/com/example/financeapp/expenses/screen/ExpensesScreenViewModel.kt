@@ -59,7 +59,7 @@ class ExpensesScreenViewModel @Inject constructor(
 
                     when (val transactionsResult = getTransactionsUseCase(account.id, from, to)) {
                         is Result.Success -> {
-                            val expenses = transactionsResult.data.filter { !it.isIncome }
+                            val expenses = transactionsResult.data.filter { !it.category.isIncome }
                             _uiState.update {
                                 ExpensesUiState.Success(
                                     transactions = expenses,

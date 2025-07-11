@@ -5,6 +5,10 @@ import com.example.financeapp.base.di.scopes.CategoryScope
 import com.example.financeapp.base.di.scopes.ExpensesScope
 import dagger.Subcomponent
 
+/**
+ * Dagger Subcomponent с областью действия [CategoryScope], предоставляющий зависимости для экрана категорий.
+ * Отвечает за инициализацию ViewModelFactory, содержащего [CategoryScreenViewModel].
+ */
 @CategoryScope
 @Subcomponent(
     modules = [

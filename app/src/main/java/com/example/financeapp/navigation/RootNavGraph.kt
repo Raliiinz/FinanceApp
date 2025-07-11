@@ -12,6 +12,7 @@ import com.example.financeapp.expenses.navigation.expensesNavGraph
 import com.example.financeapp.history.navigation.historyNavGraph
 import com.example.financeapp.income.navigation.incomeNavGraph
 import com.example.financeapp.settings.navigation.settingsNavGraph
+import com.example.financeapp.transaction.navigation.transactionNavGraph
 
 /**
  * Хост навигации, содержащий все графы навигации приложения.
@@ -26,6 +27,7 @@ fun RootNavGraph(
     checkViewModelFactory: ViewModelFactory,
     articlesViewModelFactory: ViewModelFactory,
     settingsViewModelFactory: ViewModelFactory,
+    transactionViewModelFactory: ViewModelFactory,
     historyNavigation: HistoryNavigation,
     updateTopBarState: (NavBackStackEntry, TopBarConfig?) -> Unit,
 
@@ -40,5 +42,6 @@ fun RootNavGraph(
         articlesNavGraph(navController, paddingValues, articlesViewModelFactory, updateTopBarState)
         settingsNavGraph(navController, paddingValues, settingsViewModelFactory, updateTopBarState)
         historyNavGraph(navController, paddingValues, historyViewModelFactory, updateTopBarState)
+        transactionNavGraph(navController, paddingValues, transactionViewModelFactory, updateTopBarState)
     }
 }

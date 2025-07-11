@@ -5,13 +5,17 @@ import com.example.financeapp.base.di.ViewModelKey
 import com.example.financeapp.expenses.screen.ExpensesScreenViewModel
 import dagger.Binds
 import dagger.Module
-import dagger.multibindings.IntoMap // Не забудьте добавить зависимость dagger-android-support
+import dagger.multibindings.IntoMap
 
+/**
+ * Dagger модуль для привязки [ExpensesScreenViewModel] к общей фабрике ViewModel'ей.
+ * Используется при построении компоненты [ExpensesComponent].
+ */
 @Module
 interface ExpensesViewModelModule {
 
     @Binds
-    @IntoMap // Добавляет ViewModel в Map<Class<out ViewModel>, Provider<ViewModel>>
-    @ViewModelKey(ExpensesScreenViewModel::class) // Связываем с ExpensesViewModel
+    @IntoMap
+    @ViewModelKey(ExpensesScreenViewModel::class)
     fun bindExpensesViewModel(viewModel: ExpensesScreenViewModel): ViewModel
 }

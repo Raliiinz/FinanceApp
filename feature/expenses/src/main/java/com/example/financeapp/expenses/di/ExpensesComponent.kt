@@ -4,19 +4,18 @@ import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.base.di.scopes.ExpensesScope
 import dagger.Subcomponent
 
-@ExpensesScope // Применяем наш кастомный Scope
+/**
+ * Dagger Subcomponent с областью действия [ExpensesScope], предоставляющий зависимости для экрана расходов.
+ * Отвечает за инициализацию ViewModelFactory, содержащего [ExpensesScreenViewModel].
+ */
+@ExpensesScope
 @Subcomponent(
     modules = [
-        // Для специфичных зависимостей фичи (если есть)
-        ExpensesViewModelModule::class // Для ViewModel
+        ExpensesViewModelModule::class
     ]
 )
 interface ExpensesComponent {
 
-    // Метод для инъекции в ExpensesHostActivity
-//    fun inject(activity: ExpensesHostActivity)
-
-    // Метод для получения ViewModelFactory, чтобы использовать его в Composable
     fun getViewModelFactory(): ViewModelFactory
 
     @Subcomponent.Builder

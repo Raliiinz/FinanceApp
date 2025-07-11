@@ -24,7 +24,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+/**
+ * ViewModel для экрана редактирования аккаунта.
+ * Обрабатывает загрузку/сохранение данных и управляет состоянием.
+ */
 class AccountUpdateViewModel @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val updateAccountUseCase: UpdateAccountUseCase,
@@ -137,18 +140,6 @@ class AccountUpdateViewModel @Inject constructor(
                         )
                     }
                 }
-
-//                is Result.Success -> {
-//                    val account = result.data.firstOrNull() // Предполагаем, что getAccountUseCase возвращает List<Account>
-//                    if (account != null) {
-//                        _state.update {
-//                            it.copy(
-//                                isLoading = false,
-//                                account = accountUIMapper.map(account)
-//                            )
-//                        }
-//                    }
-//                }
 
                 is Result.HttpError -> handleFailure(result.reason)
                 Result.NetworkError -> handleFailure(FailureReason.NetworkError())

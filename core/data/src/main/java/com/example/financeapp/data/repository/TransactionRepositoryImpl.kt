@@ -35,15 +35,36 @@ class TransactionRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createTransaction(transaction: TransactionModel) {
-
+    override suspend fun createTransaction(transaction: TransactionModel): Result<TransactionModel> {
+        val requestBody = transactionMapper.toRequest(transaction)
+        return apiClient.safeApiCall {
+            api.createTransaction(requestBody)
+        }.map { response ->
+            transaction.copy(id = response.id)
+        }
     }
 
-    override suspend fun updateTransaction(transaction: TransactionModel) {
-
+    override suspend fun updateTransaction(transaction: TransactionModel): Result<TransactionModel> {
+        val requestBody = transactionMapper.toRequest(transaction)
+        return apiClient.safeApiCall {
+            api.updateTransaction(
+                id = transaction.id,
+                request = requestBody
+            )
+        }.map { response ->
+            transaction.copy(id = response.id)
+        }
     }
 
-    override suspend fun deleteTransaction(id: Int) {
+    override suspend fun deleteTransaction(id: Int): Result<Unit> {
+        return apiClient.safeApiCall {
+            api.deleteTransaction(id)
+        }
+    }
 
+    override suspend fun getTransactionById(id: Int): Result<TransactionModel> {
+        return apiClient.safeApiCall {
+            api.getTransactionById(id).let(transactionMapper::toDomain)
+        }
     }
 }

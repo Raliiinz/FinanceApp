@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Обрабатывает ошибки сетевых запросов.

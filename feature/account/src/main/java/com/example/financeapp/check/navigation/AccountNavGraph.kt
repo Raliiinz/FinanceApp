@@ -143,7 +143,7 @@ fun ChecksRoute(
  */
 @Composable
 fun EditAccountRoute(
-    accountId: Int?, // Если null, значит ID нужно получить во ViewModel
+    accountId: Int?,
     navController: NavHostController,
     paddingValues: PaddingValues,
     viewModel: AccountUpdateViewModel

@@ -2,22 +2,20 @@ package com.example.financeapp.check.di
 
 import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.base.di.scopes.AccountScope
-import com.example.financeapp.base.di.scopes.ExpensesScope
 import dagger.Subcomponent
 
-@AccountScope // Применяем наш кастомный Scope
+/**
+ * Dagger-компонент для работы с аккаунтами.
+ * Предоставляет фабрику ViewModel'ей в рамках AccountScope.
+ */
+@AccountScope
 @Subcomponent(
     modules = [
-        // Для специфичных зависимостей фичи (если есть)
-        AccountViewModelModule::class // Для ViewModel
+        AccountViewModelModule::class
     ]
 )
 interface AccountComponent {
 
-    // Метод для инъекции в ExpensesHostActivity
-//    fun inject(activity: ExpensesHostActivity)
-
-    // Метод для получения ViewModelFactory, чтобы использовать его в Composable
     fun getViewModelFactory(): ViewModelFactory
 
     @Subcomponent.Builder

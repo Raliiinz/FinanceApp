@@ -2,8 +2,10 @@ package com.example.financeapp.settings.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.R
@@ -28,7 +30,15 @@ fun ThemeSwitchItem(
         trailingContent = {
             Switch(
                 checked = isDarkTheme,
-                onCheckedChange = { onThemeToggle() }
+                onCheckedChange = { onThemeToggle() },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = MaterialTheme.colorScheme.primary,
+
+                    uncheckedThumbColor = Color(0x80333333),
+                    uncheckedTrackColor = Color(0xFFE0E0E0),
+                    uncheckedBorderColor = Color(0x80333333)
+                )
             )
         },
         downDivider = true,

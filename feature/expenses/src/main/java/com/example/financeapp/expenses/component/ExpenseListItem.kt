@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.base.commonItems.IconBox
 import com.example.financeapp.base.commonItems.ListItem
-import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 import com.example.financeapp.domain.model.TransactionModel
@@ -30,13 +29,13 @@ fun ExpenseListItem(
     ListItem(
         leadingContent = {
             ExpenseLeadingContent(
-                icon = transaction.categoryEmoji,
-                title = transaction.categoryName,
+                icon = transaction.category.iconLeading,
+                title = transaction.category.textLeading,
                 comment = transaction.comment
             )
         },
         trailingContent = {
-            ExpenseTrailingContent(price = transaction.amount, currency = transaction.currency)
+            ExpenseTrailingContent(price = transaction.amount, currency = transaction.account.currency)
         },
         downDivider = true,
         onClick = onClick,

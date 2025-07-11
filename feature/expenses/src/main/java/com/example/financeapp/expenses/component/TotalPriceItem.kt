@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ListItem
-import com.example.financeapp.base.ui.formating.formatPrice
 import com.example.financeapp.base.ui.theme.Typography
 import com.example.financeapp.base.ui.util.extension.toCurrencySymbol
 

@@ -50,9 +50,7 @@ dependencies {
     implementation(project(":feature:account"))
     implementation(project(":feature:category"))
     implementation(project(":feature:history"))
-
-    // Feature
-
+    implementation(project(path = ":feature:transaction"))
     implementation(project(path = ":feature:expenses"))
     implementation(project(path = ":feature:income"))
     implementation(project(path = ":feature:settings"))
@@ -81,5 +79,11 @@ dependencies {
     kapt(libs.dagger.compiler)
     implementation(libs.bundles.network.deps)
 
+    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")
+
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    // AssistedInject
+    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
+    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
 }

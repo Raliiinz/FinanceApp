@@ -91,7 +91,9 @@ fun IncomeRoute(
     IncomeScreen(
         viewModel = viewModel,
         paddingValues = paddingValues,
-        onIncomeClicked = onIncomeClicked,
-        onFabClick = onFabClick,
+        onIncomeClicked = { id ->
+            navController.navigate("transaction/edit/${id}")
+        },
+        onFabClick = { navController.navigate(Screen.Transaction.createAddRoute(TransactionType.INCOME)) },
     )
 }

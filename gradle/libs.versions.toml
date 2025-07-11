@@ -15,7 +15,7 @@ lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
 
 # Jetpack Compose
-composeBom = "2025.06.00"
+composeBom = "2024.05.00"
 lottieCompose = "6.4.0"
 
 # Navigation
@@ -25,7 +25,7 @@ navigationCompose = "2.9.0"
 hilt-compose = "1.2.0"
 hilt-version = "2.56.1"
 ksp = "2.0.21-1.0.27"
-dagger = "2.48"
+dagger = "2.50"
 
 # Networking
 okhttp-version = "4.12.0"

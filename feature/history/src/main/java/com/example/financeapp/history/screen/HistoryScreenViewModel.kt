@@ -72,8 +72,8 @@ class HistoryScreenViewModel @Inject constructor(
                     )) {
                         is Result.Success -> {
                             val filteredTransactions = transactionsResult.data
-                                .filter { it.isIncome == (transactionType == TransactionType.INCOME) }
-                                .sortedByDescending { it.time }
+                                .filter { it.category.isIncome == (transactionType == TransactionType.INCOME) }
+                                .sortedByDescending { it.date }
 
                             _uiState.update {
                                 HistoryUiState.Success(filteredTransactions, currentCurrency)

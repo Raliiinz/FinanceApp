@@ -7,6 +7,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
+/**
+ * Dagger модуль для привязки [HistoryScreenViewModel] к ViewModelFactory с использованием multibindings.
+ */
 @Module
 interface HistoryViewModelModule {
 

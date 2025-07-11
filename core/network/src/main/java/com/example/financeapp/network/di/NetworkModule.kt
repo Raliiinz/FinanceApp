@@ -10,6 +10,7 @@ import com.example.financeapp.network.BuildConfig.FINANCE_API_URL
 import com.example.financeapp.network.CategoryApi
 import com.example.financeapp.network.TransactionApi
 import com.example.financeapp.network.interceptor.AuthInterceptor
+import com.example.financeapp.network.interceptor.LoggingInterceptor
 import com.example.financeapp.network.util.ApiClient
 import com.example.financeapp.network.util.ErrorHandler
 import com.example.financeapp.network.util.NetworkChecker
@@ -70,6 +71,7 @@ object NetworkModule {
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor())
+            .addInterceptor(LoggingInterceptor())
             .build()
     }
 

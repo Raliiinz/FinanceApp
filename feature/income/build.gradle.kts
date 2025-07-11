@@ -67,4 +67,7 @@ dependencies {
 
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+    // AssistedInject
+    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
+    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
 }

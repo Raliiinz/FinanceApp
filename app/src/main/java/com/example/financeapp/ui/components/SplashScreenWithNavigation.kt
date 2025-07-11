@@ -23,6 +23,7 @@ fun SplashScreenWithNavigation(
     checkViewModelFactory: ViewModelFactory,
     articlesViewModelFactory: ViewModelFactory,
     settingsViewModelFactory: ViewModelFactory,
+    transactionViewModelFactory: ViewModelFactory,
 ) {
     var isSplashFinished by remember { mutableStateOf(false) }
 
@@ -39,7 +40,8 @@ fun SplashScreenWithNavigation(
                 incomeViewModelFactory = incomeViewModelFactory,
                 articlesViewModelFactory = articlesViewModelFactory,
                 settingsViewModelFactory = settingsViewModelFactory,
-                checkViewModelFactory = checkViewModelFactory
+                checkViewModelFactory = checkViewModelFactory,
+                transactionViewModelFactory = transactionViewModelFactory
             )
         }
     }

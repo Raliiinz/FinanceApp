@@ -8,7 +8,6 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
 import com.example.financeapp.util.result.Result
-import javax.inject.Singleton
 
 /**
  * Выполняет сетевые запросы с обработкой ошибок и повторами.

@@ -7,6 +7,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
+/**
+ * Dagger модуль для привязки [SettingsViewModel] к карте ViewModel'ей для ViewModelFactory.
+ */
 @Module
 interface SettingsViewModelModule {
 

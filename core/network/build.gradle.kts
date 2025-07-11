@@ -49,6 +49,7 @@ dependencies {
     implementation(project(path = ":core:base"))
 
     implementation("androidx.annotation:annotation:1.7.1")
+    implementation("com.jakewharton.timber:timber:5.0.1")
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
     implementation(libs.kotlinx.coroutines.core)

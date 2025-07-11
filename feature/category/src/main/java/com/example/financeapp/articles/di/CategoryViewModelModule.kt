@@ -7,6 +7,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
+/**
+ * Dagger модуль для привязки [CategoryScreenViewModel] к общей фабрике ViewModel'ей.
+ * Использует multibindings для регистрации ViewModel в системе Dagger.
+ */
 @Module
 interface CategoryViewModelModule {
 

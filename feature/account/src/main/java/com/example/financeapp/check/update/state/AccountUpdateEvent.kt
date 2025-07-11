@@ -2,6 +2,10 @@ package com.example.financeapp.check.update.state
 
 import com.example.financeapp.check.model.CurrencyUIModel
 
+/**
+ * События экрана редактирования аккаунта.
+ * Включает действия пользователя и системные события.
+ */
 sealed class AccountUpdateEvent {
     object LoadData : AccountUpdateEvent()
     object OnDoneClicked : AccountUpdateEvent()
