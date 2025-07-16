@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.secrets)
 }
 
@@ -17,6 +18,11 @@ android {
 
         defaultConfig {
             buildConfigField("String", "FINANCE_API_URL", "\"https://shmr-finance.ru/api/v1/\"")
+        }
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            vectorDrawables.useSupportLibrary = true
         }
 
         buildFeatures{
@@ -54,6 +60,11 @@ dependencies {
 
     // Network
     implementation(libs.bundles.network.deps)
+
+    //Room
+    implementation(libs.room)
+    implementation(libs.room.ktx)
+    ksp(libs.room.ksp)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

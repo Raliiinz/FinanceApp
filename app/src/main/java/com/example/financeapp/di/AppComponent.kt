@@ -8,6 +8,7 @@ import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.data.di.DataBinderModule
 import com.example.financeapp.base.di.qualifiers.ApplicationContext
 import com.example.financeapp.check.di.AccountComponent
+import com.example.financeapp.data.di.RoomModule
 import com.example.financeapp.domain.di.DomainModule
 import com.example.financeapp.domain.di.qualifies.IoDispatchers
 import com.example.financeapp.expenses.di.ExpensesComponent
@@ -34,7 +35,8 @@ import kotlinx.coroutines.CoroutineDispatcher
         NetworkModule::class,
         DataBinderModule::class,
         DomainModule::class,
-        NavigationModule::class
+        NavigationModule::class,
+        RoomModule::class
     ]
 )
 interface AppComponent {
