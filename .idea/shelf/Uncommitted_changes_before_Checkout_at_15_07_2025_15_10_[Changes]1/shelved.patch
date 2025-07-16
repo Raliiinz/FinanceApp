@@ -1,0 +1,50 @@
+Index: app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.financeapp.extensions\r\n\r\nimport androidx.navigation.NavBackStackEntry\r\nimport androidx.navigation.NavController\r\nimport androidx.navigation.NavDestination\r\nimport androidx.navigation.NavDestination.Companion.hierarchy\r\nimport androidx.navigation.NavGraph.Companion.findStartDestination\r\nimport com.example.financeapp.check.navigation.CheckRoutes\r\nimport com.example.financeapp.history.navigation.HistoryScreens\r\nimport com.example.financeapp.navigation.NavigationItem\r\nimport com.example.financeapp.navigation.Screen\r\nimport com.example.financeapp.navigation.TransactionType\r\n\r\n/**\r\n * Файл с extension-функциями для навигации.\r\n * Содержит вспомогательные методы для работы с Navigation Component.\r\n */\r\n\r\nfun NavController.navigateToItem(item: NavigationItem) {\r\n    navigate(item.screen.route) {\r\n        popUpTo(graph.findStartDestination().id) {\r\n            saveState = true\r\n        }\r\n        launchSingleTop = true\r\n        restoreState = true\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt b/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt
+--- a/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt	(revision 2a60924fa69b4e2ce38d563468820afaf5d01c4f)
++++ b/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt	(date 1752413817198)
+@@ -1,15 +1,8 @@
+ package com.example.financeapp.extensions
+ 
+-import androidx.navigation.NavBackStackEntry
+ import androidx.navigation.NavController
+-import androidx.navigation.NavDestination
+-import androidx.navigation.NavDestination.Companion.hierarchy
+ import androidx.navigation.NavGraph.Companion.findStartDestination
+-import com.example.financeapp.check.navigation.CheckRoutes
+-import com.example.financeapp.history.navigation.HistoryScreens
+ import com.example.financeapp.navigation.NavigationItem
+-import com.example.financeapp.navigation.Screen
+-import com.example.financeapp.navigation.TransactionType
+ 
+ /**
+  * Файл с extension-функциями для навигации.
+Index: app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.financeapp.ui.screens\r\n\r\nimport android.annotation.SuppressLint\r\nimport androidx.compose.foundation.layout.Box\r\nimport androidx.compose.foundation.layout.fillMaxSize\r\nimport androidx.compose.material3.Scaffold\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.runtime.getValue\r\nimport androidx.compose.runtime.mutableStateMapOf\r\nimport androidx.compose.runtime.remember\r\nimport androidx.compose.runtime.rememberUpdatedState\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.navigation.compose.currentBackStackEntryAsState\r\nimport androidx.navigation.compose.rememberNavController\r\nimport com.example.financeapp.base.di.ViewModelFactory\r\nimport androidx.navigation.NavBackStackEntry\r\nimport com.example.financeapp.base.R\r\nimport com.example.financeapp.navigation.HistoryNavigation\r\nimport com.example.financeapp.navigation.RootNavGraph\r\nimport com.example.financeapp.navigation.TopBarConfig\r\nimport com.example.financeapp.navigation.TransactionType\r\nimport com.example.financeapp.ui.components.AppBottomBar\r\nimport com.example.financeapp.ui.components.AppTopBar\r\nimport kotlinx.coroutines.flow.MutableStateFlow\r\n\r\n/**\r\n * Главный экран приложения с навигацией и scaffold-структурой.\r\n */\r\n@SuppressLint(\"RememberReturnType\")\r\n@Composable\r\nfun MainScreen(\r\n    historyNavigation: HistoryNavigation,\r\n    expensesViewModelFactory: ViewModelFactory,\r\n    historyViewModelFactory: ViewModelFactory,\r\n    incomeViewModelFactory: ViewModelFactory,\r\n    checkViewModelFactory: ViewModelFactory,\r\n    articlesViewModelFactory: ViewModelFactory,\r\n    settingsViewModelFactory: ViewModelFactory,\r\n    transactionViewModelFactory: ViewModelFactory\r\n) {\r\n    val navController = rememberNavController()\r\n    val navBackStackEntry by navController.currentBackStackEntryAsState()\r\n    val currentDestination = navBackStackEntry?.destination\r\n    val transactionType = navBackStackEntry?.arguments?.getSerializable(\"type\") as? TransactionType\r\n\r\n    val topBarStateMap = remember { mutableStateMapOf<NavBackStackEntry, TopBarConfig>() }\r\n    val currentNavController by rememberUpdatedState(navController)\r\n    val currentHistoryNavigation by rememberUpdatedState(historyNavigation)\r\n\r\n    val currentTopBarStateFlow = remember {\r\n        val initialTopBarConfig = TopBarConfig(\r\n            textResId = R.string.expenses_today,\r\n            trailingImageResId = R.drawable.refresh,\r\n            onTrailingClick = {\r\n                currentNavController.navigate(\r\n                    currentHistoryNavigation.navigateToHistory(\r\n                        TransactionType.EXPENSE\r\n                    )\r\n                )\r\n            },\r\n            leadingImageResId = null,\r\n            onLeadingClick = null\r\n        )\r\n        MutableStateFlow<TopBarConfig?>(initialTopBarConfig)\r\n    }\r\n\r\n    Scaffold(\r\n        modifier = Modifier.fillMaxSize(),\r\n        topBar = { AppTopBar(currentTopBarStateFlow) },\r\n        bottomBar = {\r\n            AppBottomBar(\r\n                navController = navController,\r\n                currentDestination = currentDestination,\r\n                activeTransactionType = transactionType\r\n            )\r\n        }\r\n    ) { innerPadding ->\r\n        Box(modifier = Modifier.fillMaxSize()) {\r\n            RootNavGraph(\r\n                navController = navController,\r\n                paddingValues = innerPadding,\r\n                expensesViewModelFactory = expensesViewModelFactory,\r\n                historyViewModelFactory = historyViewModelFactory,\r\n                incomeViewModelFactory = incomeViewModelFactory,\r\n                articlesViewModelFactory = articlesViewModelFactory,\r\n                settingsViewModelFactory = settingsViewModelFactory,\r\n                checkViewModelFactory = checkViewModelFactory,\r\n                transactionViewModelFactory = transactionViewModelFactory,\r\n                historyNavigation = historyNavigation,\r\n\r\n                updateTopBarState = { entry, newState ->\r\n                    if (newState != null) {\r\n                        topBarStateMap[entry] = newState\r\n                    } else {\r\n                        topBarStateMap.remove(entry)\r\n                    }\r\n                    currentTopBarStateFlow.value = navBackStackEntry?.let { activeEntry ->\r\n                        topBarStateMap[activeEntry]\r\n                    } ?: currentTopBarStateFlow.value\r\n                }\r\n            )\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt b/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt
+--- a/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt	(revision 2a60924fa69b4e2ce38d563468820afaf5d01c4f)
++++ b/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt	(date 1752413817199)
+@@ -10,11 +10,11 @@
+ import androidx.compose.runtime.remember
+ import androidx.compose.runtime.rememberUpdatedState
+ import androidx.compose.ui.Modifier
++import androidx.navigation.NavBackStackEntry
+ import androidx.navigation.compose.currentBackStackEntryAsState
+ import androidx.navigation.compose.rememberNavController
+-import com.example.financeapp.base.di.ViewModelFactory
+-import androidx.navigation.NavBackStackEntry
+ import com.example.financeapp.base.R
++import com.example.financeapp.base.di.ViewModelFactory
+ import com.example.financeapp.navigation.HistoryNavigation
+ import com.example.financeapp.navigation.RootNavGraph
+ import com.example.financeapp.navigation.TopBarConfig

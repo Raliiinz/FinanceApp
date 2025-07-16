@@ -3,6 +3,8 @@ package com.example.financeapp.transaction.navigation
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -15,10 +17,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.financeapp.base.R
-import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.navigation.Screen
 import com.example.financeapp.navigation.TopBarConfig
 import com.example.financeapp.navigation.TransactionType
+import com.example.financeapp.transaction.di.TransactionComponentProvider
+import com.example.financeapp.transaction.di.TransactionFormViewModelAssistedFactory
 import com.example.financeapp.transaction.screen.TransactionFormScreen
 import com.example.financeapp.transaction.screen.TransactionFormViewModel
 import com.example.financeapp.transaction.state.TransactionFormEvent
@@ -28,14 +31,12 @@ import com.example.financeapp.transaction.state.TransactionFormEvent
  *
  * @param navController Контроллер навигации.
  * @param paddingValues Отступы верхнего уровня (например, от системы).
- * @param viewModelFactory Фабрика для создания ViewModel'ей.
  * @param updateTopBarState Функция для конфигурации верхней панели (TopBar).
  */
 @SuppressLint("StateFlowValueCalledInComposition")
 fun NavGraphBuilder.transactionNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues,
-    viewModelFactory: ViewModelFactory,
     updateTopBarState: (NavBackStackEntry, TopBarConfig?) -> Unit,
 ) {
     navigation(
@@ -48,15 +49,19 @@ fun NavGraphBuilder.transactionNavGraph(
                 type = NavType.EnumType(TransactionType::class.java)
             })
         ) { backStackEntry ->
-            val typeArg = backStackEntry.arguments?.get("type")
+            val context = LocalContext.current
+            val transactionComponent = remember {
+                (context.applicationContext as TransactionComponentProvider).transactionComponent()
+            }
+            val assistedFactory = transactionComponent.getTransactionFormViewModelFactory()
+            val factory = remember { TransactionFormViewModelAssistedFactory(assistedFactory) }
+            val transactionFormViewModel: TransactionFormViewModel = viewModel(
+                factory = factory,
+                viewModelStoreOwner = backStackEntry
+            )
 
             val lifecycleOwner = LocalLifecycleOwner.current
             val transactionType = backStackEntry.arguments?.getSerializable("type") as TransactionType
-
-            val transactionFormViewModel: TransactionFormViewModel = viewModel(
-                factory = viewModelFactory,
-                viewModelStoreOwner = backStackEntry
-            )
 
             DisposableEffect(lifecycleOwner, backStackEntry) {
                 val observer = LifecycleEventObserver { _, event ->
@@ -93,15 +98,19 @@ fun NavGraphBuilder.transactionNavGraph(
             route = Screen.Transaction.editRouteTemplate,
             arguments = listOf(navArgument("transactionId") { type = NavType.IntType })
         ) { backStackEntry ->
-            val idArg = backStackEntry.arguments?.get("transactionId")
 
-            val lifecycleOwner = LocalLifecycleOwner.current
-            val transactionId = backStackEntry.arguments?.getInt("transactionId")
-
+            val context = LocalContext.current
+            val transactionComponent = remember {
+                (context.applicationContext as TransactionComponentProvider).transactionComponent()
+            }
+            val assistedFactory = transactionComponent.getTransactionFormViewModelFactory()
+            val factory = remember { TransactionFormViewModelAssistedFactory(assistedFactory) }
             val transactionFormViewModel: TransactionFormViewModel = viewModel(
-                factory = viewModelFactory,
+                factory = factory,
                 viewModelStoreOwner = backStackEntry
             )
+
+            val lifecycleOwner = LocalLifecycleOwner.current
 
             DisposableEffect(lifecycleOwner, backStackEntry, transactionFormViewModel.uiState.value.isEditing, transactionFormViewModel.uiState.value.type) {
                 val observer = LifecycleEventObserver { _, event ->

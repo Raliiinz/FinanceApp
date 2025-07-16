@@ -34,6 +34,10 @@ import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
 import com.example.financeapp.util.date.LocalDateTimeToIsoString
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import java.time.format.DateTimeFormatter
 
 /**
  * ViewModel, управляющая состоянием формы транзакции.
@@ -41,14 +45,19 @@ import com.example.financeapp.util.date.LocalDateTimeToIsoString
  *
  * @constructor [Inject] используется для внедрения необходимых use-case'ов.
  */
-class TransactionFormViewModel @Inject constructor(
+@AssistedFactory
+interface TransactionFormViewModelFactory {
+    fun create(savedStateHandle: SavedStateHandle): TransactionFormViewModel
+}
+
+class TransactionFormViewModel  @AssistedInject constructor(
     private val createTransactionUseCase: CreateTransactionUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTransactionByIdUseCase: GetTransactionByIdUseCase,
     private val getAllAccountsUseCase: GetAccountUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val savedStateHandle: SavedStateHandle
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TransactionFormUiState())
@@ -58,7 +67,6 @@ class TransactionFormViewModel @Inject constructor(
     val effect = _effect.receiveAsFlow()
 
     private val initialTransactionId: Int? = savedStateHandle.get<Int>("transactionId")
-    private val initialTransactionTypeString: String? = savedStateHandle.get<String>("type")
 
     init {
         val isEditingMode = (initialTransactionId != null && initialTransactionId != 0)
@@ -67,11 +75,7 @@ class TransactionFormViewModel @Inject constructor(
             currentState.copy(
                 isEditing = isEditingMode,
                 transactionId = initialTransactionId.takeIf { it != 0 },
-                type = if (isEditingMode) {
-                    TransactionType.EXPENSE
-                } else {
-                    initialTransactionTypeString?.let { TransactionType.valueOf(it) } ?: TransactionType.EXPENSE
-                }
+                type = TransactionType.EXPENSE
             )
         }
         loadFormData(initialTransactionId.takeIf { it != 0 }, _uiState.value.type)
@@ -133,7 +137,7 @@ class TransactionFormViewModel @Inject constructor(
                                     selectedCategory = allCategories.find { it.id == transaction.category.id },
                                     amountInput = transaction.amount.toString(),
                                     date = LocalDate.parse(transaction.date.substringBefore("T")),
-                                    time = LocalTime.parse(transaction.date.substringAfter("T")),
+                                    time =  LocalTime.parse(transaction.date.substringAfter("T").take(8), DateTimeFormatter.ofPattern("HH:mm:ss")),
                                     comment = transaction.comment ?: ""
                                 )
                             }

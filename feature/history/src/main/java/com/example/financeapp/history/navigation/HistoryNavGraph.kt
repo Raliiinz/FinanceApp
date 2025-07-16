@@ -73,7 +73,10 @@ fun NavGraphBuilder.historyNavGraph(
                 viewModel = viewModel(
                     factory = viewModelFactory,
                     viewModelStoreOwner = backStackEntry
-                )
+                ),
+                onTransactionClick = { id ->
+                    navController.navigate("transaction/edit/$id")
+                }
             )
         }
     }

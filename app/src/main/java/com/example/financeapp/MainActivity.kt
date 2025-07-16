@@ -55,7 +55,6 @@ class MainActivity : ComponentActivity() {
                 articlesViewModelFactory = categoryComponent.getViewModelFactory(),
                 settingsViewModelFactory = settingsComponent.getViewModelFactory(),
                 checkViewModelFactory = accountComponent.getViewModelFactory(),
-                transactionViewModelFactory = transactionComponent.getViewModelFactory()
             )
         }
     }

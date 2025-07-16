@@ -1,7 +1,7 @@
 package com.example.financeapp.transaction.di
 
-import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.base.di.scopes.TransactionScope
+import com.example.financeapp.transaction.screen.TransactionFormViewModelFactory
 import dagger.Subcomponent
 
 /**
@@ -10,12 +10,13 @@ import dagger.Subcomponent
  */
 @TransactionScope
 @Subcomponent(
-    modules = [
-        TransactionModule::class,
-        TransactionViewModelModule::class
-    ]
+    modules = []
 )
 interface TransactionComponent {
-    fun getViewModelFactory(): ViewModelFactory
-    @Subcomponent.Builder interface Builder { fun build(): TransactionComponent }
+    fun getTransactionFormViewModelFactory(): TransactionFormViewModelFactory
+
+    @Subcomponent.Builder
+    interface Builder {
+        fun build(): TransactionComponent
+    }
 }

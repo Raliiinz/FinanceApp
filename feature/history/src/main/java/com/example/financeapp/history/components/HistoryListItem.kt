@@ -26,7 +26,10 @@ import com.example.financeapp.domain.model.TransactionModel
  * @param item Данные транзакции
  */
 @Composable
-fun HistoryListItem(item: TransactionModel) {
+fun HistoryListItem(
+    item: TransactionModel,
+    onClick: () -> Unit
+) {
     ListItem(
         leadingContent = {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -71,7 +74,7 @@ fun HistoryListItem(item: TransactionModel) {
                 )
             }
         },
-        onClick = {},
+        onClick = { onClick() },
         downDivider = true,
         backgroundColor = MaterialTheme.colorScheme.surface,
         itemHeight = 70.dp

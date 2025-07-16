@@ -39,7 +39,8 @@ fun HistoryScreen(
     transactionType: TransactionType,
     paddingValues: PaddingValues,
     onBackClick: (Int) -> Unit,
-    viewModel: HistoryScreenViewModel
+    viewModel: HistoryScreenViewModel,
+    onTransactionClick: (Int) -> Unit,
 ) {
     val displayFormatter = remember { DateTimeFormatter.ofPattern("dd-MM-yy") }
     val backendFormatter = remember { DateTimeFormatter.ofPattern("yyyy-MM-dd") }
@@ -164,7 +165,10 @@ fun HistoryScreen(
                     }
 
                     itemsIndexed(historyList) { _, item ->
-                        HistoryListItem(item)
+                        HistoryListItem(
+                            item = item,
+                            onClick = { onTransactionClick(item.id) }
+                        )
                     }
                 }
             }

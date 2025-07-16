@@ -1,0 +1,257 @@
+Index: gradle/libs.versions.toml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[versions]\r\nagp = \"8.9.1\"\r\nkotlin = \"2.0.21\"\r\ncoreKtx = \"1.16.0\"\r\nappcompat = \"1.7.0\"\r\nmaterial = \"1.12.0\"\r\n\r\n# Тестирование\r\njunit = \"4.13.2\"\r\njunitVersion = \"1.2.1\"\r\nespressoCore = \"3.6.1\"\r\n\r\n# Jetpack Components\r\nlifecycleRuntimeKtx = \"2.9.0\"\r\nactivityCompose = \"1.10.1\"\r\n\r\n# Jetpack Compose\r\ncomposeBom = \"2025.06.00\"\r\nlottieCompose = \"6.4.0\"\r\n\r\n# Navigation\r\nnavigationCompose = \"2.9.0\"\r\n\r\n# DI\r\nhilt-compose = \"1.2.0\"\r\nhilt-version = \"2.56.1\"\r\nksp = \"2.0.21-1.0.27\"\r\n\r\n# Networking\r\nokhttp-version = \"4.12.0\"\r\nconverter-gson-version=\"2.3.0\"\r\ngson = \"2.13.0\"\r\nretrofit_version = \"2.11.0\"\r\n\r\n# Security\r\nsecretsGradlePlugin = \"2.0.1\"\r\n\r\n#Detekt\r\ndetekt = \"1.23.8\"\r\n\r\n# Android SDK\r\nminSdk = \"26\"\r\ntargetSdk = \"35\"\r\ncompileSdk = \"35\"\r\n\r\n\r\n[libraries]\r\nandroidx-core-ktx = { group = \"androidx.core\", name = \"core-ktx\", version.ref = \"coreKtx\" }\r\njunit = { group = \"junit\", name = \"junit\", version.ref = \"junit\" }\r\nandroidx-junit = { group = \"androidx.test.ext\", name = \"junit\", version.ref = \"junitVersion\" }\r\nandroidx-espresso-core = { group = \"androidx.test.espresso\", name = \"espresso-core\", version.ref = \"espressoCore\" }\r\nandroidx-lifecycle-runtime-ktx = { group = \"androidx.lifecycle\", name = \"lifecycle-runtime-ktx\", version.ref = \"lifecycleRuntimeKtx\" }\r\nandroidx-activity-compose = { group = \"androidx.activity\", name = \"activity-compose\", version.ref = \"activityCompose\" }\r\nandroidx-compose-bom = { group = \"androidx.compose\", name = \"compose-bom\", version.ref = \"composeBom\" }\r\nandroidx-ui = { group = \"androidx.compose.ui\", name = \"ui\" }\r\nandroidx-ui-graphics = { group = \"androidx.compose.ui\", name = \"ui-graphics\" }\r\nandroidx-ui-tooling = { group = \"androidx.compose.ui\", name = \"ui-tooling\" }\r\nandroidx-ui-tooling-preview = { group = \"androidx.compose.ui\", name = \"ui-tooling-preview\" }\r\nandroidx-ui-test-manifest = { group = \"androidx.compose.ui\", name = \"ui-test-manifest\" }\r\nandroidx-ui-test-junit4 = { group = \"androidx.compose.ui\", name = \"ui-test-junit4\" }\r\nandroidx-material3 = { group = \"androidx.compose.material3\", name = \"material3\" }\r\nandroidx-appcompat = { group = \"androidx.appcompat\", name = \"appcompat\", version.ref = \"appcompat\" }\r\nmaterial = { group = \"com.google.android.material\", name = \"material\", version.ref = \"material\" }\r\nandroidx-navigation-compose = { module = \"androidx.navigation:navigation-compose\", version.ref = \"navigationCompose\" }\r\nlottie-compose = { module = \"com.airbnb.android:lottie-compose\", version.ref = \"lottieCompose\" }\r\nhilt-compose = { group = \"androidx.hilt\", name = \"hilt-navigation-compose\", version.ref = \"hilt-compose\" }\r\nhilt = { group = \"com.google.dagger\", name = \"hilt-android\", version.ref = \"hilt-version\" }\r\nhilt-compiler = { group = \"com.google.dagger\", name = \"hilt-android-compiler\", version.ref = \"hilt-version\" }\r\nretrofit = { group = \"com.squareup.retrofit2\", name = \"retrofit\", version.ref = \"retrofit_version\" }\r\nokhttp = { group = \"com.squareup.okhttp3\", name = \"okhttp\", version.ref = \"okhttp-version\" }\r\nconverter-gson = { group = \"com.squareup.retrofit2\", name = \"converter-gson\", version.ref = \"converter-gson-version\" }\r\ngson = { group = \"com.google.code.gson\", name = \"gson\", version.ref = \"gson\" }\r\ndetekt-formatting = { module = \"io.gitlab.arturbosch.detekt:detekt-formatting\", version.ref = \"detekt\" }\r\n\r\n[bundles]\r\nnetwork-deps = [\"retrofit\", \"converter-gson\", \"okhttp\", \"gson\"]\r\n\r\n[plugins]\r\nandroid-application = { id = \"com.android.application\", version.ref = \"agp\" }\r\nkotlin-android = { id = \"org.jetbrains.kotlin.android\", version.ref = \"kotlin\" }\r\nkotlin-compose = { id = \"org.jetbrains.kotlin.plugin.compose\", version.ref = \"kotlin\" }\r\nandroid-library = { id = \"com.android.library\", version.ref = \"agp\" }\r\nksp = { id = \"com.google.devtools.ksp\", version.ref = \"ksp\" }\r\nhilt = { id = \"com.google.dagger.hilt.android\", version.ref = \"hilt-version\" }\r\nsecrets = { id = \"com.google.android.libraries.mapsplatform.secrets-gradle-plugin\", version.ref = \"secretsGradlePlugin\" }\r\ndetekt = { id = \"io.gitlab.arturbosch.detekt\", version.ref = \"detekt\" }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+--- a/gradle/libs.versions.toml	(revision 143fe2fa6a816039eda63c8388871dd79d28b0bc)
++++ b/gradle/libs.versions.toml	(date 1752581693892)
+@@ -15,7 +15,7 @@
+ activityCompose = "1.10.1"
+ 
+ # Jetpack Compose
+-composeBom = "2025.06.00"
++composeBom = "2024.05.00"
+ lottieCompose = "6.4.0"
+ 
+ # Navigation
+@@ -25,12 +25,14 @@
+ hilt-compose = "1.2.0"
+ hilt-version = "2.56.1"
+ ksp = "2.0.21-1.0.27"
++dagger = "2.50"
+ 
+ # Networking
+ okhttp-version = "4.12.0"
+-converter-gson-version="2.3.0"
++converter-gson-version="2.11.0"
+ gson = "2.13.0"
+ retrofit_version = "2.11.0"
++kotlinx-coroutines = "1.7.3"
+ 
+ # Security
+ secretsGradlePlugin = "2.0.1"
+@@ -70,7 +72,10 @@
+ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp-version" }
+ converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converter-gson-version" }
+ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+-detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
++dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
++dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
++kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
++kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+ 
+ [bundles]
+ network-deps = ["retrofit", "converter-gson", "okhttp", "gson"]
+@@ -83,4 +88,4 @@
+ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-version" }
+ secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
++detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+\ No newline at end of file
+Index: app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.financeapp.ui.screens\r\n\r\nimport androidx.compose.foundation.layout.Box\r\nimport androidx.compose.foundation.layout.fillMaxSize\r\nimport androidx.compose.material3.Scaffold\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.runtime.getValue\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.navigation.compose.currentBackStackEntryAsState\r\nimport androidx.navigation.compose.rememberNavController\r\nimport com.example.financeapp.check.navigation.CheckRoutes\r\nimport com.example.financeapp.extensions.shouldHideTopBar\r\nimport com.example.financeapp.navigation.HistoryNavigation\r\nimport com.example.financeapp.navigation.RootNavGraph\r\nimport com.example.financeapp.navigation.TransactionType\r\nimport com.example.financeapp.ui.components.AppBottomBar\r\nimport com.example.financeapp.ui.components.AppTopBar\r\n\r\n/**\r\n * Главный экран приложения с навигацией и scaffold-структурой.\r\n */\r\n@Composable\r\nfun MainScreen(\r\n    historyNavigation: HistoryNavigation\r\n) {\r\n    val navController = rememberNavController()\r\n    val navBackStackEntry by navController.currentBackStackEntryAsState()\r\n    val currentDestination = navBackStackEntry?.destination\r\n    val transactionType = navBackStackEntry?.arguments?.getSerializable(\"type\") as? TransactionType\r\n    val currentRoute = navBackStackEntry?.destination?.route\r\n\r\n    Scaffold(\r\n        modifier = Modifier.fillMaxSize(),\r\n        topBar = {\r\n            if (currentRoute != CheckRoutes.CHECK_EDIT_FROM_TOPBAR) {\r\n                AppTopBar(\r\n                    currentDestination = currentDestination,\r\n                    navController = navController,\r\n                    historyNavigation = historyNavigation\r\n                )\r\n            }\r\n        },\r\n        bottomBar = {\r\n            AppBottomBar(\r\n                navController = navController,\r\n                currentDestination = currentDestination,\r\n                activeTransactionType = transactionType\r\n            )\r\n        }\r\n    ) { innerPadding ->\r\n        Box(modifier = Modifier.fillMaxSize()) {\r\n            RootNavGraph(\r\n                navController = navController,\r\n                paddingValues = innerPadding,\r\n            )\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt b/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt
+--- a/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt	(revision 143fe2fa6a816039eda63c8388871dd79d28b0bc)
++++ b/app/src/main/java/com/example/financeapp/ui/screens/MainScreen.kt	(date 1752581566203)
+@@ -1,45 +1,72 @@
+ package com.example.financeapp.ui.screens
+ 
++import android.annotation.SuppressLint
+ import androidx.compose.foundation.layout.Box
+ import androidx.compose.foundation.layout.fillMaxSize
+ import androidx.compose.material3.Scaffold
+ import androidx.compose.runtime.Composable
+ import androidx.compose.runtime.getValue
++import androidx.compose.runtime.mutableStateMapOf
++import androidx.compose.runtime.remember
++import androidx.compose.runtime.rememberUpdatedState
+ import androidx.compose.ui.Modifier
++import androidx.navigation.NavBackStackEntry
+ import androidx.navigation.compose.currentBackStackEntryAsState
+ import androidx.navigation.compose.rememberNavController
+-import com.example.financeapp.check.navigation.CheckRoutes
+-import com.example.financeapp.extensions.shouldHideTopBar
++import com.example.financeapp.base.R
++import com.example.financeapp.base.di.ViewModelFactory
+ import com.example.financeapp.navigation.HistoryNavigation
+ import com.example.financeapp.navigation.RootNavGraph
++import com.example.financeapp.navigation.TopBarConfig
+ import com.example.financeapp.navigation.TransactionType
+ import com.example.financeapp.ui.components.AppBottomBar
+ import com.example.financeapp.ui.components.AppTopBar
++import kotlinx.coroutines.flow.MutableStateFlow
+ 
+ /**
+  * Главный экран приложения с навигацией и scaffold-структурой.
+  */
++@SuppressLint("RememberReturnType")
+ @Composable
+ fun MainScreen(
+-    historyNavigation: HistoryNavigation
++    historyNavigation: HistoryNavigation,
++    expensesViewModelFactory: ViewModelFactory,
++    historyViewModelFactory: ViewModelFactory,
++    incomeViewModelFactory: ViewModelFactory,
++    checkViewModelFactory: ViewModelFactory,
++    articlesViewModelFactory: ViewModelFactory,
++    settingsViewModelFactory: ViewModelFactory,
++    transactionViewModelFactory: ViewModelFactory
+ ) {
+     val navController = rememberNavController()
+     val navBackStackEntry by navController.currentBackStackEntryAsState()
+     val currentDestination = navBackStackEntry?.destination
+     val transactionType = navBackStackEntry?.arguments?.getSerializable("type") as? TransactionType
+-    val currentRoute = navBackStackEntry?.destination?.route
++
++    val topBarStateMap = remember { mutableStateMapOf<NavBackStackEntry, TopBarConfig>() }
++    val currentNavController by rememberUpdatedState(navController)
++    val currentHistoryNavigation by rememberUpdatedState(historyNavigation)
++
++    val currentTopBarStateFlow = remember {
++        val initialTopBarConfig = TopBarConfig(
++            textResId = R.string.expenses_today,
++            trailingImageResId = R.drawable.refresh,
++            onTrailingClick = {
++                currentNavController.navigate(
++                    currentHistoryNavigation.navigateToHistory(
++                        TransactionType.EXPENSE
++                    )
++                )
++            },
++            leadingImageResId = null,
++            onLeadingClick = null
++        )
++        MutableStateFlow<TopBarConfig?>(initialTopBarConfig)
++    }
+ 
+     Scaffold(
+         modifier = Modifier.fillMaxSize(),
+-        topBar = {
+-            if (currentRoute != CheckRoutes.CHECK_EDIT_FROM_TOPBAR) {
+-                AppTopBar(
+-                    currentDestination = currentDestination,
+-                    navController = navController,
+-                    historyNavigation = historyNavigation
+-                )
+-            }
+-        },
++        topBar = { AppTopBar(currentTopBarStateFlow) },
+         bottomBar = {
+             AppBottomBar(
+                 navController = navController,
+@@ -52,6 +79,25 @@
+             RootNavGraph(
+                 navController = navController,
+                 paddingValues = innerPadding,
++                expensesViewModelFactory = expensesViewModelFactory,
++                historyViewModelFactory = historyViewModelFactory,
++                incomeViewModelFactory = incomeViewModelFactory,
++                articlesViewModelFactory = articlesViewModelFactory,
++                settingsViewModelFactory = settingsViewModelFactory,
++                checkViewModelFactory = checkViewModelFactory,
++                transactionViewModelFactory = transactionViewModelFactory,
++                historyNavigation = historyNavigation,
++
++                updateTopBarState = { entry, newState ->
++                    if (newState != null) {
++                        topBarStateMap[entry] = newState
++                    } else {
++                        topBarStateMap.remove(entry)
++                    }
++                    currentTopBarStateFlow.value = navBackStackEntry?.let { activeEntry ->
++                        topBarStateMap[activeEntry]
++                    } ?: currentTopBarStateFlow.value
++                }
+             )
+         }
+     }
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n    alias(libs.plugins.kotlin.android)\r\n    alias(libs.plugins.kotlin.compose)\r\n    alias(libs.plugins.ksp)\r\n    alias(libs.plugins.hilt)\r\n    alias(libs.plugins.detekt)\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.financeapp.app\"\r\n    compileSdk = libs.versions.compileSdk.get().toInt()\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.example.financeapp\"\r\n        minSdk = libs.versions.minSdk.get().toInt()\r\n        targetSdk = libs.versions.targetSdk.get().toInt()\r\n        versionCode = rootProject.extra.get(\"versionCode\") as Int\r\n        versionName = rootProject.extra.get(\"versionName\") as String\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = \"11\"\r\n    }\r\n    buildFeatures {\r\n        compose = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation(project(path = \":core:base\"))\r\n    implementation(project(path = \":core:domain\"))\r\n    implementation(project(path = \":core:data\"))\r\n    implementation(project(path = \":core:navigation\"))\r\n    implementation(project(\":feature:account\"))\r\n    implementation(project(\":feature:category\"))\r\n    implementation(project(\":feature:history\"))\r\n\r\n    // Feature\r\n\r\n    implementation(project(path = \":feature:expenses\"))\r\n    implementation(project(path = \":feature:income\"))\r\n    implementation(project(path = \":feature:settings\"))\r\n\r\n\r\n    implementation(libs.androidx.core.ktx)\r\n    implementation(libs.androidx.lifecycle.runtime.ktx)\r\n    implementation(libs.androidx.activity.compose)\r\n    implementation(platform(libs.androidx.compose.bom))\r\n    implementation(libs.androidx.ui)\r\n    implementation(libs.androidx.ui.graphics)\r\n    implementation(libs.androidx.ui.tooling.preview)\r\n    implementation(libs.androidx.material3)\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.androidx.junit)\r\n    androidTestImplementation(libs.androidx.espresso.core)\r\n    androidTestImplementation(platform(libs.androidx.compose.bom))\r\n    androidTestImplementation(libs.androidx.ui.test.junit4)\r\n    debugImplementation(libs.androidx.ui.tooling)\r\n    debugImplementation(libs.androidx.ui.test.manifest)\r\n\r\n    implementation(libs.androidx.navigation.compose)\r\n    implementation(libs.lottie.compose)\r\n\r\n\r\n\r\n\r\n    implementation(\"androidx.hilt:hilt-navigation-compose:1.2.0\")\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 143fe2fa6a816039eda63c8388871dd79d28b0bc)
++++ b/app/build.gradle.kts	(date 1752581738083)
+@@ -2,8 +2,7 @@
+     alias(libs.plugins.android.application)
+     alias(libs.plugins.kotlin.android)
+     alias(libs.plugins.kotlin.compose)
+-    alias(libs.plugins.ksp)
+-    alias(libs.plugins.hilt)
++    kotlin("kapt")
+     alias(libs.plugins.detekt)
+ }
+ 
+@@ -46,13 +45,12 @@
+     implementation(project(path = ":core:base"))
+     implementation(project(path = ":core:domain"))
+     implementation(project(path = ":core:data"))
++    implementation(project(path = ":core:network"))
+     implementation(project(path = ":core:navigation"))
+     implementation(project(":feature:account"))
+     implementation(project(":feature:category"))
+     implementation(project(":feature:history"))
+-
+-    // Feature
+-
++    implementation(project(path = ":feature:transaction"))
+     implementation(project(path = ":feature:expenses"))
+     implementation(project(path = ":feature:income"))
+     implementation(project(path = ":feature:settings"))
+@@ -77,8 +75,15 @@
+     implementation(libs.androidx.navigation.compose)
+     implementation(libs.lottie.compose)
+ 
++    implementation(libs.dagger)
++    kapt(libs.dagger.compiler)
++    implementation(libs.bundles.network.deps)
+ 
+-
++    implementation("com.jakewharton.timber:timber:5.0.1")
++    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")
+ 
+     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+-}
++    // AssistedInject
++    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
++    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.financeapp.extensions\r\n\r\nimport androidx.navigation.NavBackStackEntry\r\nimport androidx.navigation.NavController\r\nimport androidx.navigation.NavDestination\r\nimport androidx.navigation.NavDestination.Companion.hierarchy\r\nimport androidx.navigation.NavGraph.Companion.findStartDestination\r\nimport com.example.financeapp.check.navigation.CheckRoutes\r\nimport com.example.financeapp.history.navigation.HistoryScreens\r\nimport com.example.financeapp.navigation.NavigationItem\r\nimport com.example.financeapp.navigation.Screen\r\nimport com.example.financeapp.navigation.TransactionType\r\n\r\n/**\r\n * Файл с extension-функциями для навигации.\r\n * Содержит вспомогательные методы для работы с Navigation Component.\r\n */\r\nfun NavDestination?.isExpensesScreen() =\r\n    this?.hierarchy?.any { it.route == Screen.Expenses.route } == true\r\n\r\nfun NavDestination?.isIncomeScreen() =\r\n    this?.hierarchy?.any { it.route == Screen.Income.route } == true\r\n\r\nfun NavDestination?.isSettingsScreen() =\r\n    this?.hierarchy?.any { it.route == Screen.Settings.route } == true\r\n\r\nfun NavDestination?.isArticlesScreen() =\r\n    this?.hierarchy?.any { it.route == Screen.Articles.route } == true\r\n\r\nfun NavDestination?.isCheckScreen() =\r\n    this?.hierarchy?.any { it.route == Screen.Check.route } == true\r\n\r\nfun NavDestination?.isHistoryScreen(): Boolean {\r\n    val historyRoute = HistoryScreens.Main.route.substringBefore(\"?\")\r\n    return this?.route?.contains(historyRoute) == true\r\n}\r\n\r\nfun NavBackStackEntry?.getTransactionType(): TransactionType? =\r\n    this?.arguments?.getSerializable(\"type\") as? TransactionType\r\n\r\nfun NavDestination?.isItemSelected(\r\n    item: NavigationItem,\r\n    transactionType: TransactionType? = null\r\n): Boolean {\r\n    return when {\r\n        this?.hierarchy?.any { it.route == item.screen.route } == true -> true\r\n        this?.route?.startsWith(\"main\") == true -> when (item) {\r\n            NavigationItem.Income -> transactionType == TransactionType.INCOME\r\n            NavigationItem.Expenses -> transactionType == TransactionType.EXPENSE\r\n            else -> false\r\n        }\r\n        else -> false\r\n    }\r\n}\r\n\r\nfun NavController.navigateToItem(item: NavigationItem) {\r\n    navigate(item.screen.route) {\r\n        popUpTo(graph.findStartDestination().id) {\r\n            saveState = true\r\n        }\r\n        launchSingleTop = true\r\n        restoreState = true\r\n    }\r\n}\r\n\r\nfun NavDestination.shouldHideTopBar(): Boolean {\r\n    val route = this.route ?: return false\r\n    return route == CheckRoutes.CHECK_EDIT_FROM_TOPBAR\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt b/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt
+--- a/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt	(revision 143fe2fa6a816039eda63c8388871dd79d28b0bc)
++++ b/app/src/main/java/com/example/financeapp/extensions/NavExtensions.kt	(date 1752581425639)
+@@ -1,15 +1,8 @@
+ package com.example.financeapp.extensions
+ 
+-import androidx.navigation.NavBackStackEntry
+ import androidx.navigation.NavController
+-import androidx.navigation.NavDestination
+-import androidx.navigation.NavDestination.Companion.hierarchy
+ import androidx.navigation.NavGraph.Companion.findStartDestination
+-import com.example.financeapp.check.navigation.CheckRoutes
+-import com.example.financeapp.history.navigation.HistoryScreens
+ import com.example.financeapp.navigation.NavigationItem
+-import com.example.financeapp.navigation.Screen
+-import com.example.financeapp.navigation.TransactionType
+ 
+ /**
+  * Файл с extension-функциями для навигации.

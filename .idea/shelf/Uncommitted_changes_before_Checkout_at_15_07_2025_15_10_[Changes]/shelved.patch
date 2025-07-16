@@ -1,0 +1,43 @@
+Index: app/src/main/java/com/example/financeapp/di/NavigationModule.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.financeapp.di\r\n\r\nimport com.example.financeapp.base.di.scopes.AppScope\r\nimport com.example.financeapp.history.navigation.HistoryNavigationImpl\r\nimport com.example.financeapp.navigation.HistoryNavigation\r\nimport dagger.Binds\r\nimport dagger.Module\r\n\r\n/**\r\n * Dagger-модуль для навигации, предоставляющий реализации навигационных интерфейсов.\r\n *\r\n * Связывает HistoryNavigation с его реализацией HistoryNavigationImpl в рамках AppScope.\r\n */\r\n@Module\r\ninterface NavigationModule {\r\n    @Binds\r\n    @AppScope\r\n    fun bindHistoryNavigation(impl: HistoryNavigationImpl): HistoryNavigation\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/financeapp/di/NavigationModule.kt b/app/src/main/java/com/example/financeapp/di/NavigationModule.kt
+--- a/app/src/main/java/com/example/financeapp/di/NavigationModule.kt	(revision 2a60924fa69b4e2ce38d563468820afaf5d01c4f)
++++ b/app/src/main/java/com/example/financeapp/di/NavigationModule.kt	(date 1752413817198)
+@@ -16,4 +16,4 @@
+     @Binds
+     @AppScope
+     fun bindHistoryNavigation(impl: HistoryNavigationImpl): HistoryNavigation
+-}
+\ No newline at end of file
++}
+Index: app/src/main/java/com/example/financeapp/di/AppComponent.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.financeapp.di\r\n\r\nimport android.app.Application\r\nimport android.content.Context\r\nimport com.example.financeapp.FinanceApplication\r\nimport com.example.financeapp.articles.di.CategoryComponent\r\nimport com.example.financeapp.base.di.scopes.AppScope\r\nimport com.example.financeapp.data.di.DataBinderModule\r\nimport com.example.financeapp.base.di.qualifiers.ApplicationContext\r\nimport com.example.financeapp.check.di.AccountComponent\r\nimport com.example.financeapp.domain.di.DomainModule\r\nimport com.example.financeapp.domain.di.qualifies.IoDispatchers\r\nimport com.example.financeapp.expenses.di.ExpensesComponent\r\nimport com.example.financeapp.history.di.HistoryComponent\r\nimport com.example.financeapp.income.di.IncomeComponent\r\nimport com.example.financeapp.navigation.HistoryNavigation\r\nimport com.example.financeapp.network.di.NetworkModule\r\nimport com.example.financeapp.settings.di.SettingsComponent\r\nimport com.example.financeapp.transaction.di.TransactionComponent\r\nimport dagger.BindsInstance\r\nimport dagger.Component\r\nimport kotlinx.coroutines.CoroutineDispatcher\r\n\r\n/**\r\n * Главный компонент приложения, предоставляющий зависимости в масштабе всего приложения.\r\n *\r\n * Включает модули: NetworkModule, DataBinderModule, DomainModule и NavigationModule.\r\n * Предоставляет билдеры для субкомпонентов (Expenses, Account, Category и др.),\r\n * а также основные зависимости: Application, Context и CoroutineDispatcher.\r\n */\r\n@AppScope\r\n@Component(\r\n    modules = [\r\n        NetworkModule::class,\r\n        DataBinderModule::class,\r\n        DomainModule::class,\r\n        NavigationModule::class\r\n    ]\r\n)\r\ninterface AppComponent {\r\n    fun inject(application: FinanceApplication)\r\n\r\n    fun expensesComponentBuilder(): ExpensesComponent.Builder\r\n    fun checkComponentBuilder(): AccountComponent.Builder\r\n    fun articlesComponentBuilder(): CategoryComponent.Builder\r\n    fun historyComponentBuilder(): HistoryComponent.Builder\r\n    fun incomeComponentBuilder(): IncomeComponent.Builder\r\n    fun settingsComponentBuilder(): SettingsComponent.Builder\r\n    fun transactionComponentBuilder(): TransactionComponent.Builder\r\n\r\n    fun historyNavigation(): HistoryNavigation\r\n\r\n    fun application(): Application\r\n\r\n    @ApplicationContext\r\n    fun applicationContext(): Context\r\n\r\n    @IoDispatchers\r\n    fun ioDispatcher(): CoroutineDispatcher\r\n\r\n    @Component.Builder\r\n    interface Builder {\r\n        @BindsInstance\r\n        fun application(application: Application): Builder\r\n        fun build(): AppComponent\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/financeapp/di/AppComponent.kt b/app/src/main/java/com/example/financeapp/di/AppComponent.kt
+--- a/app/src/main/java/com/example/financeapp/di/AppComponent.kt	(revision 2a60924fa69b4e2ce38d563468820afaf5d01c4f)
++++ b/app/src/main/java/com/example/financeapp/di/AppComponent.kt	(date 1752413817197)
+@@ -4,10 +4,10 @@
+ import android.content.Context
+ import com.example.financeapp.FinanceApplication
+ import com.example.financeapp.articles.di.CategoryComponent
+-import com.example.financeapp.base.di.scopes.AppScope
+-import com.example.financeapp.data.di.DataBinderModule
+ import com.example.financeapp.base.di.qualifiers.ApplicationContext
++import com.example.financeapp.base.di.scopes.AppScope
+ import com.example.financeapp.check.di.AccountComponent
++import com.example.financeapp.data.di.DataBinderModule
+ import com.example.financeapp.domain.di.DomainModule
+ import com.example.financeapp.domain.di.qualifies.IoDispatchers
+ import com.example.financeapp.expenses.di.ExpensesComponent
+@@ -64,4 +64,4 @@
+         fun application(application: Application): Builder
+         fun build(): AppComponent
+     }
+-}
+\ No newline at end of file
++}

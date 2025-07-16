@@ -84,6 +84,6 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     // AssistedInject
-    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
-    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
+//    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
+//    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
 }
