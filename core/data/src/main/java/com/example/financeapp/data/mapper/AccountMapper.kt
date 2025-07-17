@@ -30,7 +30,7 @@ class AccountMapper @Inject constructor() {
         id = response.remoteId ?: response.localId,
         name = response.name,
         balance = response.balance.toDoubleOrNull() ?: 0.0,
-        currency = response.currency
+        currency = response.currency,
     )
 
     fun toEntity(request: Account): AccountEntity = AccountEntity(

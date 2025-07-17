@@ -11,6 +11,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE local_id = :id OR remote_id = :id LIMIT 1")
     suspend fun getById(id: Int): TransactionEntity?
 
+    @Query("DELETE FROM transactions WHERE remote_id IN (:remoteIds)")
+    suspend fun deleteByRemoteIds(remoteIds: List<Int>)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(transaction: TransactionEntity): Long
 

@@ -6,6 +6,7 @@ import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.domain.model.CategoryModel
 import com.example.financeapp.domain.model.TransactionModel
 import com.example.financeapp.network.pojo.request.transaction.TransactionRequest
+import com.example.financeapp.network.pojo.response.transaction.TransactionCreateResponse
 import com.example.financeapp.network.pojo.response.transaction.TransactionResponse
 import java.time.Instant
 import java.time.ZoneId
@@ -62,6 +63,42 @@ class TransactionMapper @Inject constructor(
         comment = response.comment,
         isIncome = response.isIncome
     )
+
+    fun toEntityOrNull(request: TransactionResponse): TransactionEntity? {
+        val account = request.account ?: return null
+        val category = request.category ?: return null
+        return TransactionEntity(
+            remoteId = request.id,
+            accountId = account.id,
+            categoryId = category.id,
+            amount = request.amount.toString(),
+            transactionDate = request.transactionDate,
+            comment = request.comment,
+            createdAt = request.createdAt,
+            updatedAt = request.updatedAt,
+            isIncome = category.isIncome,
+            isSynced = false,
+            lastSyncedAt = null
+        )
+    }
+
+    fun toEntityFromCreateResponse(
+        response: TransactionCreateResponse,
+        isIncome: Boolean
+    ): TransactionEntity = TransactionEntity(
+        remoteId = response.id,
+        accountId = response.accountId,
+        categoryId = response.categoryId,
+        amount = response.amount,
+        transactionDate = response.transactionDate,
+        comment = response.comment,
+        createdAt = response.createdAt,
+        updatedAt = response.updatedAt,
+        isIncome = isIncome, // <-- передаём из репозитория!
+        isSynced = true,
+        lastSyncedAt = System.currentTimeMillis()
+    )
+
 
     fun toEntity(request: TransactionResponse) = TransactionEntity(
         remoteId = request.id,

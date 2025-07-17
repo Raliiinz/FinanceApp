@@ -1,6 +1,7 @@
 package com.example.financeapp.network
 
 import com.example.financeapp.network.pojo.request.transaction.TransactionRequest
+import com.example.financeapp.network.pojo.response.transaction.TransactionCreateResponse
 import com.example.financeapp.network.pojo.response.transaction.TransactionResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -29,7 +30,11 @@ interface TransactionApi {
     @POST("transactions")
     suspend fun createTransaction(
         @Body request: TransactionRequest
-    ): TransactionResponse
+    ): TransactionCreateResponse
+//    @POST("transactions")
+//    suspend fun createTransaction(
+//        @Body request: TransactionRequest
+//    ): TransactionResponse
 
     @PUT("transactions/{id}")
     suspend fun updateTransaction(

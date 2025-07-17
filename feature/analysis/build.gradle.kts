@@ -1,23 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("kapt")
-    alias(libs.plugins.detekt)
 }
 
 android {
-    namespace = "com.example.financeapp.app"
+    namespace = "com.example.financeapp.analysis"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.example.financeapp"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = rootProject.extra.get("versionCode") as Int
-        versionName = rootProject.extra.get("versionName") as String
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -42,22 +38,19 @@ android {
 }
 
 dependencies {
-    implementation(project(path = ":core:base"))
-    implementation(project(path = ":core:domain"))
-    implementation(project(path = ":core:data"))
-    implementation(project(path = ":core:network"))
-    implementation(project(path = ":core:navigation"))
-    implementation(project(":feature:account"))
-    implementation(project(":feature:category"))
-    implementation(project(":feature:analysis"))
-    implementation(project(":feature:history"))
-    implementation(project(path = ":feature:transaction"))
-    implementation(project(path = ":feature:expenses"))
-    implementation(project(path = ":feature:income"))
-    implementation(project(path = ":feature:settings"))
 
+    implementation(project(path = ":core:domain"))
+    implementation(project(path = ":core:base"))
+    implementation(project(path = ":core:navigation"))
+    implementation(project(path = ":core:util"))
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -65,26 +58,13 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.lottie.compose)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.lottie.compose)
-
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
-    implementation(libs.bundles.network.deps)
-
-    implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")
-
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    // AssistedInject
-//    implementation("com.squareup.inject:assisted-inject-annotations-dagger2:0.8.1")
-//    kapt("com.squareup.inject:assisted-inject-processor-dagger2:0.8.1")
 }

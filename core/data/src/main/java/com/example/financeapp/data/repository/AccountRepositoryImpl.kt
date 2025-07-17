@@ -76,28 +76,44 @@ class AccountRepositoryImpl @Inject constructor(
                     )
                 )
             }
-            if (result is Result.Success) {
-                val now = Date().time
-                val entity = accountMapper.toEntity(result.data).copy(
-                    isSynced = true,
-                    lastSyncedAt = now
-                )
-                accountDao.insert(entity)
-                Result.Success(accountMapper.toDomain(result.data))
-            } else {
-                val local = accountDao.getById(id)
-                local?.let {
-                    val unsynced = it.copy(
-                        name = name,
-                        balance = balance,
-                        currency = currency,
-                        isSynced = false
+            when (result) {
+                is Result.Success -> {
+                    val now = Date().time
+                    // Получаем текущую запись из БД
+                    val local = accountDao.getById(id)
+
+                    // Создаём новую сущность с сохранением localId
+                    val entity = accountMapper.toEntity(result.data).copy(
+                        localId = local?.localId ?: 0,
+                        isSynced = true,
+                        lastSyncedAt = now
                     )
-                    accountDao.update(unsynced)
-                    Result.Success(accountMapper.entityToDomain(unsynced))
-                } ?: Result.HttpError(FailureReason.NotFound("Account not found in local database"))
+
+                    accountDao.insert(entity)
+
+                    // Получаем обновлённые данные из БД
+                    val updated = accountDao.getById(entity.localId) ?: accountDao.getById(id)
+                    updated?.let {
+                        Result.Success(accountMapper.entityToDomain(it))
+                    } ?: Result.HttpError(FailureReason.NotFound("Account not found after update"))
+                }
+                else -> {
+                    // Оффлайн-логика
+                    val local = accountDao.getById(id)
+                    local?.let {
+                        val unsynced = it.copy(
+                            name = name,
+                            balance = balance,
+                            currency = currency,
+                            isSynced = false
+                        )
+                        accountDao.update(unsynced)
+                        Result.Success(accountMapper.entityToDomain(unsynced))
+                    } ?: Result.HttpError(FailureReason.NotFound("Account not found in local database"))
+                }
             }
         } else {
+            // Оффлайн-логика
             val local = accountDao.getById(id)
             local?.let {
                 val unsynced = it.copy(
@@ -110,6 +126,40 @@ class AccountRepositoryImpl @Inject constructor(
                 Result.Success(accountMapper.entityToDomain(unsynced))
             } ?: Result.HttpError(FailureReason.NotFound("Account not found in local database"))
         }
+//            if (result is Result.Success) {
+//                val now = Date().time
+//                val entity = accountMapper.toEntity(result.data).copy(
+//                    isSynced = true,
+//                    lastSyncedAt = now
+//                )
+//                accountDao.insert(entity)
+//                Result.Success(accountMapper.toDomain(result.data))
+//            } else {
+//                val local = accountDao.getById(id)
+//                local?.let {
+//                    val unsynced = it.copy(
+//                        name = name,
+//                        balance = balance,
+//                        currency = currency,
+//                        isSynced = false
+//                    )
+//                    accountDao.update(unsynced)
+//                    Result.Success(accountMapper.entityToDomain(unsynced))
+//                } ?: Result.HttpError(FailureReason.NotFound("Account not found in local database"))
+//            }
+//        } else {
+//            val local = accountDao.getById(id)
+//            local?.let {
+//                val unsynced = it.copy(
+//                    name = name,
+//                    balance = balance,
+//                    currency = currency,
+//                    isSynced = false
+//                )
+//                accountDao.update(unsynced)
+//                Result.Success(accountMapper.entityToDomain(unsynced))
+//            } ?: Result.HttpError(FailureReason.NotFound("Account not found in local database"))
+
     }
 
     override suspend fun getAllCurrencies(): Result<List<String>> {
