@@ -28,6 +28,7 @@ fun RootNavGraph(
     checkViewModelFactory: ViewModelFactory,
     articlesViewModelFactory: ViewModelFactory,
     settingsViewModelFactory: ViewModelFactory,
+    analysisViewModelFactory: ViewModelFactory,
     historyNavigation: HistoryNavigation,
     updateTopBarState: (NavBackStackEntry, TopBarConfig?) -> Unit,
 
@@ -43,7 +44,6 @@ fun RootNavGraph(
         settingsNavGraph(navController, paddingValues, settingsViewModelFactory, updateTopBarState)
         historyNavGraph(navController, paddingValues, historyViewModelFactory, updateTopBarState)
         transactionNavGraph(navController, paddingValues, updateTopBarState)
-        analysisNavGraph(navController, paddingValues, updateTopBarState
-        )
+        analysisNavGraph(navController, paddingValues, analysisViewModelFactory, updateTopBarState)
     }
 }

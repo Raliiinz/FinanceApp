@@ -5,6 +5,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -12,11 +13,15 @@ import androidx.navigation.compose.composable
 import com.example.financeapp.base.R
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.financeapp.analysis.navigation.screen.AnalysisScreen
+import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.navigation.TopBarConfig
+import com.example.financeapp.navigation.TransactionType
 
 fun NavGraphBuilder.analysisNavGraph(
     navController: NavHostController,
     paddingValues: PaddingValues,
+    viewModelFactory: ViewModelFactory,
     updateTopBarState: (NavBackStackEntry, TopBarConfig?) -> Unit,
 ) {
     composable(
@@ -45,9 +50,14 @@ fun NavGraphBuilder.analysisNavGraph(
             }
         }
 
-        // Преобразуй строку обратно в свой enum, если нужно:
-        // val transactionType = TransactionType.valueOf(typeString ?: "INCOME")
-        // AnalysisScreen(transactionType = transactionType)
-
-        }
+        val transactionType = TransactionType.valueOf(typeString ?: "INCOME")
+        AnalysisScreen(
+            viewModel = viewModel(
+                factory = viewModelFactory,
+                viewModelStoreOwner = backStackEntry
+            ),
+            paddingValues = paddingValues,
+            transactionType = transactionType
+        )
+    }
 }

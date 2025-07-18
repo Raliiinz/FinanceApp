@@ -3,6 +3,7 @@ package com.example.financeapp.di
 import android.app.Application
 import android.content.Context
 import com.example.financeapp.FinanceApplication
+import com.example.financeapp.analysis.navigation.di.AnalysisComponent
 import com.example.financeapp.articles.di.CategoryComponent
 import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.data.di.DataBinderModule
@@ -49,6 +50,7 @@ interface AppComponent {
     fun incomeComponentBuilder(): IncomeComponent.Builder
     fun settingsComponentBuilder(): SettingsComponent.Builder
     fun transactionComponentBuilder(): TransactionComponent.Builder
+    fun analysisComponentBuilder(): AnalysisComponent.Builder
 
     fun historyNavigation(): HistoryNavigation
 
