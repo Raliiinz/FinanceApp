@@ -61,6 +61,8 @@ dependencies {
     // Network
     implementation(libs.bundles.network.deps)
 
+    implementation(libs.androidx.work.runtime.ktx)
+
     //Room
     implementation(libs.room)
     implementation(libs.room.ktx)

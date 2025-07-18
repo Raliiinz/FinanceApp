@@ -1,4 +1,4 @@
-package com.example.financeapp.analysis.navigation.di
+package com.example.financeapp.analysis.di
 
 import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.base.di.scopes.AnalysisScope

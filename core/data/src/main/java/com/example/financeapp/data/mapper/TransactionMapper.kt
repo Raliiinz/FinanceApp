@@ -9,6 +9,8 @@ import com.example.financeapp.network.pojo.request.transaction.TransactionReques
 import com.example.financeapp.network.pojo.response.transaction.TransactionCreateResponse
 import com.example.financeapp.network.pojo.response.transaction.TransactionResponse
 import java.time.Instant
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -50,81 +52,59 @@ class TransactionMapper @Inject constructor(
         )
     }
 
-    fun entityToDomain(
-        response: TransactionEntity,
-        account: AccountModel,
-        category: CategoryModel
-    ): TransactionModel = TransactionModel(
-        id = response.remoteId ?: response.localId,
-        account = account,
-        category = category,
-        amount = response.amount.toDoubleOrNull() ?: 0.0,
-        date = response.transactionDate,
-        comment = response.comment,
-        isIncome = response.isIncome
-    )
+    fun domainToEntity(transactionModel: TransactionModel): TransactionEntity {
+        val parsedDateTime = LocalDateTime.parse(transactionModel.date)
+        val date = parsedDateTime.toLocalDate().toString()
+        val time = parsedDateTime.toLocalTime().withSecond(0).withNano(0).toString()
 
-    fun toEntityOrNull(request: TransactionResponse): TransactionEntity? {
-        val account = request.account ?: return null
-        val category = request.category ?: return null
         return TransactionEntity(
-            remoteId = request.id,
-            accountId = account.id,
-            categoryId = category.id,
-            amount = request.amount.toString(),
-            transactionDate = request.transactionDate,
-            comment = request.comment,
-            createdAt = request.createdAt,
-            updatedAt = request.updatedAt,
-            isIncome = category.isIncome,
-            isSynced = false,
-            lastSyncedAt = null
+            id = transactionModel.id,
+            accountId = transactionModel.account.id.toString(),
+            categoryId = transactionModel.category.id,
+            categoryEmoji = transactionModel.category.iconLeading,
+            currency = transactionModel.account.currency,
+            categoryName = transactionModel.category.textLeading,
+            isIncome = transactionModel.category.isIncome,
+            amount = transactionModel.amount,
+            time = time,
+            date = date,
+            comment = if (transactionModel.comment == "") null else transactionModel.comment
         )
     }
 
-    fun toEntityFromCreateResponse(
-        response: TransactionCreateResponse,
-        isIncome: Boolean
-    ): TransactionEntity = TransactionEntity(
-        remoteId = response.id,
-        accountId = response.accountId,
-        categoryId = response.categoryId,
-        amount = response.amount,
-        transactionDate = response.transactionDate,
-        comment = response.comment,
-        createdAt = response.createdAt,
-        updatedAt = response.updatedAt,
-        isIncome = isIncome, // <-- передаём из репозитория!
-        isSynced = true,
-        lastSyncedAt = System.currentTimeMillis()
-    )
+    fun entityToDomain(
+        entity: TransactionEntity,
+        account: AccountModel,
+        category: CategoryModel
+    ): TransactionModel {
+        return TransactionModel(
+            id = entity.id,
+            account = account, // <-- Настоящая модель
+            category = category, // <-- Настоящая модель
+            isIncome = category.isIncome, // <-- Берем из настоящей категории
+            amount = entity.amount,
+            date = "${entity.date}T${entity.time}:00.000Z",
+            comment = entity.comment
+        )
+    }
 
-
-    fun toEntity(request: TransactionResponse) = TransactionEntity(
-        remoteId = request.id,
-        accountId = request.account.id,
-        categoryId = request.category.id,
-        amount = request.amount.toString(),
-        transactionDate = request.transactionDate,
-        comment = request.comment,
-        createdAt = "",
-        updatedAt = "",
-        isIncome = request.category.isIncome,
-        isSynced = false,
-        lastSyncedAt = null
-    )
-
-    fun toEntity(request: TransactionModel) = TransactionEntity(
-        remoteId = request.id,
-        accountId = request.account.id,
-        categoryId = request.category.id,
-        amount = request.amount.toString(),
-        transactionDate = request.date,
-        comment = request.comment,
-        createdAt = "",
-        updatedAt = "",
-        isIncome = request.isIncome,
-        isSynced = false,
-        lastSyncedAt = null
+    fun toDomain(transactionEntity: TransactionEntity) = TransactionModel(
+        id = transactionEntity.id,
+        account = AccountModel(
+            transactionEntity.accountId.toInt(),
+            "",
+            0.0,
+            transactionEntity.currency
+        ),
+        category = CategoryModel(
+            id = transactionEntity.categoryId,
+            iconLeading = transactionEntity.categoryEmoji,
+            textLeading = transactionEntity.categoryName,
+            isIncome = transactionEntity.isIncome
+        ),
+        isIncome = transactionEntity.isIncome,
+        amount = transactionEntity.amount,
+        date = "${transactionEntity.date}T${transactionEntity.time}:00.000Z",
+        comment = if (transactionEntity.comment == "") null else transactionEntity.comment
     )
 }

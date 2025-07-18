@@ -20,17 +20,21 @@ class CategoryMapper @Inject constructor() {
 
     fun entityToDomain(response: CategoryEntity): CategoryModel = CategoryModel(
         id = response.id,
-        iconLeading = response.emoji,
-        textLeading = response.name,
+        iconLeading = response.iconLeading,
+        textLeading = response.textLeading,
         isIncome = response.isIncome
     )
 
+    fun toEntity(response: CategoryModel): CategoryEntity = CategoryEntity(
+        id = response.id,
+        iconLeading = response.iconLeading,
+        textLeading = response.textLeading,
+        isIncome = response.isIncome,
+    )
     fun toEntity(response: CategoryResponse): CategoryEntity = CategoryEntity(
         id = response.id,
-        emoji = response.emoji,
-        name = response.name,
+        iconLeading = response.emoji,
+        textLeading = response.name,
         isIncome = response.isIncome,
-        isSynced = false,
-        lastSyncedAt = null
     )
 }

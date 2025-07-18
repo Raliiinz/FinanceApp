@@ -1,4 +1,4 @@
-package com.example.financeapp.analysis.navigation.components
+package com.example.financeapp.analysis.components
 
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults

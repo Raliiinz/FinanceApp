@@ -80,6 +80,9 @@ dependencies {
     kapt(libs.dagger.compiler)
     implementation(libs.bundles.network.deps)
 
+
+    implementation(libs.androidx.work.runtime.ktx)
+
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")
 

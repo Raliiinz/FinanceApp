@@ -32,14 +32,28 @@ fun AppBottomBar(
     activeTransactionType: TransactionType? = null
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val transactionType = navBackStackEntry?.arguments?.getSerializable("type") as? TransactionType
-        ?: activeTransactionType
+    val transactionType = when {
+        currentDestination?.route?.startsWith("analysis/main/") == true -> {
+            val typeString = currentDestination.route?.substringAfter("analysis/main/")
+            try {
+                TransactionType.valueOf(typeString ?: "")
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
+        else -> navBackStackEntry?.arguments?.getSerializable("type") as? TransactionType
+    } ?: activeTransactionType
 
     NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
         NavigationItem.all.forEach { item ->
             val isSelected = when {
                 currentDestination?.hierarchy?.any { it.route == item.screen.route } == true -> true
                 currentDestination?.route?.startsWith("main") == true -> when (item) {
+                    NavigationItem.Income -> transactionType == TransactionType.INCOME
+                    NavigationItem.Expenses -> transactionType == TransactionType.EXPENSE
+                    else -> false
+                }
+                currentDestination?.route?.startsWith("analysis") == true -> when (item) {
                     NavigationItem.Income -> transactionType == TransactionType.INCOME
                     NavigationItem.Expenses -> transactionType == TransactionType.EXPENSE
                     else -> false

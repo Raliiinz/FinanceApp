@@ -1,4 +1,4 @@
-package com.example.financeapp.analysis.navigation.screen
+package com.example.financeapp.analysis.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,9 +7,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.financeapp.analysis.navigation.components.AnalysisContent
-import com.example.financeapp.analysis.navigation.state.AnalysisEvent
-import com.example.financeapp.analysis.navigation.state.AnalysisUiState
+import com.example.financeapp.analysis.components.AnalysisContent
+import com.example.financeapp.analysis.state.AnalysisEvent
+import com.example.financeapp.analysis.state.AnalysisUiState
 import com.example.financeapp.base.R
 import com.example.financeapp.base.commonItems.ErrorDialog
 import com.example.financeapp.base.commonItems.MyDatePicker

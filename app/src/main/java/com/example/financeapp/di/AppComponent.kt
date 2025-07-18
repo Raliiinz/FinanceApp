@@ -3,7 +3,7 @@ package com.example.financeapp.di
 import android.app.Application
 import android.content.Context
 import com.example.financeapp.FinanceApplication
-import com.example.financeapp.analysis.navigation.di.AnalysisComponent
+import com.example.financeapp.analysis.di.AnalysisComponent
 import com.example.financeapp.articles.di.CategoryComponent
 import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.data.di.DataBinderModule
@@ -33,14 +33,21 @@ import kotlinx.coroutines.CoroutineDispatcher
 @AppScope
 @Component(
     modules = [
+//        AppModule::class,
         NetworkModule::class,
         DataBinderModule::class,
         DomainModule::class,
         NavigationModule::class,
-        RoomModule::class
+        RoomModule::class,
+//        WorkerModule::class,
+//        WorkerBindingModule::class
     ]
 )
 interface AppComponent {
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance application: Application): AppComponent
+    }
     fun inject(application: FinanceApplication)
 
     fun expensesComponentBuilder(): ExpensesComponent.Builder
@@ -62,10 +69,4 @@ interface AppComponent {
     @IoDispatchers
     fun ioDispatcher(): CoroutineDispatcher
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: Application): Builder
-        fun build(): AppComponent
-    }
 }

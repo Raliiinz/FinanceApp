@@ -2,27 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2e8e2e0bef5982b9f879bd2ba3eb7574",
+    "identityHash": "e7e25e7d82258366f7d287a75c616a4a",
     "entities": [
       {
         "tableName": "accounts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `remote_id` INTEGER, `user_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `balance` TEXT NOT NULL, `currency` TEXT NOT NULL, `created_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL, `is_synced` INTEGER NOT NULL, `last_synced_at` INTEGER, `deleted` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `balance` TEXT NOT NULL, `currency` TEXT NOT NULL, `is_synced` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
-            "fieldPath": "localId",
-            "columnName": "local_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "remoteId",
-            "columnName": "remote_id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "userId",
-            "columnName": "user_id",
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -45,40 +33,16 @@
             "notNull": true
           },
           {
-            "fieldPath": "createdAt",
-            "columnName": "created_at",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "updatedAt",
-            "columnName": "updated_at",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "isSynced",
             "columnName": "is_synced",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lastSyncedAt",
-            "columnName": "last_synced_at",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "deleted",
-            "columnName": "deleted",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "local_id"
+            "id"
           ]
         },
         "indices": [],
@@ -86,7 +50,7 @@
       },
       {
         "tableName": "categories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `emoji` TEXT NOT NULL, `is_income` INTEGER NOT NULL, `is_synced` INTEGER NOT NULL, `last_synced_at` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `icon_leading` TEXT NOT NULL, `text_leading` TEXT NOT NULL, `is_income` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -95,14 +59,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "iconLeading",
+            "columnName": "icon_leading",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "emoji",
-            "columnName": "emoji",
+            "fieldPath": "textLeading",
+            "columnName": "text_leading",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -111,18 +75,6 @@
             "columnName": "is_income",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "isSynced",
-            "columnName": "is_synced",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lastSyncedAt",
-            "columnName": "last_synced_at",
-            "affinity": "INTEGER",
-            "notNull": false
           }
         ],
         "primaryKey": {
@@ -136,24 +88,18 @@
       },
       {
         "tableName": "transactions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `remote_id` INTEGER, `account_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `amount` TEXT NOT NULL, `transaction_date` TEXT NOT NULL, `comment` TEXT, `created_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL, `is_income` INTEGER NOT NULL, `is_synced` INTEGER NOT NULL, `deleted` INTEGER NOT NULL, `last_synced_at` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `account_id` TEXT NOT NULL, `category_id` INTEGER NOT NULL, `category_name` TEXT NOT NULL, `currency` TEXT NOT NULL, `category_emoji` TEXT NOT NULL, `is_income` INTEGER NOT NULL, `amount` REAL NOT NULL, `time` TEXT NOT NULL, `date` TEXT NOT NULL, `comment` TEXT, `is_synced` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
-            "fieldPath": "localId",
-            "columnName": "local_id",
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "remoteId",
-            "columnName": "remote_id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
             "fieldPath": "accountId",
             "columnName": "account_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -163,32 +109,20 @@
             "notNull": true
           },
           {
-            "fieldPath": "amount",
-            "columnName": "amount",
+            "fieldPath": "categoryName",
+            "columnName": "category_name",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "transactionDate",
-            "columnName": "transaction_date",
+            "fieldPath": "currency",
+            "columnName": "currency",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "comment",
-            "columnName": "comment",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "createdAt",
-            "columnName": "created_at",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "updatedAt",
-            "columnName": "updated_at",
+            "fieldPath": "categoryEmoji",
+            "columnName": "category_emoji",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -199,48 +133,50 @@
             "notNull": true
           },
           {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "isSynced",
             "columnName": "is_synced",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "deleted",
-            "columnName": "deleted",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lastSyncedAt",
-            "columnName": "last_synced_at",
-            "affinity": "INTEGER",
-            "notNull": false
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "local_id"
+            "id"
           ]
         },
-        "indices": [
-          {
-            "name": "index_transactions_remote_id",
-            "unique": true,
-            "columnNames": [
-              "remote_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_transactions_remote_id` ON `${TABLE_NAME}` (`remote_id`)"
-          }
-        ],
+        "indices": [],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2e8e2e0bef5982b9f879bd2ba3eb7574')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e7e25e7d82258366f7d287a75c616a4a')"
     ]
   }
 }

@@ -1,7 +1,7 @@
-package com.example.financeapp.analysis.navigation.di
+package com.example.financeapp.analysis.di
 
 import androidx.lifecycle.ViewModel
-import com.example.financeapp.analysis.navigation.screen.AnalysisScreenViewModel
+import com.example.financeapp.analysis.screen.AnalysisScreenViewModel
 import com.example.financeapp.base.di.ViewModelKey
 import dagger.Binds
 import dagger.Module

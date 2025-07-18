@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import com.example.financeapp.base.R
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.financeapp.analysis.navigation.screen.AnalysisScreen
+import com.example.financeapp.analysis.screen.AnalysisScreen
 import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.navigation.TopBarConfig
 import com.example.financeapp.navigation.TransactionType

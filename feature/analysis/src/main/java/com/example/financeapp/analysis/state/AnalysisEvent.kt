@@ -1,4 +1,4 @@
-package com.example.financeapp.analysis.navigation.state
+package com.example.financeapp.analysis.state
 
 import com.example.financeapp.navigation.TransactionType
 

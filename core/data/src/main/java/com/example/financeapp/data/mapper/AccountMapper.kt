@@ -27,21 +27,23 @@ class AccountMapper @Inject constructor() {
     )
 
     fun entityToDomain(response: AccountEntity): AccountModel = AccountModel(
-        id = response.remoteId ?: response.localId,
+        id = response.id,
         name = response.name,
         balance = response.balance.toDoubleOrNull() ?: 0.0,
         currency = response.currency,
     )
 
-    fun toEntity(request: Account): AccountEntity = AccountEntity(
-        remoteId = request.id,
-        userId = 20,
+    fun toEntity(request: AccountModel): AccountEntity = AccountEntity(
+        id = request.id,
         name = request.name,
         balance = request.balance.toString(),
-        currency = request.currency,
-        createdAt = "",
-        updatedAt = "",
-        isSynced = false,
-        lastSyncedAt = null
+        currency = request.currency
+    )
+
+    fun toEntity(request: Account): AccountEntity = AccountEntity(
+        id = request.id,
+        name = request.name,
+        balance = request.balance.toString(),
+        currency = request.currency
     )
 }

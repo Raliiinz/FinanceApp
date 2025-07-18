@@ -1,9 +1,9 @@
-package com.example.financeapp.analysis.navigation.screen
+package com.example.financeapp.analysis.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.financeapp.analysis.navigation.state.AnalysisEvent
-import com.example.financeapp.analysis.navigation.state.AnalysisUiState
+import com.example.financeapp.analysis.state.AnalysisEvent
+import com.example.financeapp.analysis.state.AnalysisUiState
 import com.example.financeapp.base.R
 import com.example.financeapp.domain.model.AnalyticsCategory
 import com.example.financeapp.domain.usecase.account.GetAccountUseCase

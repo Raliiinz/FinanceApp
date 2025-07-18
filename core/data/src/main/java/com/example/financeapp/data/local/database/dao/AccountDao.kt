@@ -5,24 +5,21 @@ import com.example.financeapp.data.local.database.entity.AccountEntity
 
 @Dao
 interface AccountDao {
-    @Query("SELECT * FROM accounts WHERE deleted = 0")
-    suspend fun getAll(): List<AccountEntity>
+    @Query("SELECT * FROM accounts")
+    suspend fun getAllAccounts(): List<AccountEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(account: AccountEntity): Long
+    suspend fun insertAccounts(accounts: List<AccountEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(accounts: List<AccountEntity>)
+    @Query("SELECT * FROM accounts WHERE is_synced = 0")
+    suspend fun getUnsyncedAccounts(): List<AccountEntity>
 
-    @Query("SELECT * FROM accounts WHERE local_id = :id OR remote_id = :id LIMIT 1")
-    suspend fun getById(id: Int): AccountEntity?
+    @Query("UPDATE accounts SET is_synced = 1 WHERE id = :accountId")
+    suspend fun markAccountAsSynced(accountId: Int)
 
     @Update
-    suspend fun update(account: AccountEntity)
+    suspend fun updateAccount(account: AccountEntity)
 
-    @Delete
-    suspend fun delete(account: AccountEntity)
-
-    @Query("SELECT * FROM accounts WHERE is_synced = 0 OR deleted = 1")
-    suspend fun getUnsynced(): List<AccountEntity>
+    @Query("SELECT * FROM accounts WHERE id = :id LIMIT 1")
+    suspend fun getById(id: Int): AccountEntity?
 }

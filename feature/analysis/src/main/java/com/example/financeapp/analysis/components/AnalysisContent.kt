@@ -1,4 +1,4 @@
-package com.example.financeapp.analysis.navigation.components
+package com.example.financeapp.analysis.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row

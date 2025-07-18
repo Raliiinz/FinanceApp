@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.financeapp.analysis.navigation.di.AnalysisComponent
+import com.example.financeapp.analysis.di.AnalysisComponent
 import com.example.financeapp.articles.di.CategoryComponent
 import com.example.financeapp.check.di.AccountComponent
 import com.example.financeapp.expenses.di.ExpensesComponent
