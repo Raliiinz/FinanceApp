@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.financeapp.analysis.di.AnalysisComponent
 import com.example.financeapp.articles.di.CategoryComponent
 import com.example.financeapp.check.di.AccountComponent
 import com.example.financeapp.expenses.di.ExpensesComponent
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var categoryComponent: CategoryComponent
     private lateinit var accountComponent: AccountComponent
     private lateinit var transactionComponent: TransactionComponent
+    private lateinit var analysisComponent: AnalysisComponent
     private lateinit var historyNavigationInstance: HistoryNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,8 @@ class MainActivity : ComponentActivity() {
         incomeComponent = appComponent.incomeComponentBuilder().build()
         settingsComponent = appComponent.settingsComponentBuilder().build()
         transactionComponent = appComponent.transactionComponentBuilder().build()
+        analysisComponent = appComponent.analysisComponentBuilder().build()
+
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         enableEdgeToEdge()
@@ -55,6 +59,7 @@ class MainActivity : ComponentActivity() {
                 articlesViewModelFactory = categoryComponent.getViewModelFactory(),
                 settingsViewModelFactory = settingsComponent.getViewModelFactory(),
                 checkViewModelFactory = accountComponent.getViewModelFactory(),
+                analysisViewModelFactory = analysisComponent.getViewModelFactory()
             )
         }
     }

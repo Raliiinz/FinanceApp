@@ -3,7 +3,10 @@ package com.example.financeapp.expenses.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.base.R
+import com.example.financeapp.domain.model.AccountModel
+import com.example.financeapp.domain.model.CategoryModel
 import com.example.financeapp.domain.usecase.account.GetAccountUseCase
+import com.example.financeapp.domain.usecase.category.GetCategoriesUseCase
 import com.example.financeapp.domain.usecase.transaction.GetTransactionsUseCase
 import com.example.financeapp.expenses.state.ExpensesEvent
 import com.example.financeapp.expenses.state.ExpensesUiState
@@ -24,7 +27,8 @@ import javax.inject.Inject
  */
 class ExpensesScreenViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
-    private val getAccountUseCase: GetAccountUseCase
+    private val getAccountUseCase: GetAccountUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ExpensesUiState>(ExpensesUiState.Loading)
@@ -48,32 +52,47 @@ class ExpensesScreenViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { ExpensesUiState.Loading }
 
-            when (val accountsResult = getAccountUseCase()) {
+            // 1. Сначала грузим аккаунты
+            val accountsResult = getAccountUseCase()
+            if (accountsResult !is Result.Success) {
+                handleAccountError(accountsResult)
+                return@launch
+            }
+            val account = accountsResult.data.firstOrNull()
+            if (account == null) {
+                _uiState.update { ExpensesUiState.Error(R.string.error_no_accounts) }
+                return@launch
+            }
+            currentCurrency = account.currency
+
+            // 2. Затем грузим категории
+            val categoriesResult = getCategoriesUseCase(null)
+            if (categoriesResult !is Result.Success) {
+                handleCategoryError(categoriesResult)
+                return@launch
+            }
+            val categories = categoriesResult.data
+            if (categories.isEmpty()) {
+                _uiState.update { ExpensesUiState.Error(R.string.error_no_categories) }
+                return@launch
+            }
+
+            // 3. Только теперь грузим транзакции
+            when (val transactionsResult = getTransactionsUseCase(account.id, from, to)) {
                 is Result.Success -> {
-                    val account = accountsResult.data.firstOrNull()
-                    if (account == null) {
-                        return@launch
+                    // фильтруем только расходы
+                    val expenses = transactionsResult.data.filter { transaction ->
+                        val category = categories.find { it.id == transaction.category.id }
+                        category != null && !category.isIncome
                     }
-
-                    currentCurrency = account.currency
-
-                    when (val transactionsResult = getTransactionsUseCase(account.id, from, to)) {
-                        is Result.Success -> {
-                            val expenses = transactionsResult.data.filter { !it.category.isIncome }
-                            _uiState.update {
-                                ExpensesUiState.Success(
-                                    transactions = expenses,
-                                    currency = currentCurrency
-                                )
-                            }
-                        }
-                        is Result.HttpError -> handleHttpError(transactionsResult.reason)
-                        is Result.NetworkError -> {
-                            _uiState.update { ExpensesUiState.Error(R.string.error_network) }
-                        }
+                    _uiState.update {
+                        ExpensesUiState.Success(
+                            transactions = expenses,
+                            currency = currentCurrency
+                        )
                     }
                 }
-                is Result.HttpError -> handleHttpError(accountsResult.reason)
+                is Result.HttpError -> handleHttpError(transactionsResult.reason)
                 is Result.NetworkError -> {
                     _uiState.update { ExpensesUiState.Error(R.string.error_network) }
                 }
@@ -88,5 +107,21 @@ class ExpensesScreenViewModel @Inject constructor(
             else -> R.string.error_unknown
         }
         _uiState.update { ExpensesUiState.Error(errorRes) }
+    }
+
+    private fun handleAccountError(result: Result<List<AccountModel>>) {
+        when (result) {
+            is Result.HttpError -> handleHttpError(result.reason)
+            is Result.NetworkError -> _uiState.update { ExpensesUiState.Error(R.string.error_network) }
+            else -> _uiState.update { ExpensesUiState.Error(R.string.error_unknown) }
+        }
+    }
+
+    private fun handleCategoryError(result: Result<List<CategoryModel>>) {
+        when (result) {
+            is Result.HttpError -> handleHttpError(result.reason)
+            is Result.NetworkError -> _uiState.update { ExpensesUiState.Error(R.string.error_network) }
+            else -> _uiState.update { ExpensesUiState.Error(R.string.error_unknown) }
+        }
     }
 }

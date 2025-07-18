@@ -1,6 +1,7 @@
 package com.example.financeapp.data.mapper
 
 import com.example.financeapp.base.di.scopes.AppScope
+import com.example.financeapp.data.local.database.entity.AccountEntity
 import com.example.financeapp.domain.model.AccountModel
 import com.example.financeapp.network.pojo.response.account.Account
 import com.example.financeapp.network.pojo.response.account.AccountBrief
@@ -11,13 +12,6 @@ import javax.inject.Inject
  */
 @AppScope
 class AccountMapper @Inject constructor() {
-    fun toBriefAccount(model: AccountModel): AccountBrief = AccountBrief(
-        id = model.id.toInt(),
-        name = model.name,
-        balance = model.balance.toString(),
-        currency = model.currency
-    )
-
     fun toDomain(response: Account): AccountModel = AccountModel(
         id = response.id,
         name = response.name,
@@ -30,5 +24,26 @@ class AccountMapper @Inject constructor() {
         name = response.name,
         balance = response.balance.toDouble(),
         currency = response.currency
+    )
+
+    fun entityToDomain(response: AccountEntity): AccountModel = AccountModel(
+        id = response.id,
+        name = response.name,
+        balance = response.balance.toDoubleOrNull() ?: 0.0,
+        currency = response.currency,
+    )
+
+    fun toEntity(request: AccountModel): AccountEntity = AccountEntity(
+        id = request.id,
+        name = request.name,
+        balance = request.balance.toString(),
+        currency = request.currency
+    )
+
+    fun toEntity(request: Account): AccountEntity = AccountEntity(
+        id = request.id,
+        name = request.name,
+        balance = request.balance.toString(),
+        currency = request.currency
     )
 }

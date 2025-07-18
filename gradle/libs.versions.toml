@@ -33,6 +33,10 @@ converter-gson-version="2.11.0"
 gson = "2.13.0"
 retrofit_version = "2.11.0"
 kotlinx-coroutines = "1.7.3"
+workRuntimeKtx = "2.10.2"
+
+# Room
+room_version = "2.6.1"
 
 # Security
 secretsGradlePlugin = "2.0.1"
@@ -76,6 +80,11 @@ dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" 
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+room = { group = "androidx.room", name = "room-runtime", version.ref = "room_version" }
+room-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "room_version" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room_version"}
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+
 
 [bundles]
 network-deps = ["retrofit", "converter-gson", "okhttp", "gson"]

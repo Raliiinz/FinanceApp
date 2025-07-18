@@ -49,6 +49,7 @@ dependencies {
     implementation(project(path = ":core:navigation"))
     implementation(project(":feature:account"))
     implementation(project(":feature:category"))
+    implementation(project(":feature:analysis"))
     implementation(project(":feature:history"))
     implementation(project(path = ":feature:transaction"))
     implementation(project(path = ":feature:expenses"))
@@ -78,6 +79,9 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
     implementation(libs.bundles.network.deps)
+
+
+    implementation(libs.androidx.work.runtime.ktx)
 
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3")

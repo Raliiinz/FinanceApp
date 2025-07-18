@@ -3,11 +3,13 @@ package com.example.financeapp.di
 import android.app.Application
 import android.content.Context
 import com.example.financeapp.FinanceApplication
+import com.example.financeapp.analysis.di.AnalysisComponent
 import com.example.financeapp.articles.di.CategoryComponent
 import com.example.financeapp.base.di.scopes.AppScope
 import com.example.financeapp.data.di.DataBinderModule
 import com.example.financeapp.base.di.qualifiers.ApplicationContext
 import com.example.financeapp.check.di.AccountComponent
+import com.example.financeapp.data.di.RoomModule
 import com.example.financeapp.domain.di.DomainModule
 import com.example.financeapp.domain.di.qualifies.IoDispatchers
 import com.example.financeapp.expenses.di.ExpensesComponent
@@ -31,13 +33,21 @@ import kotlinx.coroutines.CoroutineDispatcher
 @AppScope
 @Component(
     modules = [
+//        AppModule::class,
         NetworkModule::class,
         DataBinderModule::class,
         DomainModule::class,
-        NavigationModule::class
+        NavigationModule::class,
+        RoomModule::class,
+//        WorkerModule::class,
+//        WorkerBindingModule::class
     ]
 )
 interface AppComponent {
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance application: Application): AppComponent
+    }
     fun inject(application: FinanceApplication)
 
     fun expensesComponentBuilder(): ExpensesComponent.Builder
@@ -47,6 +57,7 @@ interface AppComponent {
     fun incomeComponentBuilder(): IncomeComponent.Builder
     fun settingsComponentBuilder(): SettingsComponent.Builder
     fun transactionComponentBuilder(): TransactionComponent.Builder
+    fun analysisComponentBuilder(): AnalysisComponent.Builder
 
     fun historyNavigation(): HistoryNavigation
 
@@ -58,10 +69,4 @@ interface AppComponent {
     @IoDispatchers
     fun ioDispatcher(): CoroutineDispatcher
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: Application): Builder
-        fun build(): AppComponent
-    }
 }

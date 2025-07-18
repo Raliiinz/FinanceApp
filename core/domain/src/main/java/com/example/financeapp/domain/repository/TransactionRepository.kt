@@ -12,4 +12,6 @@ interface TransactionRepository {
     suspend fun updateTransaction(transaction: TransactionModel): Result<TransactionModel>
     suspend fun deleteTransaction(id: Int): Result<Unit>
     suspend fun getTransactionById(id: Int): Result<TransactionModel>
+    suspend fun getUnsyncedTransactions(): Result<List<TransactionModel>>
+    suspend fun markAsSynced(id: Int)
 }

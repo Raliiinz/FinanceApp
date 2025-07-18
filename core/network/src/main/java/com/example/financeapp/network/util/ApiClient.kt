@@ -20,7 +20,7 @@ import com.example.financeapp.util.result.Result
 @AppScope
 class ApiClient @Inject constructor(
     @IoDispatchers private val dispatcher: CoroutineDispatcher,
-    private val networkChecker: NetworkChecker,
+    val networkChecker: NetworkChecker,
     private val errorHandler: ErrorHandler
 ) {
     companion object {

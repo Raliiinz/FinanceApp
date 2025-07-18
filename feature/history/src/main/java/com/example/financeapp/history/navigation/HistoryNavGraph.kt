@@ -1,7 +1,6 @@
 package com.example.financeapp.history.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -16,7 +15,6 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.financeapp.base.R
 import com.example.financeapp.base.di.ViewModelFactory
-import com.example.financeapp.base.ui.commonItems.TopBarTextIcon
 import com.example.financeapp.history.screen.HistoryScreen
 import com.example.financeapp.navigation.TopBarConfig
 import com.example.financeapp.navigation.TransactionType
@@ -42,13 +40,17 @@ fun NavGraphBuilder.historyNavGraph(
         ) { backStackEntry ->
             val lifecycleOwner = LocalLifecycleOwner.current
 
+            val transactionType = backStackEntry.arguments?.getSerializable("type") as TransactionType
+
             DisposableEffect(lifecycleOwner, backStackEntry) {
                 val observer = LifecycleEventObserver { _, event ->
                     if (event == Lifecycle.Event.ON_START) {
                         val topBarConfig = TopBarConfig(
                             textResId = R.string.history,
                             trailingImageResId = R.drawable.ic_analysis,
-                            onTrailingClick = null,
+                            onTrailingClick = {
+                                navController.navigate("analysis/main/${transactionType.name}")
+                            },
                             leadingImageResId = R.drawable.ic_back,
                             onLeadingClick = { navController.popBackStack() }
                         )
@@ -63,8 +65,6 @@ fun NavGraphBuilder.historyNavGraph(
                     updateTopBarState(backStackEntry, null)
                 }
             }
-
-            val transactionType = backStackEntry.arguments?.getSerializable("type") as TransactionType
 
             HistoryScreen(
                 transactionType = transactionType,

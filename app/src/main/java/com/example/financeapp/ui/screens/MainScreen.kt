@@ -36,6 +36,7 @@ fun MainScreen(
     checkViewModelFactory: ViewModelFactory,
     articlesViewModelFactory: ViewModelFactory,
     settingsViewModelFactory: ViewModelFactory,
+    analysisViewModelFactory: ViewModelFactory
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -84,6 +85,7 @@ fun MainScreen(
                 articlesViewModelFactory = articlesViewModelFactory,
                 settingsViewModelFactory = settingsViewModelFactory,
                 checkViewModelFactory = checkViewModelFactory,
+                analysisViewModelFactory = analysisViewModelFactory,
                 historyNavigation = historyNavigation,
 
                 updateTopBarState = { entry, newState ->

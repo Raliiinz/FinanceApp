@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.example.financeapp.analysis.navigation.analysisNavGraph
 import com.example.financeapp.articles.navigation.articlesNavGraph
 import com.example.financeapp.base.di.ViewModelFactory
 import com.example.financeapp.check.navigation.checkNavGraph
@@ -27,6 +28,7 @@ fun RootNavGraph(
     checkViewModelFactory: ViewModelFactory,
     articlesViewModelFactory: ViewModelFactory,
     settingsViewModelFactory: ViewModelFactory,
+    analysisViewModelFactory: ViewModelFactory,
     historyNavigation: HistoryNavigation,
     updateTopBarState: (NavBackStackEntry, TopBarConfig?) -> Unit,
 
@@ -42,5 +44,6 @@ fun RootNavGraph(
         settingsNavGraph(navController, paddingValues, settingsViewModelFactory, updateTopBarState)
         historyNavGraph(navController, paddingValues, historyViewModelFactory, updateTopBarState)
         transactionNavGraph(navController, paddingValues, updateTopBarState)
+        analysisNavGraph(navController, paddingValues, analysisViewModelFactory, updateTopBarState)
     }
 }

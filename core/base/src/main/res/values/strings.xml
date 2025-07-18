@@ -41,6 +41,12 @@
     <string name="no_articles_found">Статьи не найдены</string>
     <string name="error_loading_articles">Ошибка при загрузке статей</string>
 
+    <!-- Analysis Screen -->
+    <string name="analysis">Анализ</string>
+    <string name="period_start">Период: начало</string>
+    <string name="no_data_for_period">Отсутствуют данные за этот период</string>
+    <string name="period_end">Период: конец</string>
+
 
     <!-- Settings Screen -->
     <string name="settings">Настройки</string>
@@ -75,6 +81,9 @@
     <string name="error">Произошла ошибка</string>
     <string name="error_validation_fields">Заполните все обязательные поля</string>
     <string name="error_delete_invalid_id">Не удалось удалить транзакцию</string>
+    <string name="error_no_accounts">Аккаунт не найден</string>
+    <string name="error_no_categories">Категории не найдены</string>
+
 
     <!-- Основные строки для экрана транзакций -->
     <string name="account">Счет</string>
